@@ -3,7 +3,7 @@
    Permite instalacion como PWA y funcionamiento offline
    ================================================================ */
 
-var CACHE = 'empg-v1';
+var CACHE = 'empg-v2-animado';
 
 var ARCHIVOS = [
     './',
