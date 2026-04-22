@@ -232,8 +232,10 @@
             var total = 0;
             var html = `<b>${CONFIG.tienda}</b><br>-------------------------<br>`;
             carrito.forEach(p => {
-                html += `${p.nombre.substring(0,18)}... $${p.precio}<br>`;
-                total += p.precio;
+                // Forzamos a que el precio sea número para la suma
+                var precioNum = Number(p.precio); 
+                html += `${p.nombre.substring(0,18)}... $${precioNum.toLocaleString()}<br>`;
+                total += precioNum;
             });
             html += `-------------------------<br><b>TOTAL: $${total.toLocaleString()}</b><br><br><small>Entrega: Pendiente confirmar</small>`;
             document.getElementById("ticketArea").innerHTML = html;
@@ -246,11 +248,14 @@
 
             var total = 0;
             var msg = `*ORDEN DE COMPRA - ${CONFIG.tienda}*\n\n*Cliente:* ${n}\n*Dir:* ${d}\n----------\n`;
+            
             carrito.forEach(p => { 
-                msg += `- ${p.nombre}: $${p.precio}\n`; 
-                total += p.precio; 
+                var precioNum = Number(p.precio);
+                msg += `- ${p.nombre}: $${precioNum}\n`; 
+                total += precioNum; 
             });
-            msg += `----------\n*TOTAL: $${total}*\n\n_Confirmar entrega con el admin._`;
+            
+            msg += `----------\n*TOTAL: $${total.toLocaleString()}*\n\n_Confirmar entrega con el admin._`;
             
             window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
             carrito = []; 
