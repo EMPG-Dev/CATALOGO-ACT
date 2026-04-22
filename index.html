@@ -3,521 +3,973 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- =====================================================
-         VIEWPORT & PANTALLA COMPLETA
-         ===================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- ================================================================
+         VIEWPORT — viewport-fit=cover es OBLIGATORIO para que la app
+         ocupe todo el telefono incluyendo el area del notch en iPhone
+         ================================================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,
+          maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-    <!-- =====================================================
-         PWA: PANTALLA COMPLETA SIN BARRA DE NAVEGADOR
-         Esto hace que al "Agregar a pantalla de inicio"
-         la app se abra como app nativa, sin navegador.
-         ===================================================== -->
+    <title>E_M_P_G | App Business</title>
+
+    <!-- ================================================================
+         PWA — Hace que al "Agregar a pantalla de inicio" la app se abra
+         sin barra del navegador, como app nativa
+         ================================================================ -->
+    <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="E_M_P_G">
-    <meta name="application-name" content="E_M_P_G">
     <meta name="theme-color" content="#0f172a">
 
-    <!-- =====================================================
-         OPEN GRAPH — Controla cómo se ve el link en
-         WhatsApp, Facebook, Instagram, Telegram, etc.
-         IMPORTANTE: Cambia og:image por una URL real de
-         una imagen tuya (1200x630 px recomendado).
-         ===================================================== -->
-    <meta property="og:type"        content="website">
-    <meta property="og:url"         content="https://TU-DOMINIO.com/"> <!-- ← CAMBIA ESTO -->
-    <meta property="og:title"       content="E_M_P_G | Catálogo de Productos">
-    <meta property="og:description" content="Encuentra nuestros productos, precios y agenda tu cita directo desde aquí 🚀">
-    <meta property="og:image"       content="https://TU-DOMINIO.com/preview.jpg"> <!-- ← CAMBIA ESTO: imagen 1200x630px -->
+    <!-- ================================================================
+         OPEN GRAPH — Controla la previsualizacion del link cuando lo
+         mandas por WhatsApp, Facebook, Telegram, iMessage, etc.
+         DEBES cambiar los valores marcados con [EDITAR]
+         ================================================================ -->
+    <meta property="og:type"         content="website">
+    <meta property="og:url"          content="https://TU-DOMINIO.com/">
+    <meta property="og:title"        content="E_M_P_G | Catalogo Oficial">
+    <meta property="og:description"  content="Productos, precios y agenda de citas en un solo lugar.">
+    <meta property="og:image"        content="https://TU-DOMINIO.com/og-preview.jpg">
+    <!-- [EDITAR] og:image debe ser una imagen tuya de 1200x630 px -->
     <meta property="og:image:width"  content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:locale"      content="es_MX">
-    <meta property="og:site_name"   content="E_M_P_G App">
+    <meta property="og:locale"       content="es_MX">
+    <meta property="og:site_name"    content="E_M_P_G App">
 
-    <!-- Twitter Card (también sirve para otras apps) -->
     <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="E_M_P_G | Catálogo de Productos">
-    <meta name="twitter:description" content="Productos, precios y citas en un solo lugar 🚀">
-    <meta name="twitter:image"       content="https://TU-DOMINIO.com/preview.jpg"> <!-- ← CAMBIA ESTO -->
+    <meta name="twitter:title"       content="E_M_P_G | Catalogo Oficial">
+    <meta name="twitter:description" content="Productos, precios y agenda de citas en un solo lugar.">
+    <meta name="twitter:image"       content="https://TU-DOMINIO.com/og-preview.jpg">
 
-    <!-- =====================================================
-         ICONOS PWA (Apple + Android)
-         Pon tus imágenes en la misma carpeta
-         ===================================================== -->
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-    <link rel="icon" type="image/png" sizes="32x32"   href="icons/icon-32.png">
-    <link rel="manifest" href="manifest.json">
+    <!-- ================================================================
+         ICONOS PWA
+         Crea una carpeta /icons/ junto al index.html y pon ahi:
+           icon-32.png   (32x32 px)
+           icon-180.png  (180x180 px) - iOS "Agregar a inicio"
+           icon-192.png  (192x192 px) - Android
+           icon-512.png  (512x512 px) - Android splash
+         ================================================================ -->
+    <link rel="icon"             type="image/png" sizes="32x32"   href="icons/icon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180"                  href="icons/icon-180.png">
 
-    <!-- =====================================================
-         SERVICE WORKER — Para instalación y offline
-         ===================================================== -->
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(() => {});
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').catch(function() {});
             });
         }
     </script>
 
-    <title>E_M_P_G | App Business</title>
-
     <style>
-        /* ============ VARIABLES Y RESET ============ */
+        /* ============================================================
+           VARIABLES DE COLOR
+           Cambia aqui para modificar toda la paleta de la app
+           ============================================================ */
         :root {
-            --dark:   #0f172a;
-            --mid:    #1e293b;
-            --accent: #3b82f6;
-            --ws:     #25d366;
-            --danger: #ff4757;
-            --bg:     #f1f5f9;
-            --card:   #ffffff;
-            --text:   #1e293b;
-            --muted:  #64748b;
-            --safe-top:    env(safe-area-inset-top, 0px);
+            --dark:       #0f172a;
+            --mid:        #1e293b;
+            --accent:     #3b82f6;
+            --accent2:    #2563eb;
+            --ws:         #16a34a;
+            --danger:     #dc2626;
+            --bg:         #f1f5f9;
+            --card:       #ffffff;
+            --text:       #0f172a;
+            --muted:      #64748b;
+            --border:     #e2e8f0;
+            --input-bg:   #f8fafc;
+            --safe-top:    env(safe-area-inset-top,    0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body, html {
-            margin: 0; padding: 0; height: 100%;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg); overflow: hidden;
-            /* Previene el bounce scroll en iOS */
-            overscroll-behavior: none;
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* ============ PANTALLA INICIAL ============ */
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            overscroll-behavior: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================
+           PANTALLA INICIAL
+           ============================================================ */
         .main-screen {
             height: 100vh;
-            height: 100dvh; /* Dynamic viewport: respeta teclado en móvil */
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 100%);
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%);
         }
 
         .card-inicio {
-            background: rgba(255,255,255,0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.12);
-            padding: 45px 28px; border-radius: 30px;
-            text-align: center; width: 100%; max-width: 380px;
-            color: white;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.10);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 44px 28px;
+            border-radius: 28px;
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
         }
 
-        .card-inicio h1 { margin: 0 0 8px; font-size: 2rem; letter-spacing: 3px; }
-        .card-inicio p  { color: rgba(255,255,255,0.6); margin: 0 0 28px; font-size: 0.95rem; }
+        /* ----------------------------------------------------------------
+           LOGO EN PANTALLA INICIAL
 
-        .btn-abrir {
-            background: linear-gradient(135deg, var(--accent), #2563eb);
-            color: white; border: none; padding: 18px;
-            border-radius: 50px; font-weight: 700; width: 100%;
-            cursor: pointer; font-size: 1rem;
-            box-shadow: 0 10px 30px rgba(59,130,246,0.4);
+           OPCION A - Imagen (recomendado):
+             1. Pon tu logo en: icons/logo.png  (sugerido 200x60 px, fondo transparente)
+             2. Quita los comentarios de la etiqueta <img class="logo-img"> en el HTML
+             3. Comenta o borra la etiqueta <h1 class="logo-texto">
+
+           OPCION B - Texto (activo por defecto):
+             El <h1 class="logo-texto"> ya esta funcionando, no hagas nada.
+           ---------------------------------------------------------------- */
+        .logo-texto {
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: #ffffff;
+            margin-bottom: 8px;
         }
 
-        /* ============ OVERLAY PRINCIPAL ============ */
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 12px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-inicio .subtitulo {
+            color: rgba(255,255,255,0.50);
+            font-size: 0.88rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-entrar {
+            display: block;
+            width: 100%;
+            padding: 17px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.4px;
+            box-shadow: 0 8px 28px rgba(59,130,246,0.40);
+            transition: background 0.2s, transform 0.12s;
+        }
+
+        .btn-entrar:active { transform: scale(0.97); background: var(--accent2); }
+
+        /* ============================================================
+           OVERLAY CATALOGO
+           ============================================================ */
         #catalogo-overlay {
-            position: fixed; inset: 0;
+            position: fixed;
+            inset: 0;
             background: var(--bg);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            display: flex;
+            flex-direction: column;
             z-index: 9999;
-            display: flex; flex-direction: column;
-            /* Respeta el notch y el home indicator en iPhone */
-            padding-top: var(--safe-top);
+            transform: translateY(100%);
+            transition: transform 0.40s cubic-bezier(0.32,0.72,0,1);
+            padding-top:    var(--safe-top);
             padding-bottom: var(--safe-bottom);
         }
 
         #catalogo-overlay.active { transform: translateY(0); }
 
-        /* ============ HEADER ============ */
+        /* ============================================================
+           HEADER
+           ============================================================ */
         .header {
-            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
             background: var(--dark);
-            color: white;
-            display: flex; justify-content: space-between; align-items: center;
             flex-shrink: 0;
         }
 
-        .header-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; cursor: pointer; user-select: none; }
-        .header-close { font-size: 22px; cursor: pointer; opacity: 0.7; line-height: 1; }
+        /* ----------------------------------------------------------------
+           LOGO EN EL HEADER
 
-        /* ============ TABS ============ */
+           OPCION A - Imagen blanca sobre fondo oscuro:
+             1. Pon tu logo en: icons/logo-header.png  (alto max 30px, PNG transparente)
+             2. Quita los comentarios de la etiqueta <img class="header-logo-img"> en el HTML
+             3. Comenta o borra el texto "E_M_P_G" dentro del <span id="logoAdmin">
+
+           OPCION B - Texto (activo por defecto):
+             El texto "E_M_P_G" ya esta en el HTML, no hagas nada.
+           ---------------------------------------------------------------- */
+        #logoAdmin {
+            font-size: 1rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo-img {
+            height: 28px;
+            width: auto;
+        }
+
+        .btn-cerrar-overlay {
+            background: rgba(255,255,255,0.08);
+            border: none;
+            color: rgba(255,255,255,0.75);
+            font-size: 1rem;
+            font-weight: 700;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .btn-cerrar-overlay:active { background: rgba(255,255,255,0.18); }
+
+        /* ============================================================
+           TABS
+           ============================================================ */
         .tabs {
-            display: flex; padding: 10px 12px; gap: 8px;
+            display: flex;
+            gap: 8px;
+            padding: 10px 14px;
             background: var(--dark);
             flex-shrink: 0;
         }
 
         .tab {
-            flex: 1; padding: 11px; border: none; border-radius: 12px;
-            font-weight: 700; font-size: 0.85rem;
-            background: rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.5);
-            cursor: pointer; transition: all 0.2s;
+            flex: 1;
+            padding: 11px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.07);
+            color: rgba(255,255,255,0.45);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         }
 
         .tab.active {
             background: var(--accent);
-            color: white;
-            box-shadow: 0 4px 15px rgba(59,130,246,0.35);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(59,130,246,0.35);
         }
 
-        /* ============ CONTENIDO ============ */
+        /* ============================================================
+           AREA SCROLLEABLE
+           ============================================================ */
         .content {
-            flex: 1; overflow-y: auto;
+            flex: 1;
+            overflow-y: auto;
             padding: 18px;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* ============ MARCAS ============ */
-        .brand-container { margin-bottom: 28px; }
+        /* ============================================================
+           SECCION DE MARCA
+           ============================================================ */
+        .brand-container { margin-bottom: 30px; }
 
         .brand-header {
             display: block;
-            font-size: 0.72rem; font-weight: 800;
-            color: var(--accent); text-transform: uppercase;
-            letter-spacing: 2.5px; margin-bottom: 12px;
-            border-left: 3px solid var(--accent); padding-left: 10px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 14px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent);
         }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
+        /* ============================================================
+           TARJETA DE PRODUCTO
+           ============================================================ */
         .card-prod {
-            background: var(--card); border-radius: 18px;
+            background: var(--card);
+            border-radius: 18px;
             padding: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-            border: 1px solid #e8eef4;
-            display: flex; flex-direction: column;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
         }
 
-        .img-placeholder {
-            height: 100px; border-radius: 10px;
-            background: linear-gradient(135deg, #e8eef4, #f1f5f9);
-            margin-bottom: 8px; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem;
+        /* ----------------------------------------------------------------
+           IMAGEN DEL PRODUCTO
+           Al agregar un producto, pega en el campo "URL imagen" la URL
+           directa de tu imagen. Servicios gratuitos para subir imagenes:
+             - imgbb.com       (gratis, facil)
+             - cloudinary.com  (gratis, profesional)
+             - postimages.org  (gratis, sin registro)
+           Copia la "Direct link" o "URL directa" de la imagen.
+           Si no pones URL, se muestra un recuadro gris con "Sin imagen".
+           ---------------------------------------------------------------- */
+        .img-prod {
+            width: 100%;
+            height: 108px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 9px;
+            display: block;
+            background: var(--border);
         }
 
-        .card-prod h4 { margin: 0 0 4px; font-size: 0.8rem; color: var(--text); line-height: 1.3; }
-
-        .price {
-            font-weight: 800; color: var(--dark);
-            font-size: 1rem; display: block; margin-bottom: 8px;
+        .img-placeholder-box {
+            width: 100%;
+            height: 108px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #e8eef4, #dde6f0);
+            margin-bottom: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ============ BOTONES ============ */
+        .img-placeholder-box span {
+            font-size: 0.62rem;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prod-nombre {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 3px;
+        }
+
+        .prod-desc {
+            font-size: 0.71rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.59rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            margin-bottom: 7px;
+        }
+
+        .badge.disponible { background: #dcfce7; color: #16a34a; }
+        .badge.agotado    { background: #fee2e2; color: #dc2626; }
+
+        .prod-precio {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--dark);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* ============================================================
+           BOTONES
+           ============================================================ */
         .btn-ws {
-            background: var(--ws); color: white; border: none;
-            padding: 10px; border-radius: 10px; width: 100%;
-            font-weight: 700; cursor: pointer; font-size: 0.8rem;
-            display: flex; align-items: center; justify-content: center; gap: 5px;
+            width: 100%;
+            padding: 10px;
+            background: var(--ws);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.12s;
         }
 
-        .btn-del {
-            background: transparent; color: var(--danger);
-            border: 1px solid var(--danger);
-            margin-top: 5px; border-radius: 8px; width: 100%;
-            padding: 6px; cursor: pointer; font-size: 0.68rem;
-            font-weight: 600;
+        .btn-ws:active           { transform: scale(0.96); background: #15803d; }
+        .btn-ws.agotado-btn      { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+        .btn-eliminar {
+            width: 100%;
+            margin-top: 5px;
+            padding: 7px;
+            background: transparent;
+            color: var(--danger);
+            border: 1.5px solid var(--danger);
+            border-radius: 9px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.12s;
         }
 
-        button:active { transform: scale(0.96); }
+        .btn-eliminar:active { transform: scale(0.96); background: #fee2e2; }
 
-        /* ============ SERVICIOS ============ */
+        /* ============================================================
+           ESTADO VACIO
+           ============================================================ */
+        .estado-vacio {
+            padding: 52px 24px;
+            text-align: center;
+        }
+
+        .estado-vacio .barra {
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            margin: 0 auto 16px;
+        }
+
+        .estado-vacio p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+           VISTA SERVICIOS
+           ============================================================ */
         .booking-card {
-            background: var(--card); padding: 22px;
+            background: var(--card);
+            padding: 24px;
             border-radius: 22px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
         }
 
-        .booking-card h3 { margin: 0 0 18px; font-size: 1.1rem; color: var(--text); }
-
-        .field-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: block; }
-
-        .field-group { margin-bottom: 14px; }
-
-        input, select {
-            width: 100%; padding: 13px 15px;
-            border-radius: 12px; border: 1.5px solid #e2e8f0;
-            background: #f8fafc; font-size: 0.9rem; color: var(--text);
-            outline: none; -webkit-appearance: none; appearance: none;
-            transition: border-color 0.2s;
+        .booking-card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 20px;
         }
 
-        input:focus, select:focus { border-color: var(--accent); background: white; }
+        .btn-confirmar {
+            width: 100%;
+            padding: 15px;
+            background: var(--ws);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.12s;
+        }
 
-        /* ============ PANEL ADMIN ============ */
+        .btn-confirmar:active { transform: scale(0.97); background: #15803d; }
+
+        /* ============================================================
+           CAMPOS DE FORMULARIO
+           ============================================================ */
+        .campo {
+            margin-bottom: 14px;
+        }
+
+        .campo-label {
+            display: block;
+            font-size: 0.67rem;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            background: var(--input-bg);
+            font-size: 0.88rem;
+            color: var(--text);
+            font-family: inherit;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            transition: border-color 0.18s, background 0.18s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            background: #ffffff;
+        }
+
+        textarea { resize: none; height: 70px; line-height: 1.5; }
+
+        /* ============================================================
+           PANEL ADMINISTRADOR
+           ============================================================ */
         #adminPanel {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: white;
-            padding: 22px 22px calc(22px + var(--safe-bottom));
-            display: none; z-index: 10000;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card);
+            padding: 22px 20px calc(22px + var(--safe-bottom));
+            display: none;
+            z-index: 10001;
             border-radius: 24px 24px 0 0;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.18);
+            box-shadow: 0 -12px 48px rgba(0,0,0,0.16);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
-        #adminPanel h4 { margin: 0 0 16px; font-size: 1rem; }
-
-        #adminPanel input,
-        #adminPanel select { margin-bottom: 10px; }
-
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .btn-close-admin { border: none; background: none; font-weight: 700; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
-
-        /* ============ EMPTY STATE ============ */
-        .empty-state {
-            text-align: center; padding: 40px 20px; color: var(--muted);
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
-        .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .empty-state p { margin: 0; font-size: 0.9rem; }
 
-        /* ============ TOAST ============ */
+        .admin-header h4 {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .btn-cerrar-admin {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--muted);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .admin-sep {
+            font-size: 0.64rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .btn-agregar {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background 0.2s, transform 0.12s;
+        }
+
+        .btn-agregar:active { transform: scale(0.97); background: var(--accent2); }
+
+        /* Radio de disponibilidad */
+        .radio-disp {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-disp label {
+            flex: 1;
+            padding: 11px;
+            border-radius: 11px;
+            border: 1.5px solid var(--border);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            background: var(--input-bg);
+            color: var(--muted);
+            transition: all 0.15s;
+            user-select: none;
+        }
+
+        .radio-disp input[type="radio"] { display: none; }
+
+        .radio-disp label.sel-si { background: #dcfce7; border-color: #16a34a; color: #16a34a; }
+        .radio-disp label.sel-no { background: #fee2e2; border-color: #dc2626; color: #dc2626; }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
         #toast {
-            position: fixed; bottom: calc(20px + var(--safe-bottom));
-            left: 50%; transform: translateX(-50%) translateY(80px);
-            background: var(--dark); color: white;
-            padding: 12px 22px; border-radius: 50px;
-            font-size: 0.85rem; font-weight: 600;
-            z-index: 99999; opacity: 0;
-            transition: all 0.3s ease; white-space: nowrap;
+            position: fixed;
+            bottom: calc(22px + var(--safe-bottom));
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: var(--dark);
+            color: #fff;
+            padding: 11px 22px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            z-index: 99999;
+            opacity: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
-        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        #toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA INICIAL -->
+    <!-- ================================================================
+         PANTALLA INICIAL
+         ================================================================ -->
     <div class="main-screen">
         <div class="card-inicio">
-            <h1>E_M_P_G</h1>
-            <p>Gestión de Productos y Servicios</p>
-            <button class="btn-abrir" onclick="toggleApp(true)">
-                Entrar al Catálogo →
-            </button>
+
+            <!-- LOGO OPCION A (imagen) - quita este comentario para usar imagen:
+            <img class="logo-img" src="icons/logo.png" alt="E_M_P_G">
+            -->
+
+            <!-- LOGO OPCION B (texto) - activo por defecto -->
+            <h1 class="logo-texto">E_M_P_G</h1>
+
+            <p class="subtitulo">Catalogo de Productos y Servicios</p>
+            <button class="btn-entrar" onclick="abrirApp()">Entrar al Catalogo</button>
         </div>
     </div>
 
-    <!-- OVERLAY PRINCIPAL -->
+    <!-- ================================================================
+         OVERLAY DEL CATALOGO
+         ================================================================ -->
     <div id="catalogo-overlay">
+
         <div class="header">
-            <span class="header-logo" id="logoAdmin">E_M_P_G</span>
-            <div class="header-close" onclick="toggleApp(false)">✕</div>
+            <span id="logoAdmin">
+
+                <!-- LOGO HEADER OPCION A (imagen blanca) - quita este comentario:
+                <img class="header-logo-img" src="icons/logo-header.png" alt="E_M_P_G">
+                -->
+
+                <!-- LOGO HEADER OPCION B (texto) - activo por defecto -->
+                E_M_P_G
+
+            </span>
+            <button class="btn-cerrar-overlay" onclick="cerrarApp()">x</button>
         </div>
 
         <div class="tabs">
-            <button class="tab active" id="tabP" onclick="switchView('prod')">🛍 Productos</button>
-            <button class="tab" id="tabS" onclick="switchView('serv')">📅 Servicios</button>
+            <button class="tab active" id="tabP" onclick="cambiarVista('prod')">Productos</button>
+            <button class="tab"        id="tabS" onclick="cambiarVista('serv')">Servicios</button>
         </div>
 
         <div class="content">
-            <!-- PRODUCTOS -->
+
+            <!-- VISTA PRODUCTOS -->
             <div id="prodView">
-                <div id="marcas-dinamicas"></div>
+                <div id="catalogo-container"></div>
             </div>
 
-            <!-- SERVICIOS -->
+            <!-- VISTA SERVICIOS -->
             <div id="servView" style="display:none;">
                 <div class="booking-card">
-                    <h3>📋 Agendar Cita</h3>
+                    <h3>Agendar Cita</h3>
 
-                    <div class="field-group">
-                        <span class="field-label">Tipo de servicio</span>
+                    <div class="campo">
+                        <span class="campo-label">Tipo de servicio</span>
                         <select id="citaTipo">
                             <option>Desarrollo Web</option>
-                            <option>Consultoría</option>
-                            <option>Diseño Gráfico</option>
+                            <option>Consultoria</option>
+                            <option>Diseno Grafico</option>
                             <option>Marketing Digital</option>
                         </select>
                     </div>
 
-                    <div class="field-group">
-                        <span class="field-label">Fecha</span>
+                    <div class="campo">
+                        <span class="campo-label">Fecha</span>
                         <input type="date" id="citaFecha">
                     </div>
 
-                    <div class="field-group">
-                        <span class="field-label">Hora</span>
+                    <div class="campo">
+                        <span class="campo-label">Hora</span>
                         <input type="time" id="citaHora">
                     </div>
 
-                    <button class="btn-ws" onclick="bookNow()">
-                        <span>💬</span> Confirmar por WhatsApp
-                    </button>
+                    <div class="campo">
+                        <span class="campo-label">Notas adicionales (opcional)</span>
+                        <textarea id="citaNotas" placeholder="Describe tu proyecto o dudas..."></textarea>
+                    </div>
+
+                    <button class="btn-confirmar" onclick="confirmarCita()">Confirmar por WhatsApp</button>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- PANEL ADMIN -->
+    <!-- ================================================================
+         PANEL ADMINISTRADOR
+         Activar: mantener presionado el logo del header por 2 segundos
+         ================================================================ -->
     <div id="adminPanel">
         <div class="admin-header">
-            <h4>⚙️ Modo Administrador</h4>
-            <button class="btn-close-admin" onclick="closeAdmin()">×</button>
+            <h4>Panel Administrador</h4>
+            <button class="btn-cerrar-admin" onclick="cerrarAdmin()">x</button>
         </div>
 
-        <input type="text"   id="admNombre"  placeholder="Nombre del producto">
-        <input type="number" id="admPrecio"  placeholder="Precio $" min="0">
-        <input type="text"   id="admEmoji"   placeholder="Emoji del producto (ej: 👟)">
+        <p class="admin-sep">Datos del producto</p>
 
-        <select id="admMarca">
-            <option value="Marca 1">Marca 1</option>
-            <option value="Marca 2">Marca 2</option>
-            <option value="Marca 3">Marca 3</option>
-            <option value="Marca 4">Marca 4</option>
-        </select>
+        <div class="campo">
+            <span class="campo-label">Nombre del producto *</span>
+            <input type="text" id="admNombre" placeholder="Ej: Tenis Air Max 90">
+        </div>
 
-        <button onclick="saveProduct()" class="btn-ws" style="margin-top:4px;">
-            ＋ Agregar al Inventario
-        </button>
+        <div class="campo">
+            <span class="campo-label">Descripcion breve (opcional)</span>
+            <textarea id="admDesc" placeholder="Ej: Color negro, talla 27, importado"></textarea>
+        </div>
+
+        <div class="campo">
+            <span class="campo-label">Precio *</span>
+            <input type="number" id="admPrecio" placeholder="Ej: 1299" min="0" step="0.01">
+        </div>
+
+        <div class="campo">
+            <!-- Instruccion de imagen visible en el panel admin -->
+            <span class="campo-label">URL de imagen del producto (opcional)</span>
+            <input type="url" id="admImagen" placeholder="https://i.ibb.co/tu-imagen.jpg">
+            <p style="font-size:0.68rem;color:var(--muted);margin-top:5px;line-height:1.5;">
+                Sube tu imagen en imgbb.com, cloudinary.com o postimages.org y pega aqui la URL directa.
+            </p>
+        </div>
+
+        <div class="campo">
+            <span class="campo-label">Marca / Categoria *</span>
+            <select id="admMarca">
+                <option value="Marca 1">Marca 1</option>
+                <option value="Marca 2">Marca 2</option>
+                <option value="Marca 3">Marca 3</option>
+                <option value="Marca 4">Marca 4</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <span class="campo-label">Disponibilidad *</span>
+            <div class="radio-disp">
+                <label id="lblSi" class="sel-si" onclick="setDisp('si')">
+                    <input type="radio" name="disp" value="si" checked>Disponible
+                </label>
+                <label id="lblNo" onclick="setDisp('no')">
+                    <input type="radio" name="disp" value="no">Agotado
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-agregar" onclick="guardarProducto()">Agregar al Inventario</button>
     </div>
 
-    <!-- TOAST NOTIFICACIÓN -->
+    <!-- NOTIFICACIONES -->
     <div id="toast"></div>
 
     <script>
-        /* ============================================================
-           CONFIGURACIÓN — Edita solo esta sección
-           ============================================================ */
-        const CONFIG = {
-            phone:      "52712XXXXXXX",  // ← Tu número real (con código de país, sin +)
-            secretCode: "1234"           // ← Código de admin
+        /* ================================================================
+           CONFIGURACION — Solo edita esta seccion
+           ================================================================ */
+        var CONFIG = {
+            phone:      "52712XXXXXXX",  // [EDITAR] Tu numero sin + (ej: 521234567890)
+            secretCode: "1234",          // [EDITAR] Codigo del panel admin
+            marcas:     ["Marca 1", "Marca 2", "Marca 3", "Marca 4"]
         };
-        /* ============================================================ */
+        /* ================================================================ */
 
-        let isAdmin = false;
+        var isAdmin = false;
+        var dispActual = "si";
 
-        /* ---- Toggle App ---- */
-        function toggleApp(show) {
-            document.getElementById('catalogo-overlay').classList.toggle('active', show);
+        /* ---- Abrir / Cerrar app ---- */
+        function abrirApp()  { document.getElementById("catalogo-overlay").classList.add("active"); }
+        function cerrarApp() { document.getElementById("catalogo-overlay").classList.remove("active"); }
+
+        /* ---- Cambiar tabs ---- */
+        function cambiarVista(v) {
+            document.getElementById("prodView").style.display = v === "prod" ? "block" : "none";
+            document.getElementById("servView").style.display = v === "serv" ? "block" : "none";
+            document.getElementById("tabP").classList.toggle("active", v === "prod");
+            document.getElementById("tabS").classList.toggle("active", v === "serv");
         }
 
-        /* ---- Cambiar tab ---- */
-        function switchView(view) {
-            document.getElementById('prodView').style.display = view === 'prod' ? 'block' : 'none';
-            document.getElementById('servView').style.display = view === 'serv' ? 'block' : 'none';
-            document.getElementById('tabP').classList.toggle('active', view === 'prod');
-            document.getElementById('tabS').classList.toggle('active', view === 'serv');
-        }
+        /* ---- Login admin: mantener logo 2 segundos ---- */
+        var pTimer = null;
+        var logoEl = document.getElementById("logoAdmin");
+        logoEl.addEventListener("mousedown",  function() { pTimer = setTimeout(pedirCodigo, 2000); });
+        logoEl.addEventListener("touchstart", function() { pTimer = setTimeout(pedirCodigo, 2000); }, { passive: true });
+        logoEl.addEventListener("mouseup",    function() { clearTimeout(pTimer); });
+        logoEl.addEventListener("touchend",   function() { clearTimeout(pTimer); });
+        logoEl.addEventListener("mouseleave", function() { clearTimeout(pTimer); });
 
-        /* ---- Login Admin (mantener presionado el logo 2s) ---- */
-        let pressTimer;
-        const logo = document.getElementById("logoAdmin");
-
-        function startPress()  { pressTimer = setTimeout(checkAdmin, 2000); }
-        function cancelPress() { clearTimeout(pressTimer); }
-
-        logo.addEventListener("mousedown",  startPress);
-        logo.addEventListener("touchstart", startPress,  { passive: true });
-        logo.addEventListener("mouseup",    cancelPress);
-        logo.addEventListener("touchend",   cancelPress);
-        logo.addEventListener("mouseleave", cancelPress);
-
-        function checkAdmin() {
-            const code = prompt("Código de seguridad:");
+        function pedirCodigo() {
+            var code = prompt("Codigo de acceso:");
+            if (code === null) return;
             if (code === CONFIG.secretCode) {
                 isAdmin = true;
                 document.getElementById("adminPanel").style.display = "block";
-                showToast("✅ Modo admin activado");
+                toast("Modo administrador activado");
                 render();
-            } else if (code !== null) {
-                showToast("❌ Código incorrecto");
+            } else {
+                toast("Codigo incorrecto");
             }
         }
 
-        function closeAdmin() {
+        function cerrarAdmin() {
             isAdmin = false;
             document.getElementById("adminPanel").style.display = "none";
             render();
         }
 
-        /* ---- Toast ---- */
-        function showToast(msg) {
-            const t = document.getElementById("toast");
-            t.textContent = msg;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 2500);
+        /* ---- Disponibilidad ---- */
+        function setDisp(val) {
+            dispActual = val;
+            document.getElementById("lblSi").className = val === "si" ? "sel-si" : "";
+            document.getElementById("lblNo").className = val === "no" ? "sel-no" : "";
         }
 
+        /* ---- LocalStorage ---- */
+        function getProds() {
+            try { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
+            catch(e) { return []; }
+        }
+        function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
+
         /* ---- Guardar producto ---- */
-        function saveProduct() {
-            const nombre = document.getElementById("admNombre").value.trim();
-            const precio = document.getElementById("admPrecio").value.trim();
-            const emoji  = document.getElementById("admEmoji").value.trim() || "📦";
-            const marca  = document.getElementById("admMarca").value;
+        function guardarProducto() {
+            var nombre = document.getElementById("admNombre").value.trim();
+            var precio = document.getElementById("admPrecio").value.trim();
+            var desc   = document.getElementById("admDesc").value.trim();
+            var imagen = document.getElementById("admImagen").value.trim();
+            var marca  = document.getElementById("admMarca").value;
 
-            if (!nombre || !precio) return showToast("⚠️ Completa los campos");
+            if (!nombre)                          return toast("Falta el nombre");
+            if (!precio || isNaN(precio) || parseFloat(precio) < 0) return toast("Precio invalido");
 
-            let prods = getProds();
-            prods.push({ id: Date.now(), nombre, precio, emoji, marca });
-            saveProds(prods);
+            var arr = getProds();
+            arr.push({ id: Date.now(), nombre: nombre, desc: desc, precio: parseFloat(precio), imagen: imagen, marca: marca, disp: dispActual });
+            setProds(arr);
 
             document.getElementById("admNombre").value = "";
+            document.getElementById("admDesc").value   = "";
             document.getElementById("admPrecio").value = "";
-            document.getElementById("admEmoji").value  = "";
+            document.getElementById("admImagen").value = "";
+            setDisp("si");
 
-            showToast("✅ Producto agregado");
+            toast("Producto agregado");
             render();
         }
 
         /* ---- Eliminar producto ---- */
-        function deleteItem(id) {
-            if (!confirm("¿Eliminar este producto?")) return;
-            saveProds(getProds().filter(p => p.id !== id));
-            showToast("🗑 Eliminado");
+        function eliminarProducto(id) {
+            if (!confirm("Eliminar este producto?")) return;
+            setProds(getProds().filter(function(p) { return p.id !== id; }));
+            toast("Producto eliminado");
             render();
         }
 
-        /* ---- LocalStorage helpers ---- */
-        function getProds() {
-            try { return JSON.parse(localStorage.getItem("empg_data")) || []; }
-            catch { return []; }
-        }
-        function saveProds(arr) {
-            localStorage.setItem("empg_data", JSON.stringify(arr));
-        }
-
-        /* ---- Render catálogo ---- */
+        /* ---- Render del catalogo ---- */
         function render() {
-            const container = document.getElementById("marcas-dinamicas");
+            var container = document.getElementById("catalogo-container");
             container.innerHTML = "";
-            const prods  = getProds();
-            const marcas = ["Marca 1", "Marca 2", "Marca 3", "Marca 4"];
+            var prods = getProds();
+            var hayAlgo = false;
 
-            let hayAlgo = false;
-
-            marcas.forEach(m => {
-                const filtered = prods.filter(p => p.marca === m);
-                if (filtered.length === 0 && !isAdmin) return;
-
+            CONFIG.marcas.forEach(function(marca) {
+                var filtrados = prods.filter(function(p) { return p.marca === marca; });
+                if (filtrados.length === 0 && !isAdmin) return;
                 hayAlgo = true;
-                const section = document.createElement("div");
-                section.className = "brand-container";
-                section.innerHTML = `<span class="brand-header">${m}</span>`;
 
-                const grid = document.createElement("div");
+                var section = document.createElement("div");
+                section.className = "brand-container";
+
+                var tit = document.createElement("span");
+                tit.className = "brand-header";
+                tit.textContent = marca;
+                section.appendChild(tit);
+
+                var grid = document.createElement("div");
                 grid.className = "grid";
 
-                if (filtered.length === 0 && isAdmin) {
-                    grid.innerHTML = `<p style="color:var(--muted);font-size:0.8rem;grid-column:1/-1;">Sin productos en esta marca</p>`;
+                if (filtrados.length === 0) {
+                    var vacio = document.createElement("p");
+                    vacio.style.cssText = "color:var(--muted);font-size:0.78rem;grid-column:1/-1;padding:6px 0;";
+                    vacio.textContent = "Sin productos en esta marca aun";
+                    grid.appendChild(vacio);
                 } else {
-                    filtered.forEach(p => {
-                        const card = document.createElement("div");
+                    filtrados.forEach(function(p) {
+                        var card = document.createElement("div");
                         card.className = "card-prod";
-                        card.innerHTML = `
-                            <div class="img-placeholder">${p.emoji || '📦'}</div>
-                            <h4>${p.nombre}</h4>
-                            <b class="price">$${Number(p.precio).toLocaleString('es-MX')}</b>
-                            <button class="btn-ws" onclick="pedirProd('${escHtml(p.nombre)}')">
-                                💬 Comprar
-                            </button>
-                            ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Eliminar</button>` : ''}
-                        `;
+
+                        var imgHtml = p.imagen
+                            ? '<img class="img-prod" src="' + esc(p.imagen) + '" alt="' + esc(p.nombre) + '" onerror="this.style.display=\'none\'">'
+                            : '<div class="img-placeholder-box"><span>Sin imagen</span></div>';
+
+                        var precioFmt = "$" + Number(p.precio).toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                        var badgeHtml = p.disp === "si"
+                            ? '<span class="badge disponible">Disponible</span>'
+                            : '<span class="badge agotado">Agotado</span>';
+
+                        var btnHtml;
+                        if (p.disp === "si") {
+                            var msg = encodeURIComponent("Hola, me interesa el producto: " + p.nombre);
+                            btnHtml = '<button class="btn-ws" onclick="window.open(\'https://wa.me/' + CONFIG.phone + '?text=' + msg + '\')">Comprar por WhatsApp</button>';
+                        } else {
+                            btnHtml = '<button class="btn-ws agotado-btn" disabled>Agotado</button>';
+                        }
+
+                        var elimHtml = isAdmin
+                            ? '<button class="btn-eliminar" onclick="eliminarProducto(' + p.id + ')">Eliminar</button>'
+                            : "";
+
+                        card.innerHTML = imgHtml
+                            + '<p class="prod-nombre">' + esc(p.nombre) + '</p>'
+                            + (p.desc ? '<p class="prod-desc">' + esc(p.desc) + '</p>' : '')
+                            + badgeHtml
+                            + '<b class="prod-precio">' + precioFmt + '</b>'
+                            + btnHtml
+                            + elimHtml;
+
                         grid.appendChild(card);
                     });
                 }
@@ -527,39 +979,42 @@
             });
 
             if (!hayAlgo) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">📦</div>
-                        <p>Aún no hay productos.<br>¡Próximamente!</p>
-                    </div>`;
+                container.innerHTML =
+                    '<div class="estado-vacio">'
+                    + '<div class="barra"></div>'
+                    + '<p>Proximamente encontraras<br>nuestros productos aqui.</p>'
+                    + '</div>';
             }
         }
 
-        function escHtml(str) {
-            return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        /* ---- Cita por WhatsApp ---- */
+        function confirmarCita() {
+            var tipo  = document.getElementById("citaTipo").value;
+            var fecha = document.getElementById("citaFecha").value;
+            var hora  = document.getElementById("citaHora").value;
+            var notas = document.getElementById("citaNotas").value.trim();
+
+            if (!fecha) return toast("Selecciona una fecha");
+            if (!hora)  return toast("Selecciona una hora");
+
+            var msg = "Hola, quiero agendar una cita.\nServicio: " + tipo + "\nFecha: " + fecha + "\nHora: " + hora;
+            if (notas) msg += "\nNotas: " + notas;
+            window.open("https://wa.me/" + CONFIG.phone + "?text=" + encodeURIComponent(msg));
         }
 
-        /* ---- WhatsApp ---- */
-        function pedirProd(nombre) {
-            const msg = encodeURIComponent(`Hola, me interesa el producto: *${nombre}* 🛍`);
-            window.open(`https://wa.me/${CONFIG.phone}?text=${msg}`);
+        /* ---- Utilidades ---- */
+        function esc(s) {
+            return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
         }
 
-        function bookNow() {
-            const tipo  = document.getElementById("citaTipo").value;
-            const fecha = document.getElementById("citaFecha").value;
-            const hora  = document.getElementById("citaHora").value;
-
-            if (!fecha || !hora) return showToast("⚠️ Falta fecha u hora");
-
-            const msg = encodeURIComponent(
-                `Hola, quiero agendar una cita:\n*Servicio:* ${tipo}\n*Fecha:* ${fecha}\n*Hora:* ${hora} 📅`
-            );
-            window.open(`https://wa.me/${CONFIG.phone}?text=${msg}`);
+        function toast(msg) {
+            var el = document.getElementById("toast");
+            el.textContent = msg;
+            el.classList.add("visible");
+            setTimeout(function() { el.classList.remove("visible"); }, 2600);
         }
 
-        /* ---- Arranque ---- */
-        window.addEventListener('load', render);
+        window.addEventListener("load", render);
     </script>
 </body>
 </html>

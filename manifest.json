@@ -1,7 +1,7 @@
 {
   "name": "E_M_P_G | App Business",
   "short_name": "E_M_P_G",
-  "description": "Catálogo de productos y agenda de citas",
+  "description": "Catalogo de productos y agenda de citas",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
