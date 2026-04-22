@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>E_M_P_G | Smart App</title>
+    <title>E_M_P_G | App Business</title>
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <style>
         :root {
@@ -29,7 +28,7 @@
             background: var(--bg); overflow: hidden;
         }
 
-        /* PANTALLA DE INICIO */
+        /* PANTALLA INICIAL */
         .main-screen {
             height: 100vh; display: flex; align-items: center;
             justify-content: center; padding: 20px;
@@ -47,7 +46,7 @@
             font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem;
         }
 
-        /* OVERLAY DINÁMICO */
+        /* OVERLAY PRINCIPAL */
         #catalogo-overlay {
             position: fixed; inset: 0; background: #f8fafc;
             transform: translateY(100%); z-index: 9999;
@@ -56,7 +55,7 @@
 
         #catalogo-overlay.active { transform: translateY(0); }
 
-        /* HEADER & TABS */
+        /* HEADER Y TABS */
         .header {
             padding: 18px; background: white; display: flex;
             justify-content: space-between; align-items: center;
@@ -73,11 +72,13 @@
         /* CONTENIDO */
         .content { flex: 1; overflow-y: auto; padding: 20px; }
 
-        /* CATEGORÍAS Y GRID */
-        .brand-title {
-            font-size: 0.75rem; font-weight: 800; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 1.5px;
-            margin: 25px 0 10px 5px; display: block;
+        /* SECCIONES DE MARCAS */
+        .brand-container { margin-bottom: 30px; }
+        .brand-header {
+            font-size: 0.8rem; font-weight: 800; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 12px; display: block;
+            border-left: 3px solid var(--accent); padding-left: 10px;
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
@@ -90,19 +91,19 @@
         .img-placeholder { height: 110px; border-radius: 12px; background: #f1f5f9; margin-bottom: 8px; }
         .price { font-weight: 800; color: var(--dark); display: block; margin-bottom: 8px; }
 
-        /* BOTONES */
+        /* BOTONES ACCIÓN */
         .btn-ws {
             background: var(--ws); color: white; border: none;
             padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;
         }
 
-        .btn-del { background: #ff4757; color: white; border: none; margin-top: 5px; border-radius: 5px; width: 100%; padding: 5px; cursor: pointer; font-size: 0.7rem; }
+        .btn-del { background: #ff4757; color: white; border: none; margin-top: 5px; border-radius: 8px; width: 100%; padding: 6px; cursor: pointer; font-size: 0.7rem; }
 
-        /* AGENDA */
+        /* FORMULARIO CITAS */
         .booking-card { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        input, select { width: 100%; padding: 12px; margin: 8px 0 15px; border-radius: 12px; border: 1px solid #ddd; }
+        input, select { width: 100%; padding: 14px; margin: 8px 0 15px; border-radius: 12px; border: 1px solid #ddd; }
 
-        /* ADMIN PANEL */
+        /* PANEL ADMIN */
         #adminPanel {
             position: fixed; bottom: 0; left: 0; width: 100%; background: white;
             padding: 25px; display: none; z-index: 10000;
@@ -116,15 +117,15 @@
 
     <div class="main-screen">
         <div class="card-inicio">
-            <h1 style="margin-bottom: 5px;">E_M_P_G</h1>
-            <p style="color: #64748b;">Smart Digital Catalog</p>
-            <button class="btn-abrir" onclick="toggleApp(true)">Explorar</button>
+            <h1 style="margin-bottom: 10px;">E_M_P_G App</h1>
+            <p style="color: #64748b;">Gestión de Productos y Servicios</p>
+            <button class="btn-abrir" onclick="toggleApp(true)">Entrar al Catálogo</button>
         </div>
     </div>
 
     <div id="catalogo-overlay">
         <div class="header">
-            <span id="logoAdmin"><b>E_M_P_G</b></span>
+            <span id="logoAdmin" style="cursor:pointer;"><b>E_M_P_G</b></span>
             <div onclick="toggleApp(false)" style="font-size: 24px; cursor: pointer;">✕</div>
         </div>
 
@@ -133,22 +134,21 @@
             <button class="tab" id="tabS" onclick="switchView('serv')">Servicios</button>
         </div>
 
-        <div class="content" id="mainContent">
-            <div id="prodView"></div>
+        <div class="content">
+            <div id="prodView">
+                <div id="marcas-dinamicas"></div>
+            </div>
 
             <div id="servView" style="display:none;">
                 <div class="booking-card">
                     <h3 style="margin-top:0">Agendar Cita</h3>
-                    <label>Servicio:</label>
                     <select id="citaTipo">
-                        <option>Desarrollo Full-Stack</option>
-                        <option>Consultoría de Datos</option>
-                        <option>Mantenimiento Técnico</option>
+                        <option>Desarrollo Web</option>
+                        <option>Consultoría</option>
                     </select>
-                    <label>Fecha y Hora:</label>
                     <input type="date" id="citaFecha">
                     <input type="time" id="citaHora">
-                    <button class="btn-ws" onclick="bookNow()">Confirmar Cita 📅</button>
+                    <button class="btn-ws" onclick="bookNow()">Confirmar por WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
 
     <div id="adminPanel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <b>Panel de Gestión</b>
+            <b>Modo Administrador</b>
             <button onclick="closeAdmin()" style="border:none; background:none; font-weight:bold;">Cerrar</button>
         </div>
         <input type="text" id="admNombre" placeholder="Nombre del producto">
@@ -167,12 +167,12 @@
             <option value="Marca 3">Marca 3</option>
             <option value="Marca 4">Marca 4</option>
         </select>
-        <button onclick="saveProduct()" class="btn-ws">Guardar Producto</button>
+        <button onclick="saveProduct()" class="btn-ws">Agregar al Inventario</button>
     </div>
 
     <script>
-        const phone = "52712XXXXXXX"; // Tu número aquí
-        const secret = "1234";
+        const phone = "52712XXXXXXX"; // Tu número de WhatsApp real
+        const secretCode = "1234";
         let isAdmin = false;
 
         function toggleApp(show) {
@@ -186,16 +186,16 @@
             document.getElementById('tabS').classList.toggle('active', view === 'serv');
         }
 
-        /* LOGO ADMIN TRIGGER */
+        /* LOGIN ADMIN OCULTO */
         let timer;
         const logo = document.getElementById("logoAdmin");
-        logo.addEventListener("mousedown", () => timer = setTimeout(openAdmin, 2000));
-        logo.addEventListener("touchstart", () => timer = setTimeout(openAdmin, 2000));
+        logo.addEventListener("mousedown", () => timer = setTimeout(checkAdmin, 2000));
+        logo.addEventListener("touchstart", () => timer = setTimeout(checkAdmin, 2000));
         logo.addEventListener("mouseup", () => clearTimeout(timer));
         logo.addEventListener("touchend", () => clearTimeout(timer));
 
-        function openAdmin() {
-            if(prompt("Código Admin:") === secret) {
+        function checkAdmin() {
+            if(prompt("Código de Seguridad:") === secretCode) {
                 isAdmin = true;
                 document.getElementById("adminPanel").style.display = "block";
                 render();
@@ -208,17 +208,17 @@
             render();
         }
 
-        /* GESTIÓN DE DATOS */
+        /* LÓGICA DE PRODUCTOS */
         function saveProduct() {
             const nombre = document.getElementById("admNombre").value;
             const precio = document.getElementById("admPrecio").value;
             const marca = document.getElementById("admMarca").value;
 
-            if(!nombre || !precio) return alert("Faltan datos");
+            if(!nombre || !precio) return alert("Completa los campos");
 
-            let prods = JSON.parse(localStorage.getItem("db_empg")) || [];
+            let prods = JSON.parse(localStorage.getItem("empg_data")) || [];
             prods.push({ id: Date.now(), nombre, precio, marca });
-            localStorage.setItem("db_empg", JSON.stringify(prods));
+            localStorage.setItem("empg_data", JSON.stringify(prods));
             
             document.getElementById("admNombre").value = "";
             document.getElementById("admPrecio").value = "";
@@ -226,23 +226,25 @@
         }
 
         function deleteItem(id) {
-            let prods = JSON.parse(localStorage.getItem("db_empg")).filter(p => p.id !== id);
-            localStorage.setItem("db_empg", JSON.stringify(prods));
+            let prods = JSON.parse(localStorage.getItem("empg_data")).filter(p => p.id !== id);
+            localStorage.setItem("empg_data", JSON.stringify(prods));
             render();
         }
 
         function render() {
-            const container = document.getElementById("prodView");
+            const container = document.getElementById("marcas-dinamicas");
             container.innerHTML = "";
-            let prods = JSON.parse(localStorage.getItem("db_empg")) || [];
+            let prods = JSON.parse(localStorage.getItem("empg_data")) || [];
 
-            // Agrupar por marcas automáticamente
             const marcas = ["Marca 1", "Marca 2", "Marca 3", "Marca 4"];
             
             marcas.forEach(m => {
                 const filtered = prods.filter(p => p.marca === m);
                 if(filtered.length > 0 || isAdmin) {
-                    container.innerHTML += `<span class="brand-title">${m}</span>`;
+                    let section = document.createElement("div");
+                    section.className = "brand-container";
+                    section.innerHTML = `<span class="brand-header">${m}</span>`;
+                    
                     let grid = document.createElement("div");
                     grid.className = "grid";
                     
@@ -250,14 +252,15 @@
                         grid.innerHTML += `
                             <div class="card-prod">
                                 <div class="img-placeholder"></div>
-                                <h4 style="margin:0; font-size:0.9rem;">${p.nombre}</h4>
-                                <span class="price">$${p.precio}</span>
-                                <button class="btn-ws" onclick="window.open('https://wa.me/${phone}?text=Me interesa ${p.nombre}')">Pedir</button>
-                                ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Borrar</button>` : ''}
+                                <h4 style="margin:5px 0;">${p.nombre}</h4>
+                                <b class="price">$${p.precio}</b>
+                                <button class="btn-ws" onclick="window.open('https://wa.me/${phone}?text=Hola Emmanuel, me interesa el ${p.nombre}')">Comprar</button>
+                                ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Eliminar</button>` : ''}
                             </div>
                         `;
                     });
-                    container.appendChild(grid);
+                    section.appendChild(grid);
+                    container.appendChild(section);
                 }
             });
         }
@@ -266,8 +269,8 @@
             const t = document.getElementById("citaTipo").value;
             const f = document.getElementById("citaFecha").value;
             const h = document.getElementById("citaHora").value;
-            if(!f || !h) return alert("Completa fecha y hora");
-            window.open(`https://wa.me/${phone}?text=Cita: ${t} el ${f} a las ${h}`);
+            if(!f || !h) return alert("Falta fecha u hora");
+            window.open(`https://wa.me/${phone}?text=Cita para ${t} el día ${f} a las ${h}`);
         }
 
         window.onload = render;
