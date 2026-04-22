@@ -2,364 +2,275 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>E_M_P_G | Enterprise Catalog</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>E_M_P_G | Smart App</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
     <style>
         :root {
             --dark: #0f172a;
             --accent: #3b82f6;
             --ws: #25d366;
-            --bg: #f8fafc;
-            --vh: 1vh; /* Variable dinámica para la altura */
+            --bg: #f1f5f9;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            transition: all .25s ease;
+        }
 
         body, html {
-            margin: 0; padding: 0;
-            width: 100vw;
-            height: calc(var(--vh) * 100);
-            overflow: hidden;
-            background: var(--dark);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg); overflow: hidden;
         }
 
-        /* --- PANTALLA DE CARGA / INICIO --- */
-        .app-shell {
-            position: relative;
-            height: 100%;
-            width: 100%;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
+        /* PANTALLA DE INICIO */
+        .main-screen {
+            height: 100vh; display: flex; align-items: center;
+            justify-content: center; padding: 20px;
         }
 
-        .welcome-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 85%;
-            max-width: 400px;
-            animation: fadeIn 0.8s ease;
+        .card-inicio {
+            background: white; padding: 40px 25px; border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08); text-align: center;
+            width: 100%; max-width: 380px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #e2e8f0;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: var(--dark);
-            margin-bottom: 15px;
+        .btn-abrir {
+            background: linear-gradient(135deg, var(--dark), #1e293b);
+            color: white; border: none; padding: 18px; border-radius: 50px;
+            font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem;
         }
 
-        .btn-explorer {
-            background: var(--dark);
-            color: white;
-            border: none;
-            padding: 20px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            transition: 0.3s;
+        /* OVERLAY DINÁMICO */
+        #catalogo-overlay {
+            position: fixed; inset: 0; background: #f8fafc;
+            transform: translateY(100%); z-index: 9999;
+            display: flex; flex-direction: column;
         }
 
-        /* --- CONTENEDOR DEL CATÁLOGO (FLOTANTE) --- */
-        #catalogo-panel {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 100;
-            transform: translateY(100%);
-            transition: transform 0.6s cubic-bezier(0.32, 0.72, 0, 1);
-            display: flex;
-            flex-direction: column;
-        }
+        #catalogo-overlay.active { transform: translateY(0); }
 
-        #catalogo-panel.active { transform: translateY(0); }
-
-        /* Header con detección de área segura (iPhone Notch) */
+        /* HEADER & TABS */
         .header {
-            padding: env(safe-area-inset-top, 20px) 20px 15px;
-            background: white;
-            border-bottom: 1px solid #f1f5f9;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 18px; background: white; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
         }
 
-        .close-btn {
-            background: #f1f5f9;
-            border: none;
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        /* Navegación tipo App */
-        .nav-tabs {
-            display: flex;
-            padding: 10px 20px;
-            gap: 10px;
-            background: white;
-        }
-
+        .tabs { display: flex; padding: 10px; gap: 10px; background: white; }
         .tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 15px;
-            font-weight: bold;
-            background: #f1f5f9;
-            color: #64748b;
-            transition: 0.3s;
+            flex: 1; padding: 12px; border: none; border-radius: 14px;
+            font-weight: bold; background: #e2e8f0; color: #64748b; cursor: pointer;
         }
-
         .tab.active { background: var(--dark); color: white; }
 
-        /* Área de contenido */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: #ffffff;
+        /* CONTENIDO */
+        .content { flex: 1; overflow-y: auto; padding: 20px; }
+
+        /* CATEGORÍAS Y GRID */
+        .brand-title {
+            font-size: 0.75rem; font-weight: 800; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1.5px;
+            margin: 25px 0 10px 5px; display: block;
         }
 
-        /* --- DISEÑO DE MARCAS Y PRODUCTOS --- */
-        .brand-header {
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin: 25px 0 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .brand-header::after { content: ""; flex: 1; height: 1px; background: #f1f5f9; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        .card-prod {
+            background: white; border-radius: 20px; padding: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;
         }
 
-        .product-card {
-            background: #f8fafc;
-            border-radius: 25px;
-            padding: 12px;
-            border: 1px solid #f1f5f9;
-            text-align: center;
+        .img-placeholder { height: 110px; border-radius: 12px; background: #f1f5f9; margin-bottom: 8px; }
+        .price { font-weight: 800; color: var(--dark); display: block; margin-bottom: 8px; }
+
+        /* BOTONES */
+        .btn-ws {
+            background: var(--ws); color: white; border: none;
+            padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;
         }
 
-        .img-holder {
-            width: 100%;
-            height: 120px;
-            background: white;
-            border-radius: 18px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #cbd5e1;
-            font-size: 0.8rem;
+        .btn-del { background: #ff4757; color: white; border: none; margin-top: 5px; border-radius: 5px; width: 100%; padding: 5px; cursor: pointer; font-size: 0.7rem; }
+
+        /* AGENDA */
+        .booking-card { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 15px; border-radius: 12px; border: 1px solid #ddd; }
+
+        /* ADMIN PANEL */
+        #adminPanel {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
+            padding: 25px; display: none; z-index: 10000;
+            border-radius: 25px 25px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
         }
 
-        .product-card h4 { margin: 8px 0 4px; font-size: 0.9rem; }
-        .product-card span { font-weight: 800; color: var(--dark); display: block; margin-bottom: 12px; }
-
-        .btn-buy {
-            background: var(--ws);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        /* --- AGENDA Y SERVICIOS --- */
-        .booking-section {
-            background: #f8fafc;
-            padding: 30px 20px;
-            border-radius: 30px;
-            margin-top: 20px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .form-group { margin-bottom: 15px; }
-        label { font-size: 0.8rem; font-weight: bold; color: #64748b; margin-left: 5px; }
-        
-        input, select {
-            width: 100%;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #cbd5e1;
-            background: white;
-            font-size: 1rem;
-            margin-top: 5px;
-        }
-
-        .btn-confirm {
-            background: var(--dark);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 20px;
-            border-radius: 15px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
+        button:active { transform: scale(.96); }
     </style>
 </head>
 <body>
 
-    <div class="app-shell">
-        <div class="welcome-card">
-            <div class="status-badge" id="os-badge">SISTEMA LISTO</div>
-            <h2 style="margin: 0 0 10px;">E_M_P_G Store</h2>
-            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 30px;">
-                Catálogo inteligente optimizado para tu dispositivo.
-            </p>
-            <button class="btn-explorer" onclick="openPanel()">ABRIR CATÁLOGO</button>
+    <div class="main-screen">
+        <div class="card-inicio">
+            <h1 style="margin-bottom: 5px;">E_M_P_G</h1>
+            <p style="color: #64748b;">Smart Digital Catalog</p>
+            <button class="btn-abrir" onclick="toggleApp(true)">Explorar</button>
         </div>
     </div>
 
-    <div id="catalogo-panel">
+    <div id="catalogo-overlay">
         <div class="header">
-            <div style="display: flex; flex-direction: column;">
-                <b style="font-size: 1.1rem;">Panel Digital</b>
-                <small style="color: var(--accent); font-weight: bold;">EMMANUEL PLATA</small>
-            </div>
-            <button class="close-btn" onclick="closePanel()">✕</button>
+            <span id="logoAdmin"><b>E_M_P_G</b></span>
+            <div onclick="toggleApp(false)" style="font-size: 24px; cursor: pointer;">✕</div>
         </div>
 
-        <div class="nav-tabs">
-            <button class="tab active" id="t1" onclick="switchTab('p')">Productos</button>
-            <button class="tab" id="t2" onclick="switchTab('s')">Servicios</button>
+        <div class="tabs">
+            <button class="tab active" id="tabP" onclick="switchView('prod')">Productos</button>
+            <button class="tab" id="tabS" onclick="switchView('serv')">Servicios</button>
         </div>
 
-        <div class="main-content">
-            
-            <div id="view-productos">
-                <div class="brand-header">MARCA ALFA</div>
-                <div class="product-grid">
-                    <div class="product-card"><div class="img-holder">Img 1</div><h4>Modelo A-1</h4><span>$1,200</span><button class="btn-buy" onclick="ws('Modelo A-1')">WhatsApp</button></div>
-                    <div class="product-card"><div class="img-holder">Img 2</div><h4>Modelo A-2</h4><span>$1,500</span><button class="btn-buy" onclick="ws('Modelo A-2')">WhatsApp</button></div>
-                </div>
+        <div class="content" id="mainContent">
+            <div id="prodView"></div>
 
-                <div class="brand-header">MARCA BETA</div>
-                <div class="product-grid">
-                    <div class="product-card"><div class="img-holder">Img 3</div><h4>Modelo B-1</h4><span>$800</span><button class="btn-buy" onclick="ws('Modelo B-1')">WhatsApp</button></div>
-                    <div class="product-card"><div class="img-holder">Img 4</div><h4>Modelo B-2</h4><span>$950</span><button class="btn-buy" onclick="ws('Modelo B-2')">WhatsApp</button></div>
-                </div>
-
-                <div class="brand-header">MARCA GAMMA</div>
-                <div class="product-grid">
-                    <div class="product-card"><div class="img-holder">Img 5</div><h4>Modelo G-1</h4><span>$2,100</span><button class="btn-buy" onclick="ws('Modelo G-1')">WhatsApp</button></div>
-                    <div class="product-card"><div class="img-holder">Img 6</div><h4>Modelo G-2</h4><span>$3,000</span><button class="btn-buy" onclick="ws('Modelo G-2')">WhatsApp</button></div>
-                </div>
-
-                <div class="brand-header">MARCA DELTA</div>
-                <div class="product-grid">
-                    <div class="product-card"><div class="img-holder">Img 7</div><h4>Modelo D-1</h4><span>$450</span><button class="btn-buy" onclick="ws('Modelo D-1')">WhatsApp</button></div>
-                    <div class="product-card"><div class="img-holder">Img 8</div><h4>Modelo D-2</h4><span>$600</span><button class="btn-buy" onclick="ws('Modelo D-2')">WhatsApp</button></div>
+            <div id="servView" style="display:none;">
+                <div class="booking-card">
+                    <h3 style="margin-top:0">Agendar Cita</h3>
+                    <label>Servicio:</label>
+                    <select id="citaTipo">
+                        <option>Desarrollo Full-Stack</option>
+                        <option>Consultoría de Datos</option>
+                        <option>Mantenimiento Técnico</option>
+                    </select>
+                    <label>Fecha y Hora:</label>
+                    <input type="date" id="citaFecha">
+                    <input type="time" id="citaHora">
+                    <button class="btn-ws" onclick="bookNow()">Confirmar Cita 📅</button>
                 </div>
             </div>
-
-            <div id="view-servicios" style="display: none;">
-                <div class="booking-section">
-                    <h3 style="margin-top: 0;">Agendar Cita</h3>
-                    <div class="form-group">
-                        <label>Servicio Requerido</label>
-                        <select id="res-tipo">
-                            <option>Consultoría de Ingeniería</option>
-                            <option>Desarrollo Full-Stack</option>
-                            <option>Análisis de Datos</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha de la Cita</label>
-                        <input type="date" id="res-fecha">
-                    </div>
-                    <div class="form-group">
-                        <label>Hora Sugerida</label>
-                        <input type="time" id="res-hora">
-                    </div>
-                    <button class="btn-confirm" onclick="sendBooking()">Confirmar Agenda</button>
-                </div>
-            </div>
-
         </div>
+    </div>
+
+    <div id="adminPanel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <b>Panel de Gestión</b>
+            <button onclick="closeAdmin()" style="border:none; background:none; font-weight:bold;">Cerrar</button>
+        </div>
+        <input type="text" id="admNombre" placeholder="Nombre del producto">
+        <input type="number" id="admPrecio" placeholder="Precio $">
+        <select id="admMarca">
+            <option value="Marca 1">Marca 1</option>
+            <option value="Marca 2">Marca 2</option>
+            <option value="Marca 3">Marca 3</option>
+            <option value="Marca 4">Marca 4</option>
+        </select>
+        <button onclick="saveProduct()" class="btn-ws">Guardar Producto</button>
     </div>
 
     <script>
-        // 1. AJUSTE DINÁMICO DE ALTURA (SOLUCIÓN INGENIERÍA)
-        function refreshHeight() {
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        const phone = "52712XXXXXXX"; // Tu número aquí
+        const secret = "1234";
+        let isAdmin = false;
+
+        function toggleApp(show) {
+            document.getElementById('catalogo-overlay').classList.toggle('active', show);
         }
-        window.addEventListener('resize', refreshHeight);
-        refreshHeight();
 
-        // 2. DETECCIÓN DE SISTEMA
-        const badge = document.getElementById('os-badge');
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (/android/i.test(userAgent)) badge.innerText = "OPTIMIZADO PARA ANDROID";
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) badge.innerText = "OPTIMIZADO PARA IOS";
+        function switchView(view) {
+            document.getElementById('prodView').style.display = view === 'prod' ? 'block' : 'none';
+            document.getElementById('servView').style.display = view === 'serv' ? 'block' : 'none';
+            document.getElementById('tabP').classList.toggle('active', view === 'prod');
+            document.getElementById('tabS').classList.toggle('active', view === 'serv');
+        }
 
-        // 3. LÓGICA DE NAVEGACIÓN
-        function openPanel() { document.getElementById('catalogo-panel').classList.add('active'); }
-        function closePanel() { document.getElementById('catalogo-panel').classList.remove('active'); }
+        /* LOGO ADMIN TRIGGER */
+        let timer;
+        const logo = document.getElementById("logoAdmin");
+        logo.addEventListener("mousedown", () => timer = setTimeout(openAdmin, 2000));
+        logo.addEventListener("touchstart", () => timer = setTimeout(openAdmin, 2000));
+        logo.addEventListener("mouseup", () => clearTimeout(timer));
+        logo.addEventListener("touchend", () => clearTimeout(timer));
 
-        function switchTab(type) {
-            const vp = document.getElementById('view-productos');
-            const vs = document.getElementById('view-servicios');
-            const t1 = document.getElementById('t1');
-            const t2 = document.getElementById('t2');
-
-            if(type === 'p') {
-                vp.style.display = 'block'; vs.style.display = 'none';
-                t1.classList.add('active'); t2.classList.remove('active');
-            } else {
-                vp.style.display = 'none'; vs.style.display = 'block';
-                t2.classList.add('active'); t1.classList.remove('active');
+        function openAdmin() {
+            if(prompt("Código Admin:") === secret) {
+                isAdmin = true;
+                document.getElementById("adminPanel").style.display = "block";
+                render();
             }
         }
 
-        // 4. COMUNICACIÓN WHATSAPP
-        const MI_TEL = "52712XXXXXXX";
-
-        function ws(item) {
-            window.open(`https://wa.me/${MI_TEL}?text=Hola Emmanuel, me interesa el ${item} del catálogo.`, '_blank');
+        function closeAdmin() {
+            isAdmin = false;
+            document.getElementById("adminPanel").style.display = "none";
+            render();
         }
 
-        function sendBooking() {
-            const s = document.getElementById('res-tipo').value;
-            const f = document.getElementById('res-fecha').value;
-            const h = document.getElementById('res-hora').value;
-            if(!f || !h) return alert("Por favor completa la fecha y hora.");
+        /* GESTIÓN DE DATOS */
+        function saveProduct() {
+            const nombre = document.getElementById("admNombre").value;
+            const precio = document.getElementById("admPrecio").value;
+            const marca = document.getElementById("admMarca").value;
+
+            if(!nombre || !precio) return alert("Faltan datos");
+
+            let prods = JSON.parse(localStorage.getItem("db_empg")) || [];
+            prods.push({ id: Date.now(), nombre, precio, marca });
+            localStorage.setItem("db_empg", JSON.stringify(prods));
             
-            const msg = encodeURIComponent(`Hola, quiero agendar una cita para "${s}" el día ${f} a las ${h}.`);
-            window.open(`https://wa.me/${MI_TEL}?text=${msg}`, '_blank');
+            document.getElementById("admNombre").value = "";
+            document.getElementById("admPrecio").value = "";
+            render();
         }
+
+        function deleteItem(id) {
+            let prods = JSON.parse(localStorage.getItem("db_empg")).filter(p => p.id !== id);
+            localStorage.setItem("db_empg", JSON.stringify(prods));
+            render();
+        }
+
+        function render() {
+            const container = document.getElementById("prodView");
+            container.innerHTML = "";
+            let prods = JSON.parse(localStorage.getItem("db_empg")) || [];
+
+            // Agrupar por marcas automáticamente
+            const marcas = ["Marca 1", "Marca 2", "Marca 3", "Marca 4"];
+            
+            marcas.forEach(m => {
+                const filtered = prods.filter(p => p.marca === m);
+                if(filtered.length > 0 || isAdmin) {
+                    container.innerHTML += `<span class="brand-title">${m}</span>`;
+                    let grid = document.createElement("div");
+                    grid.className = "grid";
+                    
+                    filtered.forEach(p => {
+                        grid.innerHTML += `
+                            <div class="card-prod">
+                                <div class="img-placeholder"></div>
+                                <h4 style="margin:0; font-size:0.9rem;">${p.nombre}</h4>
+                                <span class="price">$${p.precio}</span>
+                                <button class="btn-ws" onclick="window.open('https://wa.me/${phone}?text=Me interesa ${p.nombre}')">Pedir</button>
+                                ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Borrar</button>` : ''}
+                            </div>
+                        `;
+                    });
+                    container.appendChild(grid);
+                }
+            });
+        }
+
+        function bookNow() {
+            const t = document.getElementById("citaTipo").value;
+            const f = document.getElementById("citaFecha").value;
+            const h = document.getElementById("citaHora").value;
+            if(!f || !h) return alert("Completa fecha y hora");
+            window.open(`https://wa.me/${phone}?text=Cita: ${t} el ${f} a las ${h}`);
+        }
+
+        window.onload = render;
     </script>
 </body>
 </html>
