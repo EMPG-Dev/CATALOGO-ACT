@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>E_M_P_G | Business Store</title>
+    <title>DIANA PLATA | Studio</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
 
@@ -59,7 +59,7 @@
 
     <div class="main-screen">
         <div class="card-inicio">
-            <h1 style="color:#fff;letter-spacing:5px">E_M_P_G</h1>
+            <h1 style="color:#fff;letter-spacing:5px">DIANA PLATA</h1>
             <p style="color:rgba(255,255,255,0.6)">Studio & Business Store</p>
             <button class="btn-entrar" onclick="abrirApp()">Ver Catálogo</button>
         </div>
@@ -67,7 +67,7 @@
 
     <div id="catalogo-overlay">
         <div class="header">
-            <span id="logoAdmin" style="font-weight:900; cursor:pointer">E_M_P_G</span>
+            <span id="logoAdmin" style="font-weight:900; cursor:pointer">DIANA PLATA</span>
             <button onclick="cerrarApp()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;padding:5px 12px;border-radius:20px">Cerrar</button>
         </div>
         
@@ -139,7 +139,7 @@
         var CONFIG = { 
             phone: "527121919227", 
             secretCode: "DAYANA123456", 
-            tienda: "E_M_P_G | Studio Business",
+            tienda: "DIANA PLATA | Studio",
             marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"]
         };
 
@@ -299,7 +299,7 @@
             var f = document.getElementById("citaFecha").value; 
             if(!f) return toast("Selecciona una fecha"); 
             var t = document.getElementById("citaTipo").value;
-            window.open(`https://wa.me/${CONFIG.phone}?text=Hola+E_M_P_G,+quiero+agendar+una+cita+para+${encodeURIComponent(t)}+el+día+${f}`); 
+            window.open(`https://wa.me/${CONFIG.phone}?text=Hola+Diana+Plata,+quiero+agendar+una+cita+para+${encodeURIComponent(t)}+el+día+${f}`); 
         }
 
         // Login Admin (Presión larga 2s en logo)
