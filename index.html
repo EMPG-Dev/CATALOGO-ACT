@@ -11,12 +11,11 @@
         :root {
             --dark: #0f172a; --mid: #1e293b; --accent: #3b82f6; --accent2: #2563eb;
             --ws: #16a34a; --danger: #dc2626; --bg: #f1f5f9; --card: #ffffff;
-            --text: #0f172a; --muted: #64748b; --border: #e2e8f0;
+            --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --input-bg: #f8fafc;
         }
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
         html,body{height:100%;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-        /* Fondo Animado EMPG Style */
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .main-screen {
             height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px;
@@ -27,7 +26,6 @@
         .card-inicio{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(24px);padding:44px 28px;border-radius:28px;text-align:center;width:100%;max-width:380px}
         .btn-entrar{display:block;width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;margin-top:20px}
 
-        /* Overlay Catálogo */
         #catalogo-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;transform:translateY(100%);transition:0.4s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column}
         #catalogo-overlay.active{transform:translateY(0)}
 
@@ -39,20 +37,22 @@
         .card-prod{background:var(--card);border-radius:18px;padding:12px;border:1px solid var(--border);position:relative}
         .img-prod{width:100%;height:100px;border-radius:10px;object-fit:cover;margin-bottom:8px;background:#eee}
 
-        /* Boton Flotante Carrito */
         .cart-float{position:fixed;bottom:25px;right:20px;background:var(--accent);color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,0.2);z-index:10000}
         .cart-count{position:absolute;top:0;right:0;background:var(--danger);font-size:0.7rem;padding:4px 8px;border-radius:20px}
 
-        /* Modal Generales */
         .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:20000;display:none;align-items:center;justify-content:center;padding:20px}
-        .modal-content{background:#fff;width:100%;max-width:400px;border-radius:25px;padding:25px;max-height:85vh;overflow-y:auto}
+        .modal-content{background:#fff;width:100%;max-width:450px;border-radius:25px;padding:25px;max-height:85vh;overflow-y:auto}
         .ticket{font-family:'Courier New', Courier, monospace;background:#f8f9fa;padding:15px;border:1px dashed #ccc;margin:15px 0}
         
         input, select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--border);font-family:inherit}
         .btn-ws{background:var(--ws);color:#fff;width:100%;padding:15px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
-        .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:10px;border-radius:8px;font-weight:700}
+        .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:12px;border-radius:10px;font-weight:700;margin-top:5px}
 
         #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999;pointer-events:none}
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; margin-top: 15px; }
+        th { border-bottom: 2px solid var(--border); padding: 8px; text-align: left; }
+        td { border-bottom: 1px solid var(--border); padding: 8px; }
     </style>
 </head>
 <body>
@@ -82,16 +82,10 @@
             <div id="prodView">
                 <div id="catalogo-container"></div>
             </div>
-
             <div id="servView" style="display:none;">
                 <div class="card-prod" style="padding:20px">
                     <h3 style="margin-bottom:15px">Agendar Cita</h3>
-                    <select id="citaTipo">
-                        <option>Facial Completo</option>
-                        <option>Corporal Relax</option>
-                        <option>Diseño de Ceja</option>
-                        <option>Consultoría de Datos</option>
-                    </select>
+                    <select id="citaTipo"><option>Facial Completo</option><option>Corporal Relax</option><option>Diseño de Ceja</option></select>
                     <input type="date" id="citaFecha">
                     <button class="btn-ws" onclick="confirmarCita()">Confirmar por WhatsApp</button>
                 </div>
@@ -116,36 +110,48 @@
     </div>
 
     <div id="adminPanel" class="modal">
-        <div class="modal-content">
-            <h4>Registro de Inventario</h4>
-            <br>
+        <div class="modal-content" style="max-width: 550px;">
+            <div style="display:flex; justify-content:space-between;">
+                <h4 id="adminTitle">Registro de Inventario</h4>
+                <button onclick="cerrarAdmin()" style="border:none; background:none; font-size:1.2rem;">&times;</button>
+            </div>
+
+            <div style="display:flex; gap:10px; margin:15px 0;">
+                <div style="flex:1; background:var(--input-bg); padding:10px; border-radius:10px; text-align:center; border:1px solid var(--border);">
+                    <small style="color:var(--muted)">STOCK</small><br><b id="dashCount">0</b>
+                </div>
+                <div style="flex:1; background:var(--input-bg); padding:10px; border-radius:10px; text-align:center; border:1px solid var(--border);">
+                    <small style="color:var(--muted)">VALOR</small><br><b id="dashValue">$0</b>
+                </div>
+            </div>
+
+            <input type="hidden" id="editId">
             <input type="text" id="admNombre" placeholder="Nombre del Producto">
-            <input type="number" id="admPrecio" placeholder="Precio (ej: 150)">
-            <input type="file" id="admFile" accept="image/*">
+            <input type="number" id="admPrecio" placeholder="Precio $">
             <select id="admMarca">
                 <option value="TERRAMAR">TERRAMAR</option>
                 <option value="FARMASI">FARMASI</option>
                 <option value="YANBAL">YANBAL</option>
                 <option value="OTRO">OTRO</option>
             </select>
-            <button class="btn-add" onclick="guardarProducto()" style="width:100%">Guardar Producto</button>
-            <button onclick="cerrarAdmin()" style="width:100%;border:none;background:none;margin-top:15px;color:red">Cerrar Panel</button>
+            <input type="file" id="admFile" accept="image/*">
+            <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">Guardar Producto</button>
+            <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; width:100%; background:none; border:none; margin-top:5px; color:var(--muted); font-size:0.8rem;">Cancelar Edición</button>
+
+            <div style="margin-top:20px; overflow-x:auto;">
+                <table>
+                    <thead><tr><th>Producto</th><th>Precio</th><th>Acciones</th></tr></thead>
+                    <tbody id="adminTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <div id="toast"></div>
 
     <script>
-        var CONFIG = { 
-            phone: "527121919227", 
-            secretCode: "DAYANA123456", 
-            tienda: "DIANA PLATA | Studio",
-            marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"]
-        };
-
-        var carrito = [];
-        var isAdmin = false;
-        var vistaActual = 'prod';
+        var CONFIG = { phone: "527121919227", secretCode: "DAYANA123456", tienda: "DIANA PLATA | Studio", marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"] };
+        var carrito = []; var isAdmin = false; var vistaActual = 'prod';
 
         function abrirApp() { document.getElementById("catalogo-overlay").classList.add("active"); cambiarVista('prod'); }
         function cerrarApp() { document.getElementById("catalogo-overlay").classList.remove("active"); }
@@ -155,182 +161,124 @@
             document.getElementById("prodView").style.display = v === "prod" ? "block" : "none";
             document.getElementById("servView").style.display = v === "serv" ? "block" : "none";
             document.getElementById("cartFloatBtn").style.display = v === "prod" ? "flex" : "none";
-            
-            document.getElementById("tabP").style.background = v === "prod" ? "var(--accent)" : "rgba(255,255,255,0.07)";
-            document.getElementById("tabP").style.color = v === "prod" ? "#fff" : "rgba(255,255,255,0.45)";
-            document.getElementById("tabS").style.background = v === "serv" ? "var(--accent)" : "rgba(255,255,255,0.07)";
-            document.getElementById("tabS").style.color = v === "serv" ? "#fff" : "rgba(255,255,255,0.45)";
+            document.querySelectorAll(".tab").forEach(t => { t.style.background = "rgba(255,255,255,0.07)"; t.style.color = "rgba(255,255,255,0.45)"; });
+            var activeTab = v === 'prod' ? 'tabP' : 'tabS';
+            document.getElementById(activeTab).style.background = "var(--accent)";
+            document.getElementById(activeTab).style.color = "#fff";
             render();
         }
 
-        // --- GESTIÓN DE PRODUCTOS ---
         function getProds() { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
         function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
 
         function guardarProducto() {
+            var id = document.getElementById("editId").value;
             var nom = document.getElementById("admNombre").value.trim();
             var pre = document.getElementById("admPrecio").value.trim();
             var mar = document.getElementById("admMarca").value;
             var fil = document.getElementById("admFile").files[0];
 
-            if(!nom || !pre) return toast("Nombre y Precio son obligatorios");
+            if(!nom || !pre) return toast("Faltan datos");
 
-            const finalSave = (imgBase64) => {
+            const finalAction = (img) => {
                 var arr = getProds();
-                arr.push({ 
-                    id: Date.now(), 
-                    nombre: nom, 
-                    precio: parseFloat(pre), 
-                    marca: mar, 
-                    imagen: imgBase64 
-                });
-                setProds(arr);
-                
-                // Limpiar campos y refrescar
-                document.getElementById("admNombre").value = "";
-                document.getElementById("admPrecio").value = "";
-                document.getElementById("admFile").value = "";
-                
-                toast("¡Producto Guardado!");
-                render();
+                if(id) { // EDITAR
+                    var index = arr.findIndex(p => p.id == id);
+                    arr[index].nombre = nom; arr[index].precio = parseFloat(pre); arr[index].marca = mar;
+                    if(img) arr[index].imagen = img;
+                } else { // NUEVO
+                    arr.push({ id: Date.now(), nombre: nom, precio: parseFloat(pre), marca: mar, imagen: img || "" });
+                }
+                setProds(arr); limpiarForm(); toast(id ? "Actualizado" : "Guardado"); render();
             };
 
-            if(fil) {
-                var reader = new FileReader();
-                reader.onload = (e) => finalSave(e.target.result);
-                reader.readAsDataURL(fil);
-            } else {
-                finalSave("");
+            if(fil) { var r = new FileReader(); r.onload = (e) => finalAction(e.target.result); r.readAsDataURL(fil); }
+            else { finalAction(id ? null : ""); }
+        }
+
+        function editarForm(id) {
+            var p = getProds().find(item => item.id == id);
+            document.getElementById("editId").value = p.id;
+            document.getElementById("admNombre").value = p.nombre;
+            document.getElementById("admPrecio").value = p.precio;
+            document.getElementById("admMarca").value = p.marca;
+            document.getElementById("adminTitle").textContent = "Editando Producto";
+            document.getElementById("btnGuardar").textContent = "Actualizar Cambios";
+            document.getElementById("btnCancelarEdit").style.display = "block";
+        }
+
+        function limpiarForm() {
+            document.getElementById("editId").value = "";
+            document.getElementById("admNombre").value = "";
+            document.getElementById("admPrecio").value = "";
+            document.getElementById("admFile").value = "";
+            document.getElementById("adminTitle").textContent = "Registro de Inventario";
+            document.getElementById("btnGuardar").textContent = "Guardar Producto";
+            document.getElementById("btnCancelarEdit").style.display = "none";
+        }
+
+        function eliminar(id) { if(confirm("¿Eliminar?")) { setProds(getProds().filter(p => p.id !== id)); render(); } }
+
+        function render() {
+            var container = document.getElementById("catalogo-container");
+            var tableBody = document.getElementById("adminTableBody");
+            var query = document.getElementById("searchInput").value.toLowerCase();
+            container.innerHTML = ""; if(tableBody) tableBody.innerHTML = "";
+
+            var prods = getProds();
+            var totalVal = 0;
+            if(isAdmin) {
+                document.getElementById("dashCount").textContent = prods.length;
+                prods.forEach(p => totalVal += Number(p.precio));
+                document.getElementById("dashValue").textContent = `$${totalVal.toLocaleString()}`;
             }
-        }
 
-        function eliminar(id) {
-            if(confirm("¿Eliminar este producto del inventario?")) {
-                var filtrados = getProds().filter(p => p.id !== id);
-                setProds(filtrados);
-                render();
-            }
-        }
+            CONFIG.marcas.forEach(marca => {
+                var items = prods.filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
+                if (items.length === 0 && !isAdmin) return;
 
-        // --- CARRITO Y WHATSAPP ---
-        function agregarAlCarrito(id) {
-            var p = getProds().find(item => item.id === id);
-            carrito.push(p);
-            document.getElementById("cartCount").textContent = carrito.length;
-            toast("Agregado al ticket");
-        }
+                var sec = document.createElement("div");
+                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.7rem; text-transform:uppercase">${marca}</h5><div class="grid"></div>`;
+                var grid = sec.querySelector(".grid");
 
-        function abrirCarrito() {
-            if (carrito.length === 0) return toast("Selecciona productos primero");
-            document.getElementById("modalCarrito").style.display = "flex";
-            dibujarTicket();
-        }
-
-        function cerrarCarrito() { document.getElementById("modalCarrito").style.display = "none"; }
-
-        function dibujarTicket() {
-            var total = 0;
-            var html = `<b>${CONFIG.tienda}</b><br>-------------------------<br>`;
-            carrito.forEach(p => {
-                // Forzamos a que el precio sea número para la suma
-                var precioNum = Number(p.precio); 
-                html += `${p.nombre.substring(0,18)}... $${precioNum.toLocaleString()}<br>`;
-                total += precioNum;
+                items.forEach(p => {
+                    grid.innerHTML += `<div class="card-prod"><img src="${p.imagen||''}" class="img-prod" onerror="this.src='https://via.placeholder.com/100?text=STUDIO'"><p style="font-size:0.8rem;font-weight:700">${p.nombre}</p><b>$${Number(p.precio).toLocaleString()}</b><button class="btn-add" onclick="agregarAlCarrito(${p.id})">+ Carrito</button></div>`;
+                    if(isAdmin && tableBody) {
+                        tableBody.innerHTML += `<tr><td>${p.nombre}</td><td>$${p.precio}</td><td><span onclick="editarForm(${p.id})" style="color:blue; cursor:pointer;">Edit</span> | <span onclick="eliminar(${p.id})" style="color:red; cursor:pointer;">X</span></td></tr>`;
+                    }
+                });
+                container.appendChild(sec);
             });
-            html += `-------------------------<br><b>TOTAL: $${total.toLocaleString()}</b><br><br><small>Entrega: Pendiente confirmar</small>`;
+        }
+
+        function agregarAlCarrito(id) { carrito.push(getProds().find(p => p.id === id)); document.getElementById("cartCount").textContent = carrito.length; toast("Agregado"); }
+        function abrirCarrito() { if(carrito.length===0) return toast("Vacío"); document.getElementById("modalCarrito").style.display="flex"; dibujarTicket(); }
+        function cerrarCarrito() { document.getElementById("modalCarrito").style.display="none"; }
+        function dibujarTicket() {
+            var total = 0; var html = `<b>${CONFIG.tienda}</b><br>---<br>`;
+            carrito.forEach(p => { html += `${p.nombre} $${Number(p.precio).toLocaleString()}<br>`; total += Number(p.precio); });
+            html += `---<br><b>TOTAL: $${total.toLocaleString()}</b>`;
             document.getElementById("ticketArea").innerHTML = html;
         }
 
         function enviarPedido() {
-            var n = document.getElementById("custNombre").value.trim();
-            var d = document.getElementById("custDireccion").value.trim();
-            if(!n || !d) return toast("Necesitamos tu nombre y dirección");
-
-            var total = 0;
-            var msg = `*ORDEN DE COMPRA - ${CONFIG.tienda}*\n\n*Cliente:* ${n}\n*Dir:* ${d}\n----------\n`;
-            
-            carrito.forEach(p => { 
-                var precioNum = Number(p.precio);
-                msg += `- ${p.nombre}: $${precioNum}\n`; 
-                total += precioNum; 
-            });
-            
-            msg += `----------\n*TOTAL: $${total.toLocaleString()}*\n\n_Confirmar entrega con el admin._`;
-            
+            var n = document.getElementById("custNombre").value; var d = document.getElementById("custDireccion").value;
+            if(!n || !d) return toast("Faltan datos");
+            var total = 0; var msg = `*ORDEN - ${CONFIG.tienda}*\n*Cliente:* ${n}\n*Dir:* ${d}\n---\n`;
+            carrito.forEach(p => { msg += `- ${p.nombre}: $${p.precio}\n`; total += Number(p.precio); });
+            msg += `---\n*TOTAL: $${total.toLocaleString()}*`;
             window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
-            carrito = []; 
-            document.getElementById("cartCount").textContent = "0"; 
-            cerrarCarrito();
+            carrito = []; document.getElementById("cartCount").textContent = "0"; cerrarCarrito();
         }
 
-        function render() {
-            var container = document.getElementById("catalogo-container");
-            var query = document.getElementById("searchInput").value.toLowerCase();
-            container.innerHTML = "";
-            if(vistaActual !== 'prod') return;
+        function confirmarCita() { var f=document.getElementById("citaFecha").value; if(!f) return toast("Fecha?"); window.open(`https://wa.me/${CONFIG.phone}?text=Cita+${document.getElementById("citaTipo").value}+${f}`); }
 
-            var hayProductos = false;
-
-            CONFIG.marcas.forEach(marca => {
-                var items = getProds().filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
-                if (items.length === 0 && !isAdmin) return;
-                
-                hayProductos = true;
-                var sec = document.createElement("div");
-                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.7rem; text-transform:uppercase; letter-spacing:1px">${marca}</h5><div class="grid"></div>`;
-                var grid = sec.querySelector(".grid");
-
-                items.forEach(p => {
-                    var div = document.createElement("div");
-                    div.className = "card-prod";
-                    div.innerHTML = `
-                        <img src="${p.imagen || ''}" class="img-prod" onerror="this.src='https://via.placeholder.com/100?text=EMPG'">
-                        <p style="font-size:0.8rem;font-weight:700">${p.nombre}</p>
-                        <b style="display:block; margin-bottom:5px">$${p.precio}</b>
-                        <button class="btn-add" onclick="agregarAlCarrito(${p.id})" style="width:100%">+ Carrito</button>
-                        ${isAdmin ? `<button onclick="eliminar(${p.id})" style="color:red;border:none;background:none;width:100%;font-size:0.6rem;margin-top:8px;cursor:pointer">Eliminar</button>` : ''}
-                    `;
-                    grid.appendChild(div);
-                });
-                container.appendChild(sec);
-            });
-
-            if(!hayProductos && !isAdmin) {
-                container.innerHTML = "<p style='text-align:center; color:var(--muted); margin-top:50px'>No hay productos disponibles por ahora.</p>";
-            }
-        }
-
-        function confirmarCita() { 
-            var f = document.getElementById("citaFecha").value; 
-            if(!f) return toast("Selecciona una fecha"); 
-            var t = document.getElementById("citaTipo").value;
-            window.open(`https://wa.me/${CONFIG.phone}?text=Hola+Diana+Plata,+quiero+agendar+una+cita+para+${encodeURIComponent(t)}+el+día+${f}`); 
-        }
-
-        // Login Admin (Presión larga 2s en logo)
-        var pT;
-        document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => { 
-            var p = prompt("Código Maestro:");
-            if(p === CONFIG.secretCode){ 
-                isAdmin = true; 
-                document.getElementById("adminPanel").style.display = "flex"; 
-                render(); 
-            } else if(p !== null) {
-                toast("Código Incorrecto");
-            }
+        var pT; document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => {
+            if(prompt("Pass:")===CONFIG.secretCode) { isAdmin=true; document.getElementById("adminPanel").style.display="flex"; render(); }
         }, 2000));
-        document.getElementById("logoAdmin").addEventListener("mouseup", () => clearTimeout(pT));
-        document.getElementById("logoAdmin").addEventListener("mouseleave", () => clearTimeout(pT));
-
-        function cerrarAdmin() { isAdmin = false; document.getElementById("adminPanel").style.display = "none"; render(); }
-        
-        function toast(m) { 
-            var t = document.getElementById("toast"); 
-            t.textContent = m; t.style.opacity = "1"; 
-            setTimeout(() => t.style.opacity = "0", 2500); 
-        }
-
-        window.onload = () => { render(); };
+        function cerrarAdmin() { isAdmin=false; document.getElementById("adminPanel").style.display="none"; render(); }
+        function toast(m) { var t=document.getElementById("toast"); t.textContent=m; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0", 2500); }
+        window.onload = render;
     </script>
 </body>
 </html>
