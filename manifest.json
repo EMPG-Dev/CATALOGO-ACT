@@ -1,9 +1,25 @@
 {
-  "name": "E_M_P_G App",
-  "short_name": "EMP",
-  "start_url": "index.html",
+  "name": "E_M_P_G | App Business",
+  "short_name": "E_M_P_G",
+  "description": "Catálogo de productos y agenda de citas",
+  "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
-  "orientation": "portrait"
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

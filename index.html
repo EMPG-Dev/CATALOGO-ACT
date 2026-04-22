@@ -2,183 +2,402 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>E_M_P_G | App Business</title>
 
-    <link rel="manifest" href="manifest.json">
+    <!-- =====================================================
+         VIEWPORT & PANTALLA COMPLETA
+         ===================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <!-- =====================================================
+         PWA: PANTALLA COMPLETA SIN BARRA DE NAVEGADOR
+         Esto hace que al "Agregar a pantalla de inicio"
+         la app se abra como app nativa, sin navegador.
+         ===================================================== -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="E_M_P_G">
+    <meta name="application-name" content="E_M_P_G">
     <meta name="theme-color" content="#0f172a">
 
+    <!-- =====================================================
+         OPEN GRAPH — Controla cómo se ve el link en
+         WhatsApp, Facebook, Instagram, Telegram, etc.
+         IMPORTANTE: Cambia og:image por una URL real de
+         una imagen tuya (1200x630 px recomendado).
+         ===================================================== -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://TU-DOMINIO.com/"> <!-- ← CAMBIA ESTO -->
+    <meta property="og:title"       content="E_M_P_G | Catálogo de Productos">
+    <meta property="og:description" content="Encuentra nuestros productos, precios y agenda tu cita directo desde aquí 🚀">
+    <meta property="og:image"       content="https://TU-DOMINIO.com/preview.jpg"> <!-- ← CAMBIA ESTO: imagen 1200x630px -->
+    <meta property="og:image:width"  content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale"      content="es_MX">
+    <meta property="og:site_name"   content="E_M_P_G App">
+
+    <!-- Twitter Card (también sirve para otras apps) -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="E_M_P_G | Catálogo de Productos">
+    <meta name="twitter:description" content="Productos, precios y citas en un solo lugar 🚀">
+    <meta name="twitter:image"       content="https://TU-DOMINIO.com/preview.jpg"> <!-- ← CAMBIA ESTO -->
+
+    <!-- =====================================================
+         ICONOS PWA (Apple + Android)
+         Pon tus imágenes en la misma carpeta
+         ===================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="32x32"   href="icons/icon-32.png">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- =====================================================
+         SERVICE WORKER — Para instalación y offline
+         ===================================================== -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => {});
+            });
+        }
+    </script>
+
+    <title>E_M_P_G | App Business</title>
+
     <style>
+        /* ============ VARIABLES Y RESET ============ */
         :root {
-            --dark: #0f172a;
+            --dark:   #0f172a;
+            --mid:    #1e293b;
             --accent: #3b82f6;
-            --ws: #25d366;
-            --bg: #f1f5f9;
+            --ws:     #25d366;
+            --danger: #ff4757;
+            --bg:     #f1f5f9;
+            --card:   #ffffff;
+            --text:   #1e293b;
+            --muted:  #64748b;
+            --safe-top:    env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            transition: all .25s ease;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg); overflow: hidden;
+            /* Previene el bounce scroll en iOS */
+            overscroll-behavior: none;
         }
 
-        /* PANTALLA INICIAL */
+        /* ============ PANTALLA INICIAL ============ */
         .main-screen {
-            height: 100vh; display: flex; align-items: center;
-            justify-content: center; padding: 20px;
+            height: 100vh;
+            height: 100dvh; /* Dynamic viewport: respeta teclado en móvil */
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 100%);
         }
 
         .card-inicio {
-            background: white; padding: 40px 25px; border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08); text-align: center;
-            width: 100%; max-width: 380px;
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 45px 28px; border-radius: 30px;
+            text-align: center; width: 100%; max-width: 380px;
+            color: white;
         }
+
+        .card-inicio h1 { margin: 0 0 8px; font-size: 2rem; letter-spacing: 3px; }
+        .card-inicio p  { color: rgba(255,255,255,0.6); margin: 0 0 28px; font-size: 0.95rem; }
 
         .btn-abrir {
-            background: linear-gradient(135deg, var(--dark), #1e293b);
-            color: white; border: none; padding: 18px; border-radius: 50px;
-            font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem;
+            background: linear-gradient(135deg, var(--accent), #2563eb);
+            color: white; border: none; padding: 18px;
+            border-radius: 50px; font-weight: 700; width: 100%;
+            cursor: pointer; font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(59,130,246,0.4);
         }
 
-        /* OVERLAY PRINCIPAL */
+        /* ============ OVERLAY PRINCIPAL ============ */
         #catalogo-overlay {
-            position: fixed; inset: 0; background: #f8fafc;
-            transform: translateY(100%); z-index: 9999;
+            position: fixed; inset: 0;
+            background: var(--bg);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            z-index: 9999;
             display: flex; flex-direction: column;
+            /* Respeta el notch y el home indicator en iPhone */
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
         }
 
         #catalogo-overlay.active { transform: translateY(0); }
 
-        /* HEADER Y TABS */
+        /* ============ HEADER ============ */
         .header {
-            padding: 18px; background: white; display: flex;
-            justify-content: space-between; align-items: center;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            padding: 16px 18px;
+            background: var(--dark);
+            color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0;
         }
 
-        .tabs { display: flex; padding: 10px; gap: 10px; background: white; }
+        .header-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; cursor: pointer; user-select: none; }
+        .header-close { font-size: 22px; cursor: pointer; opacity: 0.7; line-height: 1; }
+
+        /* ============ TABS ============ */
+        .tabs {
+            display: flex; padding: 10px 12px; gap: 8px;
+            background: var(--dark);
+            flex-shrink: 0;
+        }
+
         .tab {
-            flex: 1; padding: 12px; border: none; border-radius: 14px;
-            font-weight: bold; background: #e2e8f0; color: #64748b; cursor: pointer;
+            flex: 1; padding: 11px; border: none; border-radius: 12px;
+            font-weight: 700; font-size: 0.85rem;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.5);
+            cursor: pointer; transition: all 0.2s;
         }
-        .tab.active { background: var(--dark); color: white; }
 
-        /* CONTENIDO */
-        .content { flex: 1; overflow-y: auto; padding: 20px; }
+        .tab.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59,130,246,0.35);
+        }
 
-        /* SECCIONES DE MARCAS */
-        .brand-container { margin-bottom: 30px; }
+        /* ============ CONTENIDO ============ */
+        .content {
+            flex: 1; overflow-y: auto;
+            padding: 18px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ============ MARCAS ============ */
+        .brand-container { margin-bottom: 28px; }
+
         .brand-header {
-            font-size: 0.8rem; font-weight: 800; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 2px;
-            margin-bottom: 12px; display: block;
+            display: block;
+            font-size: 0.72rem; font-weight: 800;
+            color: var(--accent); text-transform: uppercase;
+            letter-spacing: 2.5px; margin-bottom: 12px;
             border-left: 3px solid var(--accent); padding-left: 10px;
         }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         .card-prod {
-            background: white; border-radius: 20px; padding: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;
+            background: var(--card); border-radius: 18px;
+            padding: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 1px solid #e8eef4;
+            display: flex; flex-direction: column;
         }
 
-        .img-placeholder { height: 110px; border-radius: 12px; background: #f1f5f9; margin-bottom: 8px; }
-        .price { font-weight: 800; color: var(--dark); display: block; margin-bottom: 8px; }
+        .img-placeholder {
+            height: 100px; border-radius: 10px;
+            background: linear-gradient(135deg, #e8eef4, #f1f5f9);
+            margin-bottom: 8px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem;
+        }
 
-        /* BOTONES ACCIÓN */
+        .card-prod h4 { margin: 0 0 4px; font-size: 0.8rem; color: var(--text); line-height: 1.3; }
+
+        .price {
+            font-weight: 800; color: var(--dark);
+            font-size: 1rem; display: block; margin-bottom: 8px;
+        }
+
+        /* ============ BOTONES ============ */
         .btn-ws {
             background: var(--ws); color: white; border: none;
-            padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer;
+            padding: 10px; border-radius: 10px; width: 100%;
+            font-weight: 700; cursor: pointer; font-size: 0.8rem;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        .btn-del { background: #ff4757; color: white; border: none; margin-top: 5px; border-radius: 8px; width: 100%; padding: 6px; cursor: pointer; font-size: 0.7rem; }
+        .btn-del {
+            background: transparent; color: var(--danger);
+            border: 1px solid var(--danger);
+            margin-top: 5px; border-radius: 8px; width: 100%;
+            padding: 6px; cursor: pointer; font-size: 0.68rem;
+            font-weight: 600;
+        }
 
-        /* FORMULARIO CITAS */
-        .booking-card { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        input, select { width: 100%; padding: 14px; margin: 8px 0 15px; border-radius: 12px; border: 1px solid #ddd; }
+        button:active { transform: scale(0.96); }
 
-        /* PANEL ADMIN */
+        /* ============ SERVICIOS ============ */
+        .booking-card {
+            background: var(--card); padding: 22px;
+            border-radius: 22px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .booking-card h3 { margin: 0 0 18px; font-size: 1.1rem; color: var(--text); }
+
+        .field-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; display: block; }
+
+        .field-group { margin-bottom: 14px; }
+
+        input, select {
+            width: 100%; padding: 13px 15px;
+            border-radius: 12px; border: 1.5px solid #e2e8f0;
+            background: #f8fafc; font-size: 0.9rem; color: var(--text);
+            outline: none; -webkit-appearance: none; appearance: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus { border-color: var(--accent); background: white; }
+
+        /* ============ PANEL ADMIN ============ */
         #adminPanel {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            padding: 25px; display: none; z-index: 10000;
-            border-radius: 25px 25px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white;
+            padding: 22px 22px calc(22px + var(--safe-bottom));
+            display: none; z-index: 10000;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.18);
         }
 
-        button:active { transform: scale(.96); }
+        #adminPanel h4 { margin: 0 0 16px; font-size: 1rem; }
+
+        #adminPanel input,
+        #adminPanel select { margin-bottom: 10px; }
+
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .btn-close-admin { border: none; background: none; font-weight: 700; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center; padding: 40px 20px; color: var(--muted);
+        }
+        .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .empty-state p { margin: 0; font-size: 0.9rem; }
+
+        /* ============ TOAST ============ */
+        #toast {
+            position: fixed; bottom: calc(20px + var(--safe-bottom));
+            left: 50%; transform: translateX(-50%) translateY(80px);
+            background: var(--dark); color: white;
+            padding: 12px 22px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600;
+            z-index: 99999; opacity: 0;
+            transition: all 0.3s ease; white-space: nowrap;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
+    <!-- PANTALLA INICIAL -->
     <div class="main-screen">
         <div class="card-inicio">
-            <h1 style="margin-bottom: 10px;">E_M_P_G App</h1>
-            <p style="color: #64748b;">Gestión de Productos y Servicios</p>
-            <button class="btn-abrir" onclick="toggleApp(true)">Entrar al Catálogo</button>
+            <h1>E_M_P_G</h1>
+            <p>Gestión de Productos y Servicios</p>
+            <button class="btn-abrir" onclick="toggleApp(true)">
+                Entrar al Catálogo →
+            </button>
         </div>
     </div>
 
+    <!-- OVERLAY PRINCIPAL -->
     <div id="catalogo-overlay">
         <div class="header">
-            <span id="logoAdmin" style="cursor:pointer;"><b>E_M_P_G</b></span>
-            <div onclick="toggleApp(false)" style="font-size: 24px; cursor: pointer;">✕</div>
+            <span class="header-logo" id="logoAdmin">E_M_P_G</span>
+            <div class="header-close" onclick="toggleApp(false)">✕</div>
         </div>
 
         <div class="tabs">
-            <button class="tab active" id="tabP" onclick="switchView('prod')">Productos</button>
-            <button class="tab" id="tabS" onclick="switchView('serv')">Servicios</button>
+            <button class="tab active" id="tabP" onclick="switchView('prod')">🛍 Productos</button>
+            <button class="tab" id="tabS" onclick="switchView('serv')">📅 Servicios</button>
         </div>
 
         <div class="content">
+            <!-- PRODUCTOS -->
             <div id="prodView">
                 <div id="marcas-dinamicas"></div>
             </div>
 
+            <!-- SERVICIOS -->
             <div id="servView" style="display:none;">
                 <div class="booking-card">
-                    <h3 style="margin-top:0">Agendar Cita</h3>
-                    <select id="citaTipo">
-                        <option>Desarrollo Web</option>
-                        <option>Consultoría</option>
-                    </select>
-                    <input type="date" id="citaFecha">
-                    <input type="time" id="citaHora">
-                    <button class="btn-ws" onclick="bookNow()">Confirmar por WhatsApp</button>
+                    <h3>📋 Agendar Cita</h3>
+
+                    <div class="field-group">
+                        <span class="field-label">Tipo de servicio</span>
+                        <select id="citaTipo">
+                            <option>Desarrollo Web</option>
+                            <option>Consultoría</option>
+                            <option>Diseño Gráfico</option>
+                            <option>Marketing Digital</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="field-label">Fecha</span>
+                        <input type="date" id="citaFecha">
+                    </div>
+
+                    <div class="field-group">
+                        <span class="field-label">Hora</span>
+                        <input type="time" id="citaHora">
+                    </div>
+
+                    <button class="btn-ws" onclick="bookNow()">
+                        <span>💬</span> Confirmar por WhatsApp
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- PANEL ADMIN -->
     <div id="adminPanel">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <b>Modo Administrador</b>
-            <button onclick="closeAdmin()" style="border:none; background:none; font-weight:bold;">Cerrar</button>
+        <div class="admin-header">
+            <h4>⚙️ Modo Administrador</h4>
+            <button class="btn-close-admin" onclick="closeAdmin()">×</button>
         </div>
-        <input type="text" id="admNombre" placeholder="Nombre del producto">
-        <input type="number" id="admPrecio" placeholder="Precio $">
+
+        <input type="text"   id="admNombre"  placeholder="Nombre del producto">
+        <input type="number" id="admPrecio"  placeholder="Precio $" min="0">
+        <input type="text"   id="admEmoji"   placeholder="Emoji del producto (ej: 👟)">
+
         <select id="admMarca">
             <option value="Marca 1">Marca 1</option>
             <option value="Marca 2">Marca 2</option>
             <option value="Marca 3">Marca 3</option>
             <option value="Marca 4">Marca 4</option>
         </select>
-        <button onclick="saveProduct()" class="btn-ws">Agregar al Inventario</button>
+
+        <button onclick="saveProduct()" class="btn-ws" style="margin-top:4px;">
+            ＋ Agregar al Inventario
+        </button>
     </div>
 
+    <!-- TOAST NOTIFICACIÓN -->
+    <div id="toast"></div>
+
     <script>
-        const phone = "52712XXXXXXX"; // Tu número de WhatsApp real
-        const secretCode = "1234";
+        /* ============================================================
+           CONFIGURACIÓN — Edita solo esta sección
+           ============================================================ */
+        const CONFIG = {
+            phone:      "52712XXXXXXX",  // ← Tu número real (con código de país, sin +)
+            secretCode: "1234"           // ← Código de admin
+        };
+        /* ============================================================ */
+
         let isAdmin = false;
 
+        /* ---- Toggle App ---- */
         function toggleApp(show) {
             document.getElementById('catalogo-overlay').classList.toggle('active', show);
         }
 
+        /* ---- Cambiar tab ---- */
         function switchView(view) {
             document.getElementById('prodView').style.display = view === 'prod' ? 'block' : 'none';
             document.getElementById('servView').style.display = view === 'serv' ? 'block' : 'none';
@@ -186,19 +405,28 @@
             document.getElementById('tabS').classList.toggle('active', view === 'serv');
         }
 
-        /* LOGIN ADMIN OCULTO */
-        let timer;
+        /* ---- Login Admin (mantener presionado el logo 2s) ---- */
+        let pressTimer;
         const logo = document.getElementById("logoAdmin");
-        logo.addEventListener("mousedown", () => timer = setTimeout(checkAdmin, 2000));
-        logo.addEventListener("touchstart", () => timer = setTimeout(checkAdmin, 2000));
-        logo.addEventListener("mouseup", () => clearTimeout(timer));
-        logo.addEventListener("touchend", () => clearTimeout(timer));
+
+        function startPress()  { pressTimer = setTimeout(checkAdmin, 2000); }
+        function cancelPress() { clearTimeout(pressTimer); }
+
+        logo.addEventListener("mousedown",  startPress);
+        logo.addEventListener("touchstart", startPress,  { passive: true });
+        logo.addEventListener("mouseup",    cancelPress);
+        logo.addEventListener("touchend",   cancelPress);
+        logo.addEventListener("mouseleave", cancelPress);
 
         function checkAdmin() {
-            if(prompt("Código de Seguridad:") === secretCode) {
+            const code = prompt("Código de seguridad:");
+            if (code === CONFIG.secretCode) {
                 isAdmin = true;
                 document.getElementById("adminPanel").style.display = "block";
+                showToast("✅ Modo admin activado");
                 render();
+            } else if (code !== null) {
+                showToast("❌ Código incorrecto");
             }
         }
 
@@ -208,72 +436,130 @@
             render();
         }
 
-        /* LÓGICA DE PRODUCTOS */
+        /* ---- Toast ---- */
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg;
+            t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 2500);
+        }
+
+        /* ---- Guardar producto ---- */
         function saveProduct() {
-            const nombre = document.getElementById("admNombre").value;
-            const precio = document.getElementById("admPrecio").value;
-            const marca = document.getElementById("admMarca").value;
+            const nombre = document.getElementById("admNombre").value.trim();
+            const precio = document.getElementById("admPrecio").value.trim();
+            const emoji  = document.getElementById("admEmoji").value.trim() || "📦";
+            const marca  = document.getElementById("admMarca").value;
 
-            if(!nombre || !precio) return alert("Completa los campos");
+            if (!nombre || !precio) return showToast("⚠️ Completa los campos");
 
-            let prods = JSON.parse(localStorage.getItem("empg_data")) || [];
-            prods.push({ id: Date.now(), nombre, precio, marca });
-            localStorage.setItem("empg_data", JSON.stringify(prods));
-            
+            let prods = getProds();
+            prods.push({ id: Date.now(), nombre, precio, emoji, marca });
+            saveProds(prods);
+
             document.getElementById("admNombre").value = "";
             document.getElementById("admPrecio").value = "";
+            document.getElementById("admEmoji").value  = "";
+
+            showToast("✅ Producto agregado");
             render();
         }
 
+        /* ---- Eliminar producto ---- */
         function deleteItem(id) {
-            let prods = JSON.parse(localStorage.getItem("empg_data")).filter(p => p.id !== id);
-            localStorage.setItem("empg_data", JSON.stringify(prods));
+            if (!confirm("¿Eliminar este producto?")) return;
+            saveProds(getProds().filter(p => p.id !== id));
+            showToast("🗑 Eliminado");
             render();
         }
 
+        /* ---- LocalStorage helpers ---- */
+        function getProds() {
+            try { return JSON.parse(localStorage.getItem("empg_data")) || []; }
+            catch { return []; }
+        }
+        function saveProds(arr) {
+            localStorage.setItem("empg_data", JSON.stringify(arr));
+        }
+
+        /* ---- Render catálogo ---- */
         function render() {
             const container = document.getElementById("marcas-dinamicas");
             container.innerHTML = "";
-            let prods = JSON.parse(localStorage.getItem("empg_data")) || [];
-
+            const prods  = getProds();
             const marcas = ["Marca 1", "Marca 2", "Marca 3", "Marca 4"];
-            
+
+            let hayAlgo = false;
+
             marcas.forEach(m => {
                 const filtered = prods.filter(p => p.marca === m);
-                if(filtered.length > 0 || isAdmin) {
-                    let section = document.createElement("div");
-                    section.className = "brand-container";
-                    section.innerHTML = `<span class="brand-header">${m}</span>`;
-                    
-                    let grid = document.createElement("div");
-                    grid.className = "grid";
-                    
+                if (filtered.length === 0 && !isAdmin) return;
+
+                hayAlgo = true;
+                const section = document.createElement("div");
+                section.className = "brand-container";
+                section.innerHTML = `<span class="brand-header">${m}</span>`;
+
+                const grid = document.createElement("div");
+                grid.className = "grid";
+
+                if (filtered.length === 0 && isAdmin) {
+                    grid.innerHTML = `<p style="color:var(--muted);font-size:0.8rem;grid-column:1/-1;">Sin productos en esta marca</p>`;
+                } else {
                     filtered.forEach(p => {
-                        grid.innerHTML += `
-                            <div class="card-prod">
-                                <div class="img-placeholder"></div>
-                                <h4 style="margin:5px 0;">${p.nombre}</h4>
-                                <b class="price">$${p.precio}</b>
-                                <button class="btn-ws" onclick="window.open('https://wa.me/${phone}?text=Hola Emmanuel, me interesa el ${p.nombre}')">Comprar</button>
-                                ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Eliminar</button>` : ''}
-                            </div>
+                        const card = document.createElement("div");
+                        card.className = "card-prod";
+                        card.innerHTML = `
+                            <div class="img-placeholder">${p.emoji || '📦'}</div>
+                            <h4>${p.nombre}</h4>
+                            <b class="price">$${Number(p.precio).toLocaleString('es-MX')}</b>
+                            <button class="btn-ws" onclick="pedirProd('${escHtml(p.nombre)}')">
+                                💬 Comprar
+                            </button>
+                            ${isAdmin ? `<button class="btn-del" onclick="deleteItem(${p.id})">Eliminar</button>` : ''}
                         `;
+                        grid.appendChild(card);
                     });
-                    section.appendChild(grid);
-                    container.appendChild(section);
                 }
+
+                section.appendChild(grid);
+                container.appendChild(section);
             });
+
+            if (!hayAlgo) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📦</div>
+                        <p>Aún no hay productos.<br>¡Próximamente!</p>
+                    </div>`;
+            }
+        }
+
+        function escHtml(str) {
+            return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        /* ---- WhatsApp ---- */
+        function pedirProd(nombre) {
+            const msg = encodeURIComponent(`Hola, me interesa el producto: *${nombre}* 🛍`);
+            window.open(`https://wa.me/${CONFIG.phone}?text=${msg}`);
         }
 
         function bookNow() {
-            const t = document.getElementById("citaTipo").value;
-            const f = document.getElementById("citaFecha").value;
-            const h = document.getElementById("citaHora").value;
-            if(!f || !h) return alert("Falta fecha u hora");
-            window.open(`https://wa.me/${phone}?text=Cita para ${t} el día ${f} a las ${h}`);
+            const tipo  = document.getElementById("citaTipo").value;
+            const fecha = document.getElementById("citaFecha").value;
+            const hora  = document.getElementById("citaHora").value;
+
+            if (!fecha || !hora) return showToast("⚠️ Falta fecha u hora");
+
+            const msg = encodeURIComponent(
+                `Hola, quiero agendar una cita:\n*Servicio:* ${tipo}\n*Fecha:* ${fecha}\n*Hora:* ${hora} 📅`
+            );
+            window.open(`https://wa.me/${CONFIG.phone}?text=${msg}`);
         }
 
-        window.onload = render;
+        /* ---- Arranque ---- */
+        window.addEventListener('load', render);
     </script>
 </body>
 </html>
