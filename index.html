@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DIANA PLATA | Studio</title>
+    <title>E_M_P_G | Business Store</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
 
@@ -16,7 +16,7 @@
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
         html,body{height:100%;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-        /* Fondo Animado */
+        /* Fondo Animado EMPG Style */
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .main-screen {
             height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px;
@@ -37,29 +37,29 @@
         .content{flex:1;overflow-y:auto;padding:15px}
         .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
         .card-prod{background:var(--card);border-radius:18px;padding:12px;border:1px solid var(--border);position:relative}
-        .img-prod{width:100%;height:100px;border-radius:10px;object-fit:cover;margin-bottom:8px}
+        .img-prod{width:100%;height:100px;border-radius:10px;object-fit:cover;margin-bottom:8px;background:#eee}
 
         /* Boton Flotante Carrito */
         .cart-float{position:fixed;bottom:25px;right:20px;background:var(--accent);color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,0.2);z-index:10000}
         .cart-count{position:absolute;top:0;right:0;background:var(--danger);font-size:0.7rem;padding:4px 8px;border-radius:20px}
 
-        /* Modal Ticket */
+        /* Modal Generales */
         .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:20000;display:none;align-items:center;justify-content:center;padding:20px}
         .modal-content{background:#fff;width:100%;max-width:400px;border-radius:25px;padding:25px;max-height:85vh;overflow-y:auto}
         .ticket{font-family:'Courier New', Courier, monospace;background:#f8f9fa;padding:15px;border:1px dashed #ccc;margin:15px 0}
         
-        input, select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--border)}
+        input, select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--border);font-family:inherit}
         .btn-ws{background:var(--ws);color:#fff;width:100%;padding:15px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
-        .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:8px;border-radius:8px;font-weight:700}
+        .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:10px;border-radius:8px;font-weight:700}
 
-        #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999}
+        #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999;pointer-events:none}
     </style>
 </head>
 <body>
 
     <div class="main-screen">
         <div class="card-inicio">
-            <h1 style="color:#fff;letter-spacing:5px">DIANA PLATA</h1>
+            <h1 style="color:#fff;letter-spacing:5px">E_M_P_G</h1>
             <p style="color:rgba(255,255,255,0.6)">Studio & Business Store</p>
             <button class="btn-entrar" onclick="abrirApp()">Ver Catálogo</button>
         </div>
@@ -71,7 +71,7 @@
             <button onclick="cerrarApp()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;padding:5px 12px;border-radius:20px">Cerrar</button>
         </div>
         
-        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar en catálogo..." oninput="render()">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos..." oninput="render()">
 
         <div class="tabs" style="display:flex;gap:8px;padding:10px 14px;background:var(--dark)">
             <button class="tab" id="tabP" onclick="cambiarVista('prod')" style="flex:1;padding:11px;border:none;border-radius:12px;font-weight:700">Productos</button>
@@ -87,10 +87,10 @@
                 <div class="card-prod" style="padding:20px">
                     <h3 style="margin-bottom:15px">Agendar Cita</h3>
                     <select id="citaTipo">
-                        <option>Facial</option>
-                        <option>Corporal</option>
+                        <option>Facial Completo</option>
+                        <option>Corporal Relax</option>
                         <option>Diseño de Ceja</option>
-                        <option>Consultoría</option>
+                        <option>Consultoría de Datos</option>
                     </select>
                     <input type="date" id="citaFecha">
                     <button class="btn-ws" onclick="confirmarCita()">Confirmar por WhatsApp</button>
@@ -105,21 +105,22 @@
 
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
-            <h3>Tu Pedido</h3>
+            <h3>Tu Ticket de Compra</h3>
             <div id="ticketArea" class="ticket"></div>
-            <p style="font-size:0.8rem; font-weight:700; margin-bottom:10px">DATOS DE ENTREGA:</p>
-            <input type="text" id="custNombre" placeholder="Nombre completo">
-            <input type="text" id="custDireccion" placeholder="Dirección / Ubicación">
-            <button class="btn-ws" onclick="enviarPedido()">Enviar Ticket a WhatsApp</button>
+            <p style="font-size:0.8rem; font-weight:700; margin-bottom:10px">DATOS DE ENVÍO:</p>
+            <input type="text" id="custNombre" placeholder="Tu nombre">
+            <input type="text" id="custDireccion" placeholder="Dirección en Celaya/Alrededores">
+            <button class="btn-ws" onclick="enviarPedido()">Enviar Orden a WhatsApp</button>
             <button onclick="cerrarCarrito()" style="width:100%;background:none;border:none;margin-top:15px;color:var(--muted)">Volver</button>
         </div>
     </div>
 
     <div id="adminPanel" class="modal">
         <div class="modal-content">
-            <h4>Panel Admin</h4>
-            <input type="text" id="admNombre" placeholder="Nombre">
-            <input type="number" id="admPrecio" placeholder="Precio">
+            <h4>Registro de Inventario</h4>
+            <br>
+            <input type="text" id="admNombre" placeholder="Nombre del Producto">
+            <input type="number" id="admPrecio" placeholder="Precio (ej: 150)">
             <input type="file" id="admFile" accept="image/*">
             <select id="admMarca">
                 <option value="TERRAMAR">TERRAMAR</option>
@@ -127,8 +128,8 @@
                 <option value="YANBAL">YANBAL</option>
                 <option value="OTRO">OTRO</option>
             </select>
-            <button class="btn-add" onclick="guardarProducto()">Guardar</button>
-            <button onclick="cerrarAdmin()" style="width:100%;border:none;background:none;margin-top:10px">Salir</button>
+            <button class="btn-add" onclick="guardarProducto()" style="width:100%">Guardar Producto</button>
+            <button onclick="cerrarAdmin()" style="width:100%;border:none;background:none;margin-top:15px;color:red">Cerrar Panel</button>
         </div>
     </div>
 
@@ -138,7 +139,7 @@
         var CONFIG = { 
             phone: "527121919227", 
             secretCode: "DAYANA123456", 
-            tienda: "DIANA PLATA | Studio",
+            tienda: "E_M_P_G | Studio Business",
             marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"]
         };
 
@@ -162,6 +163,56 @@
             render();
         }
 
+        // --- GESTIÓN DE PRODUCTOS ---
+        function getProds() { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
+        function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
+
+        function guardarProducto() {
+            var nom = document.getElementById("admNombre").value.trim();
+            var pre = document.getElementById("admPrecio").value.trim();
+            var mar = document.getElementById("admMarca").value;
+            var fil = document.getElementById("admFile").files[0];
+
+            if(!nom || !pre) return toast("Nombre y Precio son obligatorios");
+
+            const finalSave = (imgBase64) => {
+                var arr = getProds();
+                arr.push({ 
+                    id: Date.now(), 
+                    nombre: nom, 
+                    precio: parseFloat(pre), 
+                    marca: mar, 
+                    imagen: imgBase64 
+                });
+                setProds(arr);
+                
+                // Limpiar campos y refrescar
+                document.getElementById("admNombre").value = "";
+                document.getElementById("admPrecio").value = "";
+                document.getElementById("admFile").value = "";
+                
+                toast("¡Producto Guardado!");
+                render();
+            };
+
+            if(fil) {
+                var reader = new FileReader();
+                reader.onload = (e) => finalSave(e.target.result);
+                reader.readAsDataURL(fil);
+            } else {
+                finalSave("");
+            }
+        }
+
+        function eliminar(id) {
+            if(confirm("¿Eliminar este producto del inventario?")) {
+                var filtrados = getProds().filter(p => p.id !== id);
+                setProds(filtrados);
+                render();
+            }
+        }
+
+        // --- CARRITO Y WHATSAPP ---
         function agregarAlCarrito(id) {
             var p = getProds().find(item => item.id === id);
             carrito.push(p);
@@ -170,7 +221,7 @@
         }
 
         function abrirCarrito() {
-            if (carrito.length === 0) return toast("Carrito vacío");
+            if (carrito.length === 0) return toast("Selecciona productos primero");
             document.getElementById("modalCarrito").style.display = "flex";
             dibujarTicket();
         }
@@ -181,27 +232,31 @@
             var total = 0;
             var html = `<b>${CONFIG.tienda}</b><br>-------------------------<br>`;
             carrito.forEach(p => {
-                html += `${p.nombre.substring(0,18)} $${p.precio}<br>`;
-                total += parseFloat(p.precio);
+                html += `${p.nombre.substring(0,18)}... $${p.precio}<br>`;
+                total += p.precio;
             });
-            html += `-------------------------<br><b>TOTAL: $${total.toLocaleString()}</b><br><br><small>Entrega: Por confirmar</small>`;
+            html += `-------------------------<br><b>TOTAL: $${total.toLocaleString()}</b><br><br><small>Entrega: Pendiente confirmar</small>`;
             document.getElementById("ticketArea").innerHTML = html;
         }
 
         function enviarPedido() {
-            var n = document.getElementById("custNombre").value;
-            var d = document.getElementById("custDireccion").value;
-            if(!n || !d) return toast("Faltan tus datos");
+            var n = document.getElementById("custNombre").value.trim();
+            var d = document.getElementById("custDireccion").value.trim();
+            if(!n || !d) return toast("Necesitamos tu nombre y dirección");
+
             var total = 0;
             var msg = `*ORDEN DE COMPRA - ${CONFIG.tienda}*\n\n*Cliente:* ${n}\n*Dir:* ${d}\n----------\n`;
-            carrito.forEach(p => { msg += `- ${p.nombre}: $${p.precio}\n`; total += parseFloat(p.precio); });
+            carrito.forEach(p => { 
+                msg += `- ${p.nombre}: $${p.precio}\n`; 
+                total += p.precio; 
+            });
             msg += `----------\n*TOTAL: $${total}*\n\n_Confirmar entrega con el admin._`;
+            
             window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
-            carrito = []; document.getElementById("cartCount").textContent = "0"; cerrarCarrito();
+            carrito = []; 
+            document.getElementById("cartCount").textContent = "0"; 
+            cerrarCarrito();
         }
-
-        function getProds() { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
-        function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
 
         function render() {
             var container = document.getElementById("catalogo-container");
@@ -209,39 +264,66 @@
             container.innerHTML = "";
             if(vistaActual !== 'prod') return;
 
+            var hayProductos = false;
+
             CONFIG.marcas.forEach(marca => {
                 var items = getProds().filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
                 if (items.length === 0 && !isAdmin) return;
+                
+                hayProductos = true;
                 var sec = document.createElement("div");
-                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.7rem; text-transform:uppercase">${marca}</h5><div class="grid"></div>`;
+                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.7rem; text-transform:uppercase; letter-spacing:1px">${marca}</h5><div class="grid"></div>`;
                 var grid = sec.querySelector(".grid");
+
                 items.forEach(p => {
                     var div = document.createElement("div");
                     div.className = "card-prod";
-                    div.innerHTML = `<img src="${p.imagen||''}" class="img-prod"><p style="font-size:0.8rem;font-weight:700">${p.nombre}</p><b>$${p.precio}</b><button class="btn-add" onclick="agregarAlCarrito(${p.id})">+ Carrito</button>${isAdmin?`<button onclick="eliminar(${p.id})" style="color:red;border:none;background:none;width:100%;font-size:0.6rem;margin-top:5px">Eliminar</button>`:''}`;
+                    div.innerHTML = `
+                        <img src="${p.imagen || ''}" class="img-prod" onerror="this.src='https://via.placeholder.com/100?text=EMPG'">
+                        <p style="font-size:0.8rem;font-weight:700">${p.nombre}</p>
+                        <b style="display:block; margin-bottom:5px">$${p.precio}</b>
+                        <button class="btn-add" onclick="agregarAlCarrito(${p.id})" style="width:100%">+ Carrito</button>
+                        ${isAdmin ? `<button onclick="eliminar(${p.id})" style="color:red;border:none;background:none;width:100%;font-size:0.6rem;margin-top:8px;cursor:pointer">Eliminar</button>` : ''}
+                    `;
                     grid.appendChild(div);
                 });
                 container.appendChild(sec);
             });
+
+            if(!hayProductos && !isAdmin) {
+                container.innerHTML = "<p style='text-align:center; color:var(--muted); margin-top:50px'>No hay productos disponibles por ahora.</p>";
+            }
         }
 
-        function guardarProducto() {
-            var f = document.getElementById("admFile").files[0];
-            const s = (img) => {
-                var a = getProds();
-                a.push({ id: Date.now(), nombre: document.getElementById("admNombre").value, precio: document.getElementById("admPrecio").value, marca: document.getElementById("admMarca").value, imagen: img });
-                setProds(a); cerrarAdmin(); render();
-            };
-            if(f){ var r=new FileReader(); r.onload=(e)=>s(e.target.result); r.readAsDataURL(f); } else { s(""); }
+        function confirmarCita() { 
+            var f = document.getElementById("citaFecha").value; 
+            if(!f) return toast("Selecciona una fecha"); 
+            var t = document.getElementById("citaTipo").value;
+            window.open(`https://wa.me/${CONFIG.phone}?text=Hola+E_M_P_G,+quiero+agendar+una+cita+para+${encodeURIComponent(t)}+el+día+${f}`); 
         }
 
-        function eliminar(id) { if(confirm("¿Borrar?")){ setProds(getProds().filter(p=>p.id!==id)); render(); } }
-        function confirmarCita() { var f=document.getElementById("citaFecha").value; if(!f) return toast("Pon la fecha"); window.open(`https://wa.me/${CONFIG.phone}?text=Cita+para+${document.getElementById("citaTipo").value}+el+${f}`); }
-
+        // Login Admin (Presión larga 2s en logo)
         var pT;
-        document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => { if(prompt("Pass:")===CONFIG.secretCode){ isAdmin=true; document.getElementById("adminPanel").style.display="flex"; render(); } }, 2000));
-        function cerrarAdmin() { isAdmin=false; document.getElementById("adminPanel").style.display="none"; render(); }
-        function toast(m) { var t=document.getElementById("toast"); t.textContent=m; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0", 2000); }
+        document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => { 
+            var p = prompt("Código Maestro:");
+            if(p === CONFIG.secretCode){ 
+                isAdmin = true; 
+                document.getElementById("adminPanel").style.display = "flex"; 
+                render(); 
+            } else if(p !== null) {
+                toast("Código Incorrecto");
+            }
+        }, 2000));
+        document.getElementById("logoAdmin").addEventListener("mouseup", () => clearTimeout(pT));
+        document.getElementById("logoAdmin").addEventListener("mouseleave", () => clearTimeout(pT));
+
+        function cerrarAdmin() { isAdmin = false; document.getElementById("adminPanel").style.display = "none"; render(); }
+        
+        function toast(m) { 
+            var t = document.getElementById("toast"); 
+            t.textContent = m; t.style.opacity = "1"; 
+            setTimeout(() => t.style.opacity = "0", 2500); 
+        }
 
         window.onload = () => { render(); };
     </script>
