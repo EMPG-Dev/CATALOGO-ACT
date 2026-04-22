@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>E_M_P_G | Business Store</title>
+    <title>DIANA PLATA | Studio</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
 
@@ -32,7 +32,7 @@
         #catalogo-overlay.active{transform:translateY(0)}
 
         .header{padding:15px;background:var(--dark);display:flex;justify-content:space-between;align-items:center;color:#fff}
-        .search-bar{width:100%;padding:10px 15px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;margin:10px 15px}
+        .search-bar{width:calc(100% - 30px);padding:10px 15px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;margin:10px 15px}
 
         .content{flex:1;overflow-y:auto;padding:15px}
         .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -51,30 +51,54 @@
         input, select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--border)}
         .btn-ws{background:var(--ws);color:#fff;width:100%;padding:15px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
         .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:8px;border-radius:8px;font-weight:700}
+
+        #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999}
     </style>
 </head>
 <body>
 
     <div class="main-screen">
         <div class="card-inicio">
-            <h1 style="color:#fff;letter-spacing:5px">E_M_P_G</h1>
-            <p style="color:rgba(255,255,255,0.6)">Catálogo & Carrito de Ventas</p>
-            <button class="btn-entrar" onclick="abrirApp()">Ver Productos</button>
+            <h1 style="color:#fff;letter-spacing:5px">DIANA PLATA</h1>
+            <p style="color:rgba(255,255,255,0.6)">Studio & Business Store</p>
+            <button class="btn-entrar" onclick="abrirApp()">Ver Catálogo</button>
         </div>
     </div>
 
     <div id="catalogo-overlay">
         <div class="header">
-            <span id="logoAdmin" style="font-weight:900">E_M_P_G</span>
-            <button onclick="cerrarApp()" style="background:none;border:none;color:#fff">Cerrar</button>
+            <span id="logoAdmin" style="font-weight:900; cursor:pointer">E_M_P_G</span>
+            <button onclick="cerrarApp()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;padding:5px 12px;border-radius:20px">Cerrar</button>
         </div>
-        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos..." oninput="render()">
+        
+        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar en catálogo..." oninput="render()">
+
+        <div class="tabs" style="display:flex;gap:8px;padding:10px 14px;background:var(--dark)">
+            <button class="tab" id="tabP" onclick="cambiarVista('prod')" style="flex:1;padding:11px;border:none;border-radius:12px;font-weight:700">Productos</button>
+            <button class="tab" id="tabS" onclick="cambiarVista('serv')" style="flex:1;padding:11px;border:none;border-radius:12px;font-weight:700">Servicios</button>
+        </div>
         
         <div class="content">
-            <div id="catalogo-container"></div>
+            <div id="prodView">
+                <div id="catalogo-container"></div>
+            </div>
+
+            <div id="servView" style="display:none;">
+                <div class="card-prod" style="padding:20px">
+                    <h3 style="margin-bottom:15px">Agendar Cita</h3>
+                    <select id="citaTipo">
+                        <option>Facial</option>
+                        <option>Corporal</option>
+                        <option>Diseño de Ceja</option>
+                        <option>Consultoría</option>
+                    </select>
+                    <input type="date" id="citaFecha">
+                    <button class="btn-ws" onclick="confirmarCita()">Confirmar por WhatsApp</button>
+                </div>
+            </div>
         </div>
 
-        <div class="cart-float" onclick="abrirCarrito()">
+        <div class="cart-float" id="cartFloatBtn" onclick="abrirCarrito()">
             🛒 <span class="cart-count" id="cartCount">0</span>
         </div>
     </div>
@@ -83,22 +107,19 @@
         <div class="modal-content">
             <h3>Tu Pedido</h3>
             <div id="ticketArea" class="ticket"></div>
-            
             <p style="font-size:0.8rem; font-weight:700; margin-bottom:10px">DATOS DE ENTREGA:</p>
-            <input type="text" id="custNombre" placeholder="Tu Nombre Completo">
-            <input type="text" id="custDireccion" placeholder="Dirección de Entrega">
-            <input type="tel" id="custTel" placeholder="Tu Teléfono">
-            
-            <button class="btn-ws" onclick="enviarPedido()">Enviar Orden por WhatsApp</button>
-            <button onclick="cerrarCarrito()" style="width:100%;background:none;border:none;margin-top:15px;color:var(--muted)">Seguir Comprando</button>
+            <input type="text" id="custNombre" placeholder="Nombre completo">
+            <input type="text" id="custDireccion" placeholder="Dirección / Ubicación">
+            <button class="btn-ws" onclick="enviarPedido()">Enviar Ticket a WhatsApp</button>
+            <button onclick="cerrarCarrito()" style="width:100%;background:none;border:none;margin-top:15px;color:var(--muted)">Volver</button>
         </div>
     </div>
 
-    <div id="adminPanel" class="modal" style="display:none; background:rgba(15, 23, 42, 0.9);">
+    <div id="adminPanel" class="modal">
         <div class="modal-content">
-            <h4>Panel de Control</h4>
-            <input type="text" id="admNombre" placeholder="Nombre del Producto">
-            <input type="number" id="admPrecio" placeholder="Precio $">
+            <h4>Panel Admin</h4>
+            <input type="text" id="admNombre" placeholder="Nombre">
+            <input type="number" id="admPrecio" placeholder="Precio">
             <input type="file" id="admFile" accept="image/*">
             <select id="admMarca">
                 <option value="TERRAMAR">TERRAMAR</option>
@@ -106,8 +127,8 @@
                 <option value="YANBAL">YANBAL</option>
                 <option value="OTRO">OTRO</option>
             </select>
-            <button class="btn-add" onclick="guardarProducto()">Subir a la Nube Local</button>
-            <button onclick="cerrarAdmin()" style="width:100%;background:none;border:none;margin-top:15px">Salir</button>
+            <button class="btn-add" onclick="guardarProducto()">Guardar</button>
+            <button onclick="cerrarAdmin()" style="width:100%;border:none;background:none;margin-top:10px">Salir</button>
         </div>
     </div>
 
@@ -117,31 +138,39 @@
         var CONFIG = { 
             phone: "527121919227", 
             secretCode: "DAYANA123456", 
-            tienda: "E_M_P_G | Studio Celaya",
+            tienda: "DIANA PLATA | Studio",
             marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"]
         };
 
         var carrito = [];
         var isAdmin = false;
+        var vistaActual = 'prod';
 
-        function abrirApp() { document.getElementById("catalogo-overlay").classList.add("active"); }
+        function abrirApp() { document.getElementById("catalogo-overlay").classList.add("active"); cambiarVista('prod'); }
         function cerrarApp() { document.getElementById("catalogo-overlay").classList.remove("active"); }
 
-        // --- LÓGICA DEL CARRITO ---
+        function cambiarVista(v) {
+            vistaActual = v;
+            document.getElementById("prodView").style.display = v === "prod" ? "block" : "none";
+            document.getElementById("servView").style.display = v === "serv" ? "block" : "none";
+            document.getElementById("cartFloatBtn").style.display = v === "prod" ? "flex" : "none";
+            
+            document.getElementById("tabP").style.background = v === "prod" ? "var(--accent)" : "rgba(255,255,255,0.07)";
+            document.getElementById("tabP").style.color = v === "prod" ? "#fff" : "rgba(255,255,255,0.45)";
+            document.getElementById("tabS").style.background = v === "serv" ? "var(--accent)" : "rgba(255,255,255,0.07)";
+            document.getElementById("tabS").style.color = v === "serv" ? "#fff" : "rgba(255,255,255,0.45)";
+            render();
+        }
+
         function agregarAlCarrito(id) {
-            var prods = getProds();
-            var p = prods.find(item => item.id === id);
+            var p = getProds().find(item => item.id === id);
             carrito.push(p);
-            actualizarContador();
+            document.getElementById("cartCount").textContent = carrito.length;
             toast("Agregado al ticket");
         }
 
-        function actualizarContador() {
-            document.getElementById("cartCount").textContent = carrito.length;
-        }
-
         function abrirCarrito() {
-            if (carrito.length === 0) return toast("El carrito está vacío");
+            if (carrito.length === 0) return toast("Carrito vacío");
             document.getElementById("modalCarrito").style.display = "flex";
             dibujarTicket();
         }
@@ -150,45 +179,27 @@
 
         function dibujarTicket() {
             var total = 0;
-            var html = `<b>${CONFIG.tienda}</b><br>`;
-            html += `-------------------------<br>`;
-            carrito.forEach((p, index) => {
-                html += `${p.nombre.substring(0,15)}... $${p.precio}<br>`;
+            var html = `<b>${CONFIG.tienda}</b><br>-------------------------<br>`;
+            carrito.forEach(p => {
+                html += `${p.nombre.substring(0,18)} $${p.precio}<br>`;
                 total += parseFloat(p.precio);
             });
-            html += `-------------------------<br>`;
-            html += `<b>TOTAL: $${total.toLocaleString()}</b><br><br>`;
-            html += `<small>Entrega: Pendiente confirmar</small>`;
+            html += `-------------------------<br><b>TOTAL: $${total.toLocaleString()}</b><br><br><small>Entrega: Por confirmar</small>`;
             document.getElementById("ticketArea").innerHTML = html;
         }
 
         function enviarPedido() {
-            var nombre = document.getElementById("custNombre").value;
-            var dir = document.getElementById("custDireccion").value;
-            if(!nombre || !dir) return toast("Llena tus datos de envío");
-
+            var n = document.getElementById("custNombre").value;
+            var d = document.getElementById("custDireccion").value;
+            if(!n || !d) return toast("Faltan tus datos");
             var total = 0;
-            var msg = `*ORDEN DE COMPRA - ${CONFIG.tienda}*\n\n`;
-            msg += `*Cliente:* ${nombre}\n`;
-            msg += `*Dirección:* ${dir}\n`;
-            msg += `--------------------------\n`;
-            
-            carrito.forEach(p => {
-                msg += `- ${p.nombre}: $${p.precio}\n`;
-                total += parseFloat(p.precio);
-            });
-            
-            msg += `--------------------------\n`;
-            msg += `*TOTAL A PAGAR: $${total}*\n\n`;
-            msg += `_El administrador confirmará la entrega estimada en breve._`;
-
+            var msg = `*ORDEN DE COMPRA - ${CONFIG.tienda}*\n\n*Cliente:* ${n}\n*Dir:* ${d}\n----------\n`;
+            carrito.forEach(p => { msg += `- ${p.nombre}: $${p.precio}\n`; total += parseFloat(p.precio); });
+            msg += `----------\n*TOTAL: $${total}*\n\n_Confirmar entrega con el admin._`;
             window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
-            carrito = [];
-            actualizarContador();
-            cerrarCarrito();
+            carrito = []; document.getElementById("cartCount").textContent = "0"; cerrarCarrito();
         }
 
-        // --- LÓGICA DE DATOS ---
         function getProds() { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
         function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
 
@@ -196,81 +207,43 @@
             var container = document.getElementById("catalogo-container");
             var query = document.getElementById("searchInput").value.toLowerCase();
             container.innerHTML = "";
-            var prods = getProds();
+            if(vistaActual !== 'prod') return;
 
             CONFIG.marcas.forEach(marca => {
-                var filtrados = prods.filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
-                if (filtrados.length === 0 && !isAdmin) return;
-
+                var items = getProds().filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
+                if (items.length === 0 && !isAdmin) return;
                 var sec = document.createElement("div");
-                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent)">${marca}</h5><div class="grid"></div>`;
+                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.7rem; text-transform:uppercase">${marca}</h5><div class="grid"></div>`;
                 var grid = sec.querySelector(".grid");
-
-                filtrados.forEach(p => {
-                    var card = document.createElement("div");
-                    card.className = "card-prod";
-                    card.innerHTML = `
-                        <img class="img-prod" src="${p.imagen || ''}">
-                        <p style="font-size:0.8rem;font-weight:700">${p.nombre}</p>
-                        <b style="font-size:1.1rem">$${p.precio}</b>
-                        <button class="btn-add" onclick="agregarAlCarrito(${p.id})">+ Carrito</button>
-                        ${isAdmin ? `<button onclick="eliminar(${p.id})" style="color:red;border:none;background:none;font-size:0.6rem">Eliminar</button>` : ''}
-                    `;
-                    grid.appendChild(card);
+                items.forEach(p => {
+                    var div = document.createElement("div");
+                    div.className = "card-prod";
+                    div.innerHTML = `<img src="${p.imagen||''}" class="img-prod"><p style="font-size:0.8rem;font-weight:700">${p.nombre}</p><b>$${p.precio}</b><button class="btn-add" onclick="agregarAlCarrito(${p.id})">+ Carrito</button>${isAdmin?`<button onclick="eliminar(${p.id})" style="color:red;border:none;background:none;width:100%;font-size:0.6rem;margin-top:5px">Eliminar</button>`:''}`;
+                    grid.appendChild(div);
                 });
                 container.appendChild(sec);
             });
         }
 
         function guardarProducto() {
-            var n = document.getElementById("admNombre").value;
-            var p = document.getElementById("admPrecio").value;
-            var m = document.getElementById("admMarca").value;
-            var file = document.getElementById("admFile").files[0];
-
-            if(!n || !p) return toast("Faltan datos");
-
-            const save = (img) => {
-                var arr = getProds();
-                arr.push({ id: Date.now(), nombre: n, precio: p, marca: m, imagen: img });
-                setProds(arr);
-                toast("Producto guardado");
-                render();
+            var f = document.getElementById("admFile").files[0];
+            const s = (img) => {
+                var a = getProds();
+                a.push({ id: Date.now(), nombre: document.getElementById("admNombre").value, precio: document.getElementById("admPrecio").value, marca: document.getElementById("admMarca").value, imagen: img });
+                setProds(a); cerrarAdmin(); render();
             };
-
-            if(file) {
-                var r = new FileReader(); r.onload = (e) => save(e.target.result); r.readAsDataURL(file);
-            } else { save(""); }
+            if(f){ var r=new FileReader(); r.onload=(e)=>s(e.target.result); r.readAsDataURL(f); } else { s(""); }
         }
 
-        // --- ADMIN LOGIN (Presiona logo 2s) ---
-        var pTimer;
-        var logo = document.getElementById("logoAdmin");
-        logo.addEventListener("mousedown", () => pTimer = setTimeout(pedirCodigo, 2000));
-        logo.addEventListener("touchstart", () => pTimer = setTimeout(pedirCodigo, 2000));
-        logo.addEventListener("mouseup", () => clearTimeout(pTimer));
-        
-        function pedirCodigo() {
-            if(prompt("Pass:") === CONFIG.secretCode) {
-                isAdmin = true;
-                document.getElementById("adminPanel").style.display = "flex";
-                render();
-            }
-        }
-        function cerrarAdmin() { isAdmin = false; document.getElementById("adminPanel").style.display = "none"; render(); }
+        function eliminar(id) { if(confirm("¿Borrar?")){ setProds(getProds().filter(p=>p.id!==id)); render(); } }
+        function confirmarCita() { var f=document.getElementById("citaFecha").value; if(!f) return toast("Pon la fecha"); window.open(`https://wa.me/${CONFIG.phone}?text=Cita+para+${document.getElementById("citaTipo").value}+el+${f}`); }
 
-        function toast(m) { 
-            var t = document.getElementById("toast"); 
-            t.textContent = m; t.className = "visible"; 
-            setTimeout(() => t.className = "", 2000); 
-        }
+        var pT;
+        document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => { if(prompt("Pass:")===CONFIG.secretCode){ isAdmin=true; document.getElementById("adminPanel").style.display="flex"; render(); } }, 2000));
+        function cerrarAdmin() { isAdmin=false; document.getElementById("adminPanel").style.display="none"; render(); }
+        function toast(m) { var t=document.getElementById("toast"); t.textContent=m; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0", 2000); }
 
-        window.onload = render;
+        window.onload = () => { render(); };
     </script>
-
-    <style>
-        #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999}
-        #toast.visible{opacity:1}
-    </style>
 </body>
 </html>
