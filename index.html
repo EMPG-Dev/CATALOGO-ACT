@@ -3,299 +3,712 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DIANA PLATA | Studio</title>
+    <title>DIANA PLATA | Beauty Studio</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0f172a">
-
+    <meta name="theme-color" content="#fdf2f8">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         :root {
-            --dark: #0f172a; --mid: #1e293b; --accent: #3b82f6; --accent2: #2563eb;
-            --ws: #16a34a; --danger: #dc2626; --bg: #f1f5f9; --card: #ffffff;
-            --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --input-bg: #f8fafc;
+            --rose-light: #fff5f8;
+            --rose-bg: #fdf2f8;
+            --rose-card: #ffffff;
+            --rose-primary: #f9a8d4;
+            --rose-deep: #f472b6;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #b8860b;
+            --text-dark: #2d2a2e;
+            --text-muted: #7e6b73;
+            --border-rose: #fce7f3;
+            --success: #2b7a4b;
+            --danger: #e11d48;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
+            --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --shadow-gold: 0 4px 14px rgba(212, 175, 55, 0.2);
         }
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-        html,body{height:100%;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-        /* Animación de fondo Diana Plata Style */
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        html, body {
+            height: 100%;
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
+            background: var(--rose-bg);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        /* GRADIENTE ELEGANTE PARA PANTALLA DE INICIO */
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .main-screen {
-            height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 24px;
-            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #1e293b, #3b82f6);
-            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #ffe6f0, #ffd9e8, #fbcfe8, #fdf2f8);
+            background-size: 300% 300%;
+            animation: shimmer 12s ease infinite;
+            position: relative;
         }
 
-        .card-inicio{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(24px);padding:44px 28px;border-radius:28px;text-align:center;width:100%;max-width:380px}
-        .btn-entrar{display:block;width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;margin-top:20px;cursor:pointer}
+        .main-screen::before {
+            content: "✨";
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.1;
+            bottom: 20px;
+            right: 20px;
+            pointer-events: none;
+        }
 
-        /* Overlay Catálogo */
-        #catalogo-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;transform:translateY(100%);transition:0.4s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column}
-        #catalogo-overlay.active{transform:translateY(0)}
+        .card-inicio {
+            background: rgba(255, 248, 251, 0.85);
+            backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 48px 28px;
+            text-align: center;
+            width: 100%;
+            max-width: 380px;
+            border: 1px solid rgba(255, 215, 200, 0.5);
+            box-shadow: var(--shadow-md);
+        }
 
-        .header{padding:15px;background:var(--dark);display:flex;justify-content:space-between;align-items:center;color:#fff}
-        .search-bar{width:calc(100% - 30px);padding:10px 15px;border-radius:12px;border:none;background:rgba(255,255,255,0.1);color:#fff;margin:10px 15px}
+        .card-inicio h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #c084fc, #f472b6, #d4af37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
 
-        .content{flex:1;overflow-y:auto;padding:15px}
-        .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-        .card-prod{background:var(--card);border-radius:18px;padding:12px;border:1px solid var(--border);position:relative}
-        .img-prod{width:100%;height:100px;border-radius:10px;object-fit:cover;margin-bottom:8px;background:#eee}
+        .card-inicio p {
+            color: #9d8189;
+            font-weight: 400;
+        }
 
-        /* Carrito flotante */
-        .cart-float{position:fixed;bottom:25px;right:20px;background:var(--accent);color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,0.2);z-index:10000;cursor:pointer}
-        .cart-count{position:absolute;top:0;right:0;background:var(--danger);font-size:0.7rem;padding:4px 8px;border-radius:20px}
+        .btn-entrar {
+            background: linear-gradient(90deg, #f9a8d4, #f472b6);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            width: 100%;
+            margin-top: 28px;
+            cursor: pointer;
+            box-shadow: var(--shadow-gold);
+            transition: 0.2s;
+        }
 
-        /* Modales */
-        .modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:20000;display:none;align-items:center;justify-content:center;padding:20px}
-        .modal-content{background:#fff;width:100%;max-width:500px;border-radius:25px;padding:25px;max-height:90vh;display:flex;flex-direction:column}
-        
-        /* Dashboard Admin con Scroll */
-        .admin-scroll-area { flex: 1; overflow-y: auto; margin-top: 15px; padding-right: 5px; border-top: 1px solid var(--border); }
-        .ticket{font-family:'Courier New', monospace;background:#f8f9fa;padding:15px;border:1px dashed #ccc;margin:15px 0}
-        
-        input, select{width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1.5px solid var(--border);font-family:inherit;outline:none}
-        input:focus { border-color: var(--accent); }
-        .btn-ws{background:var(--ws);color:#fff;width:100%;padding:15px;border:none;border-radius:12px;font-weight:700;cursor:pointer}
-        .btn-add{background:var(--accent);color:#fff;border:none;width:100%;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;transition: 0.2s;}
-        .btn-add:active { transform: scale(0.98); }
+        .btn-entrar:active { transform: scale(0.97); }
 
-        /* Estilos Tabla Dashboard */
-        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        th { text-align: left; padding: 10px; color: var(--muted); border-bottom: 2px solid var(--border); position: sticky; top: 0; background: #fff; }
-        td { padding: 12px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-        .btn-icon { background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 5px; border-radius: 5px; transition: 0.2s; }
-        .btn-icon:hover { background: var(--bg); }
+        /* CATÁLOGO OVERLAY */
+        #catalogo-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--rose-bg);
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            flex-direction: column;
+        }
 
-        #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s;z-index:99999;pointer-events:none}
+        #catalogo-overlay.active {
+            transform: translateY(0);
+        }
+
+        /* HEADER ROSA/DORADO */
+        .header {
+            padding: 18px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border-rose);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        #logoAdmin {
+            font-weight: 700;
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            background: #ffffff;
+            border: 1px solid var(--border-rose);
+            border-radius: 40px;
+            padding: 12px 18px;
+            margin: 12px 16px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            padding: 8px 16px;
+            background: white;
+            margin: 0 12px 12px 12px;
+            border-radius: 60px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: var(--rose-primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(249, 168, 212, 0.3);
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+        }
+
+        /* TARJETAS PRODUCTOS */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .card-prod {
+            background: var(--rose-card);
+            border-radius: 28px;
+            padding: 14px;
+            border: 1px solid var(--border-rose);
+            transition: 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .img-prod {
+            width: 100%;
+            height: 120px;
+            border-radius: 20px;
+            object-fit: cover;
+            background: #fce7f3;
+            margin-bottom: 12px;
+        }
+
+        .precio-original {
+            text-decoration: line-through;
+            font-size: 0.7rem;
+            color: #a8768a;
+        }
+
+        .precio-descuento {
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--gold-dark);
+        }
+
+        .badge-stock {
+            background: #f3e8ff;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #b4537a;
+        }
+
+        .btn-add {
+            background: linear-gradient(95deg, #f9a8d4, #fbcfe8);
+            border: none;
+            border-radius: 50px;
+            padding: 8px;
+            width: 100%;
+            font-weight: 600;
+            color: #4a2c38;
+            margin-top: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        /* CARRITO FLOTANTE */
+        .cart-float {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            background: var(--gold);
+            color: #2d2a2e;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            z-index: 10000;
+            cursor: pointer;
+            font-size: 1.8rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        /* MODALES ESTILO BEAUTY */
+        .modal-content {
+            background: white;
+            border-radius: 40px;
+            padding: 28px;
+            border: 1px solid #fce7f3;
+            box-shadow: var(--shadow-md);
+        }
+
+        .ticket {
+            background: #fffafc;
+            border-radius: 24px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .btn-ws {
+            background: #25D366;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* TABLA ADMIN SCROLL */
+        .admin-scroll-area {
+            max-height: 260px;
+            overflow-y: auto;
+            border-radius: 24px;
+            background: #fffafd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #fef2f6;
+            color: #b4537a;
+            font-weight: 600;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #fce7f3;
+        }
+
+        .stats-card {
+            background: linear-gradient(145deg, #fff5f8, #ffffff);
+            border-radius: 28px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        input, select {
+            border-radius: 60px;
+            border: 1px solid #fbcfe8;
+            padding: 12px 16px;
+            background: white;
+        }
+
+        #toast {
+            background: #2d2a2e;
+            color: #fdf2f8;
+            border-radius: 60px;
+            backdrop-filter: blur(8px);
+        }
     </style>
 </head>
 <body>
 
-    <div class="main-screen">
-        <div class="card-inicio">
-            <h1 style="color:#fff;letter-spacing:5px">DIANA PLATA</h1>
-            <p style="color:rgba(255,255,255,0.6)">Studio & Business Store</p>
-            <button class="btn-entrar" onclick="abrirApp()">Ver Catálogo</button>
-        </div>
+<div class="main-screen">
+    <div class="card-inicio">
+        <h1>🌸 DIANA PLATA</h1>
+        <p>Beauty Studio · Elegancia & Bienestar</p>
+        <button class="btn-entrar" onclick="abrirApp()">✦ Ver Colección ✦</button>
+    </div>
+</div>
+
+<div id="catalogo-overlay">
+    <div class="header">
+        <span id="logoAdmin">💖 DIANA PLATA</span>
+        <button onclick="cerrarApp()" style="background:#fce7f3; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
+    </div>
+    <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar tratamientos o productos..." oninput="renderCatalogo()">
+
+    <div class="tabs">
+        <button class="tab" id="tabP" onclick="cambiarVista('prod')">✨ Productos</button>
+        <button class="tab" id="tabS" onclick="cambiarVista('serv')">💆‍♀️ Servicios</button>
     </div>
 
-    <div id="catalogo-overlay">
-        <div class="header">
-            <span id="logoAdmin" style="font-weight:900; cursor:pointer">DIANA PLATA</span>
-            <button onclick="cerrarApp()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;padding:5px 12px;border-radius:20px">Cerrar</button>
-        </div>
-        
-        <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos..." oninput="render()">
-
-        <div class="tabs" style="display:flex;gap:8px;padding:10px 14px;background:var(--dark)">
-            <button class="tab" id="tabP" onclick="cambiarVista('prod')" style="flex:1;padding:11px;border:none;border-radius:12px;font-weight:700">Productos</button>
-            <button class="tab" id="tabS" onclick="cambiarVista('serv')" style="flex:1;padding:11px;border:none;border-radius:12px;font-weight:700">Servicios</button>
-        </div>
-        
-        <div class="content">
-            <div id="prodView"><div id="catalogo-container"></div></div>
-            <div id="servView" style="display:none;">
-                <div class="card-prod" style="padding:20px">
-                    <h3 style="margin-bottom:15px">Agendar Cita</h3>
-                    <select id="citaTipo"><option>Facial Completo</option><option>Corporal Relax</option><option>Diseño de Ceja</option></select>
-                    <input type="date" id="citaFecha">
-                    <button class="btn-ws" onclick="confirmarCita()">Confirmar por WhatsApp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="cart-float" id="cartFloatBtn" onclick="abrirCarrito()">
-            🛒 <span class="cart-count" id="cartCount">0</span>
-        </div>
-    </div>
-
-    <div id="modalCarrito" class="modal">
-        <div class="modal-content">
-            <h3>Tu Ticket de Compra</h3>
-            <div id="ticketArea" class="ticket"></div>
-            <p style="font-size:0.8rem; font-weight:700; margin-bottom:10px">DATOS DE ENVÍO:</p>
-            <input type="text" id="custNombre" placeholder="Tu nombre">
-            <input type="text" id="custDireccion" placeholder="Dirección en Celaya/Alrededores">
-            <button class="btn-ws" onclick="enviarPedido()">Enviar Orden a WhatsApp</button>
-            <button onclick="cerrarCarrito()" style="width:100%;background:none;border:none;margin-top:15px;color:var(--muted)">Volver</button>
-        </div>
-    </div>
-
-    <div id="adminPanel" class="modal">
-        <div class="modal-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px">
-                <h4 id="adminTitle">Registro de Inventario</h4>
-                <button onclick="cerrarAdmin()" style="border:none; background:none; font-size:1.5rem; color:var(--muted); cursor:pointer;">&times;</button>
-            </div>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
-                <div style="background:var(--input-bg); padding:12px; border-radius:15px; border:1px solid var(--border); text-align:center;">
-                    <p style="font-size:0.6rem; color:var(--muted); text-transform:uppercase;">Stock</p>
-                    <b id="dashCount" style="font-size:1.1rem; color:var(--accent);">0</b>
-                </div>
-                <div style="background:var(--input-bg); padding:12px; border-radius:15px; border:1px solid var(--border); text-align:center;">
-                    <p style="font-size:0.6rem; color:var(--muted); text-transform:uppercase;">Inversión</p>
-                    <b id="dashValue" style="font-size:1.1rem; color:var(--ws);">$0</b>
-                </div>
-            </div>
-
-            <div id="formAdmin">
-                <input type="hidden" id="editId">
-                <input type="text" id="admNombre" placeholder="Nombre del Producto">
-                <input type="number" id="admPrecio" placeholder="Precio $">
-                <select id="admMarca">
-                    <option value="TERRAMAR">TERRAMAR</option>
-                    <option value="FARMASI">FARMASI</option>
-                    <option value="YANBAL">YANBAL</option>
-                    <option value="OTRO">OTRO</option>
+    <div class="content">
+        <div id="prodView"><div id="catalogo-container"></div></div>
+        <div id="servView" style="display:none;">
+            <div class="card-prod" style="padding:24px; text-align:center;">
+                <h3 style="color:#b4537a;">📅 Reserva tu momento</h3>
+                <select id="citaTipo" style="margin:15px 0;">
+                    <option>Facial Glow Diamond</option>
+                    <option>Masaje Corporal con Aceites</option>
+                    <option>Diseño de Cejas & Lifting</option>
+                    <option>Tratamiento Gold Relax</option>
                 </select>
-                <input type="file" id="admFile" accept="image/*">
-                <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">Guardar Producto</button>
-                <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; width:100%; background:none; border:none; margin-top:8px; color:var(--danger); font-size:0.8rem; font-weight:700;">CANCELAR EDICIÓN</button>
-            </div>
-
-            <div class="admin-scroll-area">
-                <table>
-                    <thead><tr><th>Producto</th><th>Precio</th><th>Acciones</th></tr></thead>
-                    <tbody id="adminTableBody"></tbody>
-                </table>
+                <input type="date" id="citaFecha">
+                <button class="btn-ws" onclick="confirmarCita()">Confirmar vía WhatsApp</button>
             </div>
         </div>
     </div>
 
-    <div id="toast"></div>
+    <div class="cart-float" id="cartFloatBtn" onclick="abrirCarrito()">
+        🛍️ <span class="cart-count" id="cartCount">0</span>
+    </div>
+</div>
 
-    <script>
-        var CONFIG = { phone: "527121919227", secretCode: "DAYANA123456", tienda: "DIANA PLATA | Studio", marcas: ["TERRAMAR", "FARMASI", "YANBAL", "OTRO"] };
-        var carrito = []; var isAdmin = false; var vistaActual = 'prod';
+<!-- Modal Carrito -->
+<div id="modalCarrito" class="modal">
+    <div class="modal-content">
+        <h3 style="color:#d4af37;">🛒 Tu pedido especial</h3>
+        <div id="ticketArea" class="ticket" style="background:#fff9fb;"></div>
+        <input type="text" id="custNombre" placeholder="Tu nombre ✨">
+        <input type="text" id="custDireccion" placeholder="Dirección (Celaya / zona)">
+        <button class="btn-ws" onclick="enviarPedido()">💎 Enviar pedido por WhatsApp</button>
+        <button onclick="cerrarCarrito()" style="margin-top:12px; background:none; border:none; color:#a8768a;">Seguir comprando</button>
+    </div>
+</div>
 
-        function abrirApp() { document.getElementById("catalogo-overlay").classList.add("active"); cambiarVista('prod'); }
-        function cerrarApp() { document.getElementById("catalogo-overlay").classList.remove("active"); }
+<!-- Panel Admin (Rosa/Dorado) -->
+<div id="adminPanel" class="modal">
+    <div class="modal-content">
+        <div style="display:flex; justify-content:space-between;">
+            <h4 style="color:#b4537a;">👑 Administración Studio</h4>
+            <button onclick="cerrarAdmin()" style="background:none; border:none; font-size:1.8rem;">&times;</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0;">
+            <div class="stats-card"><p style="font-size:0.7rem;">📦 Stock Total</p><b id="dashTotalStock" style="color:#d4af37;">0</b></div>
+            <div class="stats-card"><p style="font-size:0.7rem;">🏷️ Descuento Promedio</p><b id="dashAvgDescuento" style="color:#f472b6;">0%</b></div>
+        </div>
+        <div id="formAdmin">
+            <input type="hidden" id="editId">
+            <input type="text" id="admNombre" placeholder="Nombre del producto">
+            <input type="number" id="admPrecio" placeholder="Precio base ($)">
+            <select id="admMarca">
+                <option>TERRAMAR</option><option>FARMASI</option><option>YANBAL</option><option>OTRO</option>
+            </select>
+            <div style="display:flex; gap:8px;">
+                <input type="number" id="admStock" placeholder="Stock" value="5">
+                <input type="number" id="admDescuento" placeholder="Descuento %" value="0" step="1">
+            </div>
+            <input type="file" id="admFile" accept="image/*">
+            <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">✨ Guardar Producto</button>
+            <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; background:#fce7f3; border-radius:40px; padding:10px;">Cancelar edición</button>
+        </div>
+        <div class="admin-scroll-area">
+            <table><thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Dto%</th><th>Acciones</th></tr></thead><tbody id="adminTableBody"></tbody></table>
+        </div>
+    </div>
+</div>
 
-        function cambiarVista(v) {
-            vistaActual = v;
-            document.getElementById("prodView").style.display = v === "prod" ? "block" : "none";
-            document.getElementById("servView").style.display = v === "serv" ? "block" : "none";
-            document.getElementById("cartFloatBtn").style.display = v === "prod" ? "flex" : "none";
-            document.querySelectorAll(".tab").forEach(t => { t.style.background = "rgba(255,255,255,0.07)"; t.style.color = "rgba(255,255,255,0.45)"; });
-            var activeTab = v === 'prod' ? 'tabP' : 'tabS';
-            document.getElementById(activeTab).style.background = "var(--accent)";
-            document.getElementById(activeTab).style.color = "#fff";
-            render();
+<div id="toast"></div>
+
+<script>
+    const CONFIG = {
+        phone: "527121919227",
+        secretCode: "DAYANA123456",
+        tienda: "DIANA PLATA ✨ Beauty Studio"
+    };
+
+    let carrito = [];
+    let isAdmin = false;
+    let vistaActual = 'prod';
+
+    // ---- STORAGE ----
+    function getProductos() {
+        const data = localStorage.getItem("diana_beauty_v4");
+        if (!data) {
+            const demo = [
+                { id: 201, nombre: "Rosa Hydra Cream", precio: 390, marca: "TERRAMAR", imagen: "", stock: 12, descuento: 10 },
+                { id: 202, nombre: "Gold Serum Lifting", precio: 580, marca: "FARMASI", imagen: "", stock: 5, descuento: 15 },
+                { id: 203, nombre: "Exfoliante de Diamante", precio: 340, marca: "YANBAL", imagen: "", stock: 8, descuento: 0 },
+                { id: 204, nombre: "Brillo Labial Perla", precio: 180, marca: "OTRO", imagen: "", stock: 3, descuento: 20 }
+            ];
+            localStorage.setItem("diana_beauty_v4", JSON.stringify(demo));
+            return demo;
         }
+        return JSON.parse(data);
+    }
 
-        function getProds() { return JSON.parse(localStorage.getItem("empg_v2")) || []; }
-        function setProds(arr) { localStorage.setItem("empg_v2", JSON.stringify(arr)); }
+    function setProductos(arr) {
+        localStorage.setItem("diana_beauty_v4", JSON.stringify(arr));
+    }
 
-        function guardarProducto() {
-            var id = document.getElementById("editId").value;
-            var nom = document.getElementById("admNombre").value.trim();
-            var pre = document.getElementById("admPrecio").value.trim();
-            var mar = document.getElementById("admMarca").value;
-            var fil = document.getElementById("admFile").files[0];
+    function calcularPrecioFinal(precio, desc) {
+        return precio - (precio * (desc || 0) / 100);
+    }
 
-            if(!nom || !pre) return toast("Faltan datos");
-
-            const finalAction = (imgBase64) => {
-                var arr = getProds();
-                if(id) { 
-                    var idx = arr.findIndex(p => p.id == id);
-                    arr[idx].nombre = nom; arr[idx].precio = parseFloat(pre); arr[idx].marca = mar;
-                    if(imgBase64) arr[idx].imagen = imgBase64;
-                } else {
-                    arr.push({ id: Date.now(), nombre: nom, precio: parseFloat(pre), marca: mar, imagen: imgBase64 || "" });
-                }
-                setProds(arr); limpiarForm(); toast(id ? "Actualizado" : "Guardado"); render();
-            };
-
-            if(fil) { var r = new FileReader(); r.onload = (e) => finalAction(e.target.result); r.readAsDataURL(fil); }
-            else { finalAction(id ? null : ""); }
-        }
-
-        function editarForm(id) {
-            var p = getProds().find(item => item.id == id);
-            document.getElementById("editId").value = p.id;
-            document.getElementById("admNombre").value = p.nombre;
-            document.getElementById("admPrecio").value = p.precio;
-            document.getElementById("admMarca").value = p.marca;
-            document.getElementById("adminTitle").textContent = "Editando Producto";
-            document.getElementById("btnGuardar").textContent = "ACTUALIZAR CAMBIOS";
-            document.getElementById("btnGuardar").style.background = "var(--ws)";
-            document.getElementById("btnCancelarEdit").style.display = "block";
-            document.getElementById("formAdmin").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function limpiarForm() {
-            document.getElementById("editId").value = "";
-            document.getElementById("admNombre").value = "";
-            document.getElementById("admPrecio").value = "";
-            document.getElementById("admFile").value = "";
-            document.getElementById("adminTitle").textContent = "Registro de Inventario";
-            document.getElementById("btnGuardar").textContent = "Guardar Producto";
-            document.getElementById("btnGuardar").style.background = "var(--accent)";
-            document.getElementById("btnCancelarEdit").style.display = "none";
-        }
-
-        function eliminar(id) { if(confirm("¿Eliminar permanentemente?")) { setProds(getProds().filter(p => p.id !== id)); render(); } }
-
-        function render() {
-            var container = document.getElementById("catalogo-container");
-            var tableBody = document.getElementById("adminTableBody");
-            var query = document.getElementById("searchInput").value.toLowerCase();
-            container.innerHTML = ""; if(tableBody) tableBody.innerHTML = "";
-
-            var prods = getProds();
-            var totalInversion = 0;
-            if(isAdmin) {
-                document.getElementById("dashCount").textContent = prods.length;
-                prods.forEach(p => totalInversion += Number(p.precio));
-                document.getElementById("dashValue").textContent = `$${totalInversion.toLocaleString()}`;
-            }
-
-            CONFIG.marcas.forEach(marca => {
-                var items = prods.filter(p => p.marca === marca && p.nombre.toLowerCase().includes(query));
-                if (items.length === 0 && !isAdmin) return;
-
-                var sec = document.createElement("div");
-                sec.innerHTML = `<h5 style="margin:20px 0 10px; color:var(--accent); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px">${marca}</h5><div class="grid"></div>`;
-                var grid = sec.querySelector(".grid");
-
-                items.forEach(p => {
-                    grid.innerHTML += `<div class="card-prod"><img src="${p.imagen||''}" class="img-prod" onerror="this.src='https://via.placeholder.com/100?text=STUDIO'"><p style="font-size:0.8rem;font-weight:700">${p.nombre}</p><b>$${Number(p.precio).toLocaleString()}</b><button class="btn-add" onclick="agregarAlCarrito(${p.id})" style="width:100%; font-size:0.75rem; padding:8px;">+ Carrito</button></div>`;
-                    if(isAdmin && tableBody) {
-                        tableBody.innerHTML += `<tr><td>${p.nombre.substring(0,15)}</td><td><b>$${p.precio}</b></td><td><button class="btn-icon" onclick="editarForm(${p.id})">✏️</button><button class="btn-icon" onclick="eliminar(${p.id})" style="color:var(--danger)">🗑️</button></td></tr>`;
-                    }
-                });
-                container.appendChild(sec);
+    function renderCatalogo() {
+        const container = document.getElementById("catalogo-container");
+        if (!container) return;
+        let productos = getProductos();
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        if (query) productos = productos.filter(p => p.nombre.toLowerCase().includes(query));
+        
+        const marcasUnicas = [...new Set(productos.map(p => p.marca))];
+        container.innerHTML = "";
+        for (let marca of marcasUnicas) {
+            const items = productos.filter(p => p.marca === marca);
+            if (items.length === 0) continue;
+            const section = document.createElement("div");
+            section.innerHTML = `<h5 style="margin:25px 0 12px 8px; color:#d4af37; font-weight:600; letter-spacing:1px;">✦ ${marca} ✦</h5><div class="grid"></div>`;
+            const grid = section.querySelector(".grid");
+            items.forEach(prod => {
+                const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
+                const tieneStock = (prod.stock || 0) > 0;
+                const card = document.createElement("div");
+                card.className = "card-prod";
+                if (!tieneStock) card.style.opacity = "0.6";
+                card.innerHTML = `
+                    <img src="${prod.imagen || 'https://via.placeholder.com/120?text=✨'}" class="img-prod" onerror="this.src='https://via.placeholder.com/120?text=Beauty'">
+                    <div style="display:flex; justify-content:space-between;"><span class="badge-stock">📦 ${prod.stock ?? 0} uds</span>${!tieneStock ? '<span style="color:#e11d48;">Agotado</span>' : ''}</div>
+                    <p style="font-weight:600; margin:8px 0;">${prod.nombre}</p>
+                    <div>${prod.descuento > 0 ? `<span class="precio-original">$${prod.precio}</span> ` : ''}<span class="precio-descuento">$${Math.round(precioFinal)}</span> ${prod.descuento > 0 ? `<span style="font-size:0.7rem;">-${prod.descuento}%</span>` : ''}</div>
+                `;
+                const btn = document.createElement("button");
+                btn.innerText = tieneStock ? "➕ Agregar al neceser" : "Sin stock";
+                btn.className = "btn-add";
+                if (tieneStock) btn.onclick = () => agregarAlCarrito(prod);
+                else btn.disabled = true;
+                card.appendChild(btn);
+                grid.appendChild(card);
             });
+            container.appendChild(section);
         }
+    }
 
-        function agregarAlCarrito(id) { carrito.push(getProds().find(p => p.id === id)); document.getElementById("cartCount").textContent = carrito.length; toast("Producto en ticket"); }
-        function abrirCarrito() { if(carrito.length===0) return toast("Ticket vacío"); document.getElementById("modalCarrito").style.display="flex"; dibujarTicket(); }
-        function cerrarCarrito() { document.getElementById("modalCarrito").style.display="none"; }
-        function dibujarTicket() {
-            var total = 0; var html = `<b>${CONFIG.tienda}</b><br>---<br>`;
-            carrito.forEach(p => { html += `${p.nombre} $${Number(p.precio).toLocaleString()}<br>`; total += Number(p.precio); });
-            html += `---<br><b>TOTAL: $${total.toLocaleString()}</b>`;
-            document.getElementById("ticketArea").innerHTML = html;
+    function renderAdminTabla() {
+        const tbody = document.getElementById("adminTableBody");
+        if (!tbody) return;
+        const prods = getProductos();
+        tbody.innerHTML = "";
+        let totalStock = 0, sumaDto = 0, countDto = 0;
+        prods.forEach(p => {
+            totalStock += (p.stock || 0);
+            if (p.descuento > 0) { sumaDto += p.descuento; countDto++; }
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = p.nombre.length > 15 ? p.nombre.slice(0,12)+".." : p.nombre;
+            row.insertCell(1).innerHTML = `$${p.precio}`;
+            row.insertCell(2).innerHTML = `<span style="background:#fce7f3; padding:2px 12px; border-radius:20px;">${p.stock ?? 0}</span>`;
+            row.insertCell(3).innerText = `${p.descuento || 0}%`;
+            const acc = row.insertCell(4);
+            const editBtn = document.createElement("button"); editBtn.innerText = "✏️"; editBtn.className = "btn-icon"; editBtn.style.background="none"; editBtn.onclick = () => editarProducto(p.id);
+            const delBtn = document.createElement("button"); delBtn.innerText = "🗑️"; delBtn.className = "btn-icon"; delBtn.style.color="#e11d48"; delBtn.onclick = () => eliminarProducto(p.id);
+            acc.appendChild(editBtn); acc.appendChild(delBtn);
+        });
+        document.getElementById("dashTotalStock").innerText = totalStock;
+        const promedioDto = countDto ? Math.round(sumaDto / countDto) : 0;
+        document.getElementById("dashAvgDescuento").innerText = `${promedioDto}%`;
+    }
+
+    function guardarProducto() {
+        const id = document.getElementById("editId").value;
+        const nombre = document.getElementById("admNombre").value.trim();
+        const precio = parseFloat(document.getElementById("admPrecio").value);
+        const marca = document.getElementById("admMarca").value;
+        const stock = parseInt(document.getElementById("admStock").value) || 0;
+        let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
+        if (descuento > 100) descuento = 100;
+        const file = document.getElementById("admFile").files[0];
+        if (!nombre || isNaN(precio)) return toast("❌ Completa nombre y precio");
+        
+        const procesarImagen = (base64) => {
+            let productos = getProductos();
+            if (id) {
+                const idx = productos.findIndex(p => p.id == id);
+                if (idx !== -1) {
+                    productos[idx] = { ...productos[idx], nombre, precio, marca, stock, descuento, imagen: base64 !== undefined ? base64 : productos[idx].imagen };
+                }
+            } else {
+                productos.push({ id: Date.now(), nombre, precio, marca, stock, descuento, imagen: base64 || "" });
+            }
+            setProductos(productos);
+            limpiarForm();
+            renderCatalogo();
+            if (isAdmin) renderAdminTabla();
+            toast(id ? "✅ Producto actualizado" : "✨ Nuevo producto agregado");
+        };
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => procesarImagen(e.target.result);
+            reader.readAsDataURL(file);
+        } else procesarImagen(undefined);
+    }
+
+    function editarProducto(id) {
+        const prod = getProductos().find(p => p.id == id);
+        if (!prod) return;
+        document.getElementById("editId").value = prod.id;
+        document.getElementById("admNombre").value = prod.nombre;
+        document.getElementById("admPrecio").value = prod.precio;
+        document.getElementById("admMarca").value = prod.marca;
+        document.getElementById("admStock").value = prod.stock ?? 0;
+        document.getElementById("admDescuento").value = prod.descuento ?? 0;
+        document.getElementById("btnGuardar").innerText = "💾 Actualizar Producto";
+        document.getElementById("btnCancelarEdit").style.display = "block";
+        document.getElementById("formAdmin").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function limpiarForm() {
+        document.getElementById("editId").value = "";
+        document.getElementById("admNombre").value = "";
+        document.getElementById("admPrecio").value = "";
+        document.getElementById("admStock").value = "5";
+        document.getElementById("admDescuento").value = "0";
+        document.getElementById("admFile").value = "";
+        document.getElementById("btnGuardar").innerText = "✨ Guardar Producto";
+        document.getElementById("btnCancelarEdit").style.display = "none";
+    }
+
+    function eliminarProducto(id) {
+        if (confirm("¿Eliminar este producto del catálogo?")) {
+            const nuevos = getProductos().filter(p => p.id != id);
+            setProductos(nuevos);
+            renderCatalogo();
+            if (isAdmin) renderAdminTabla();
+            toast("🗑️ Eliminado");
         }
+    }
 
-        function enviarPedido() {
-            var n = document.getElementById("custNombre").value; var d = document.getElementById("custDireccion").value;
-            if(!n || !d) return toast("Completa tus datos");
-            var total = 0; var msg = `*ORDEN - ${CONFIG.tienda}*\n*Cliente:* ${n}\n*Dir:* ${d}\n---\n`;
-            carrito.forEach(p => { msg += `- ${p.nombre}: $${p.precio}\n`; total += Number(p.precio); });
-            msg += `---\n*TOTAL: $${total.toLocaleString()}*`;
-            window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
-            carrito = []; document.getElementById("cartCount").textContent = "0"; cerrarCarrito();
-        }
+    // Carrito
+    function agregarAlCarrito(prod) {
+        const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
+        carrito.push({ id: prod.id, nombre: prod.nombre, precioFinal, descuento: prod.descuento });
+        actualizarContador();
+        toast(`🌸 ${prod.nombre} añadido`);
+    }
 
-        function confirmarCita() { var f=document.getElementById("citaFecha").value; if(!f) return toast("Elige fecha"); window.open(`https://wa.me/${CONFIG.phone}?text=Cita+${document.getElementById("citaTipo").value}+${f}`); }
+    function actualizarContador() {
+        document.getElementById("cartCount").innerText = carrito.length;
+    }
 
-        var pT; document.getElementById("logoAdmin").addEventListener("mousedown", () => pT = setTimeout(() => {
-            if(prompt("Código Maestro:")===CONFIG.secretCode) { isAdmin=true; document.getElementById("adminPanel").style.display="flex"; render(); }
-        }, 2000));
-        function cerrarAdmin() { isAdmin=false; document.getElementById("adminPanel").style.display="none"; render(); }
-        function toast(m) { var t=document.getElementById("toast"); t.textContent=m; t.style.opacity="1"; setTimeout(()=>t.style.opacity="0", 2500); }
-        window.onload = render;
-    </script>
+    function dibujarTicket() {
+        let total = 0;
+        let html = `<div style="font-family:monospace;">${CONFIG.tienda}<br>━━━━━━━━━━━━<br>`;
+        carrito.forEach(item => {
+            html += `• ${item.nombre}  $${item.precioFinal}<br>`;
+            total += item.precioFinal;
+        });
+        html += `━━━━━━━━━━━━<br>💎 TOTAL: $${total}<br>✨ Gracias por tu confianza</div>`;
+        document.getElementById("ticketArea").innerHTML = html;
+    }
+
+    function abrirCarrito() {
+        if (carrito.length === 0) return toast("🛍️ Tu neceser está vacío");
+        dibujarTicket();
+        document.getElementById("modalCarrito").style.display = "flex";
+    }
+    function cerrarCarrito() { document.getElementById("modalCarrito").style.display = "none"; }
+
+    function enviarPedido() {
+        const nombre = document.getElementById("custNombre").value.trim();
+        const direccion = document.getElementById("custDireccion").value.trim();
+        if (!nombre || !direccion) return toast("Por favor completa tus datos");
+        let total = 0, mensaje = `✨ *${CONFIG.tienda}* ✨%0A👑 Pedido para: ${nombre}%0A📍 ${direccion}%0A━━━━━━━━━━%0A`;
+        carrito.forEach(p => { mensaje += `🌸 ${p.nombre} : $${p.precioFinal}%0A`; total += p.precioFinal; });
+        mensaje += `━━━━━━━━━━%0A💎 *TOTAL: $${total}*%0A¡Gracias por elegir Diana Plata! 💖`;
+        window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(mensaje)}`);
+        carrito = [];
+        actualizarContador();
+        cerrarCarrito();
+        toast("💕 Pedido enviado");
+    }
+
+    function confirmarCita() {
+        const fecha = document.getElementById("citaFecha").value;
+        if (!fecha) return toast("Selecciona una fecha");
+        const servicio = document.getElementById("citaTipo").value;
+        const msg = `Hola ✨ DIANA PLATA ✨, deseo agendar *${servicio}* para el día ${fecha}. 💆‍♀️`;
+        window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
+    }
+
+    // UI & Admin
+    function cambiarVista(vista) {
+        vistaActual = vista;
+        document.getElementById("prodView").style.display = vista === "prod" ? "block" : "none";
+        document.getElementById("servView").style.display = vista === "serv" ? "block" : "none";
+        document.getElementById("cartFloatBtn").style.display = vista === "prod" ? "flex" : "none";
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.getElementById(vista === "prod" ? "tabP" : "tabS").classList.add("active");
+        if (vista === "prod") renderCatalogo();
+    }
+
+    function abrirApp() {
+        document.getElementById("catalogo-overlay").classList.add("active");
+        cambiarVista('prod');
+    }
+    function cerrarApp() {
+        document.getElementById("catalogo-overlay").classList.remove("active");
+    }
+
+    let timer;
+    document.getElementById("logoAdmin").addEventListener("mousedown", () => {
+        timer = setTimeout(() => {
+            const code = prompt("🔑 Código de administradora:");
+            if (code === CONFIG.secretCode) {
+                isAdmin = true;
+                renderAdminTabla();
+                document.getElementById("adminPanel").style.display = "flex";
+                limpiarForm();
+            } else if (code) toast("Código incorrecto");
+        }, 800);
+    });
+    document.getElementById("logoAdmin").addEventListener("mouseup", () => clearTimeout(timer));
+    document.getElementById("logoAdmin").addEventListener("touchend", () => clearTimeout(timer));
+
+    function cerrarAdmin() { isAdmin = false; document.getElementById("adminPanel").style.display = "none"; renderCatalogo(); }
+    function toast(msg) { const t = document.getElementById("toast"); t.innerText = msg; t.style.opacity = "1"; setTimeout(() => t.style.opacity = "0", 2200); }
+
+    window.onload = () => {
+        renderCatalogo();
+        actualizarContador();
+        document.getElementById("citaFecha").value = new Date().toISOString().slice(0,10);
+    };
+</script>
 </body>
 </html>
