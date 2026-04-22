@@ -2,89 +2,213 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | E_M_P_G</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E_M_P_G | Catálogo Digital</title>
     <style>
-        /* Reset y Estilo Base */
-        body { 
-            margin: 0; height: 100vh; display: flex; justify-content: center; 
-            align-items: center; font-family: sans-serif; background: #f1f5f9; 
-        }
+        :root { --dark: #0f172a; --accent: #3b82f6; --ws: #25d366; --bg: #f1f5f9; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); }
 
-        /* Botón estilo 'Catálogo Emergente' */
-        .btn-trigger {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            text-align: center;
-            max-width: 350px;
+        /* PANTALLA DE INICIO */
+        .main-screen {
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; text-align: center; padding: 20px;
         }
-
-        .main-button {
-            background: #0f172a;
-            color: white;
-            padding: 18px 30px;
-            border-radius: 50px;
-            border: none;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex; align-items: center; gap: 10px;
-            width: 100%; justify-content: center;
+        .card-inicio {
+            background: white; padding: 40px 30px; border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); width: 100%; max-width: 380px;
         }
+        .btn-abrir {
+            background: var(--dark); color: white; border: none;
+            padding: 20px; border-radius: 50px; font-size: 1.1rem;
+            cursor: pointer; width: 100%; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: transform 0.2s;
+        }
+        .btn-abrir:active { transform: scale(0.96); }
 
-        /* Ventana Emergente (Modal) */
-        .modal-overlay {
-            display: none; 
+        /* CATÁLOGO OVERLAY (El efecto flotante) */
+        #catalogo-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-            z-index: 999; justify-content: center; align-items: center;
+            background: #f8fafc; z-index: 1000;
+            transform: translateY(100%); /* Escondido abajo */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+        }
+        #catalogo-overlay.active { transform: translateY(0); }
+
+        /* HEADER FIJO */
+        .header {
+            padding: 15px 20px; background: white; border-bottom: 1px solid #e2e8f0;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .close-icon { font-size: 28px; cursor: pointer; line-height: 1; }
+
+        /* NAVEGACIÓN INTERNA (Tabs) */
+        .tabs { display: flex; background: white; padding: 10px 20px; gap: 10px; }
+        .tab { 
+            flex: 1; padding: 10px; border: none; border-radius: 12px; 
+            background: #f1f5f9; font-weight: bold; color: #64748b; cursor: pointer;
+        }
+        .tab.active { background: var(--dark); color: white; }
+
+        /* CONTENIDO SCROLLEABLE */
+        .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 40px; }
+        
+        /* GRIDS Y MARCAS */
+        .brand-section { margin-bottom: 30px; }
+        .brand-name { 
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; 
+            color: var(--accent); font-weight: 800; margin-bottom: 10px; display: block;
+        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        /* TARJETA DE PRODUCTO */
+        .card-prod { background: white; border-radius: 18px; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .img-placeholder { 
+            width: 100%; height: 120px; background: #f1f5f9; 
+            border-radius: 12px; margin-bottom: 10px; 
+            /* Aquí irán tus imágenes de GitHub después */
+        }
+        .card-prod h4 { margin: 5px 0; font-size: 0.9rem; color: var(--dark); }
+        .price { font-weight: 800; color: var(--dark); display: block; margin-bottom: 10px; }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-ws { 
+            background: var(--ws); color: white; border: none; width: 100%; 
+            padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer;
         }
 
-        .modal-content {
-            width: 90%; max-width: 800px; height: 70vh;
-            background: white; border-radius: 20px;
-            position: relative; overflow: hidden;
-            animation: apper 0.3s ease-out;
+        /* FORMULARIO DE CITAS */
+        .booking-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        input, select { 
+            width: 100%; padding: 12px; margin: 10px 0 15px; 
+            border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 1rem;
         }
-
-        @keyframes apper {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .close-btn {
-            position: absolute; top: 15px; right: 20px;
-            font-size: 24px; cursor: pointer; color: #64748b;
-        }
-
-        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="btn-trigger">
-        <h2 style="color: #1e293b;">Catálogo Digital</h2>
-        <p style="color: #64748b;">Haz clic para ver nuestros productos sin salir de esta página.</p>
-        <button class="main-button" onclick="openModal()">
-            🛍️ Ver catálogo emergente
-        </button>
+    <div class="main-screen">
+        <div class="card-inicio">
+            <h1 style="margin: 0 0 10px; font-size: 1.8rem; color: var(--dark);">Catálogo Digital</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Explora nuestros productos y servicios sin salir de esta pantalla.</p>
+            <button class="btn-abrir" onclick="toggleOverlay(true)">
+                🛍️ Ver catálogo emergente
+            </button>
+        </div>
     </div>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <iframe src="catalogo.html"></iframe>
+    <div id="catalogo-overlay">
+        <div class="header">
+            <span style="font-weight: 800; color: var(--dark);">E_M_P_G STORE</span>
+            <div class="close-icon" onclick="toggleOverlay(false)">✕</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" id="tab-p" onclick="showSection('prod')">Productos</button>
+            <button class="tab" id="tab-s" onclick="showSection('serv')">Servicios</button>
+        </div>
+
+        <div class="content">
+            
+            <div id="sec-prod">
+                <div class="brand-section">
+                    <span class="brand-name">Marca 01</span>
+                    <div class="grid">
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto A1</h4><span class="price">$500</span><button class="btn-ws" onclick="order('Producto A1')">Pedir</button></div>
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto A2</h4><span class="price">$750</span><button class="btn-ws" onclick="order('Producto A2')">Pedir</button></div>
+                    </div>
+                </div>
+                <div class="brand-section">
+                    <span class="brand-name">Marca 02</span>
+                    <div class="grid">
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto B1</h4><span class="price">$1,200</span><button class="btn-ws" onclick="order('Producto B1')">Pedir</button></div>
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto B2</h4><span class="price">$990</span><button class="btn-ws" onclick="order('Producto B2')">Pedir</button></div>
+                    </div>
+                </div>
+                <div class="brand-section">
+                    <span class="brand-name">Marca 03</span>
+                    <div class="grid">
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto C1</h4><span class="price">$300</span><button class="btn-ws" onclick="order('Producto C1')">Pedir</button></div>
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto C2</h4><span class="price">$450</span><button class="btn-ws" onclick="order('Producto C2')">Pedir</button></div>
+                    </div>
+                </div>
+                <div class="brand-section">
+                    <span class="brand-name">Marca 04</span>
+                    <div class="grid">
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto D1</h4><span class="price">$2,500</span><button class="btn-ws" onclick="order('Producto D1')">Pedir</button></div>
+                        <div class="card-prod"><div class="img-placeholder"></div><h4>Producto D2</h4><span class="price">$1,800</span><button class="btn-ws" onclick="order('Producto D2')">Pedir</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-serv" style="display: none;">
+                <div class="booking-card">
+                    <h3 style="margin-top: 0;">Agendar Cita</h3>
+                    <p style="font-size: 0.9rem; color: #64748b;">Selecciona el servicio y el horario para confirmar por WhatsApp.</p>
+                    
+                    <label>Tipo de Servicio:</label>
+                    <select id="serv-tipo">
+                        <option>Consultoría de Datos</option>
+                        <option>Desarrollo Web</option>
+                        <option>Mantenimiento Técnico</option>
+                    </select>
+
+                    <label>Fecha:</label>
+                    <input type="date" id="serv-fecha">
+
+                    <label>Hora:</label>
+                    <input type="time" id="serv-hora">
+
+                    <button class="btn-ws" style="padding: 15px; font-size: 1rem;" onclick="book()">
+                        Confirmar Cita 📅
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        const modal = document.getElementById('modal');
-        function openModal() { modal.style.display = 'flex'; }
-        function closeModal() { modal.style.display = 'none'; }
-        
-        // Cerrar al hacer clic fuera del cuadro blanco
-        window.onclick = (e) => { if(e.target == modal) closeModal(); }
+        const phone = "52712XXXXXXX"; // REEMPLAZA CON TU NÚMERO
+
+        function toggleOverlay(show) {
+            const overlay = document.getElementById('catalogo-overlay');
+            if(show) overlay.classList.add('active');
+            else overlay.classList.remove('active');
+        }
+
+        function showSection(type) {
+            const p = document.getElementById('sec-prod');
+            const s = document.getElementById('sec-serv');
+            const tp = document.getElementById('tab-p');
+            const ts = document.getElementById('tab-s');
+
+            if(type === 'prod') {
+                p.style.display = 'block'; s.style.display = 'none';
+                tp.classList.add('active'); ts.classList.remove('active');
+            } else {
+                p.style.display = 'none'; s.style.display = 'block';
+                ts.classList.add('active'); tp.classList.remove('active');
+            }
+        }
+
+        function order(name) {
+            const msg = encodeURIComponent(`Hola E_M_P_G, me interesa el producto: ${name}`);
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
+
+        function book() {
+            const tipo = document.getElementById('serv-tipo').value;
+            const fecha = document.getElementById('serv-fecha').value;
+            const hora = document.getElementById('serv-hora').value;
+            
+            if(!fecha || !hora) return alert("Por favor elige fecha y hora");
+
+            const msg = encodeURIComponent(`Hola, quiero agendar ${tipo} para el día ${fecha} a las ${hora}.`);
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
     </script>
 </body>
 </html>
