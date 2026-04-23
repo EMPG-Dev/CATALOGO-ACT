@@ -6,6 +6,7 @@
     <title>DIANA PLATA | Studio</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#F5F5F7">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -29,17 +30,18 @@
             --success: #2C6E4F;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
         }
 
         body, html {
             height: 100%;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg-neutral);
             color: var(--text-primary);
             overflow: hidden;
         }
 
-        /* Pantalla de inicio minimalista */
+        /* Pantalla de inicio */
         .main-screen {
             height: 100dvh;
             display: flex;
@@ -124,7 +126,6 @@
             transform: translateY(0);
         }
 
-        /* Header con toques plateados */
         .header {
             padding: 16px 20px;
             background: var(--card-white);
@@ -156,7 +157,6 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 12px;
@@ -190,7 +190,6 @@
             padding: 16px;
         }
 
-        /* Grid productos */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -251,7 +250,6 @@
 
         .btn-add:active { background: var(--silver); color: white; }
 
-        /* Carrito flotante degradado dorado-plata */
         .cart-float {
             position: fixed;
             bottom: 24px;
@@ -267,7 +265,8 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
             z-index: 10000;
             cursor: pointer;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
+            font-weight: 500;
         }
 
         .cart-count {
@@ -282,14 +281,27 @@
             border-radius: 30px;
         }
 
-        /* Modales */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .modal-content {
             background: white;
             border-radius: 32px;
             padding: 24px;
             border: none;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
             max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .ticket {
@@ -297,7 +309,8 @@
             border-radius: 20px;
             padding: 16px;
             border-left: 3px solid var(--gold);
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
+            margin: 16px 0;
         }
 
         .btn-ws {
@@ -305,9 +318,13 @@
             border-radius: 44px;
             font-weight: 600;
             margin-top: 12px;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            color: white;
+            cursor: pointer;
         }
 
-        /* Admin panel con scroll */
         .admin-scroll-area {
             max-height: 260px;
             overflow-y: auto;
@@ -353,15 +370,31 @@
         }
 
         #toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
             background: #1C1C1E;
             color: white;
             border-radius: 60px;
             padding: 10px 20px;
             font-size: 0.85rem;
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 30000;
+            pointer-events: none;
         }
 
         button {
             cursor: pointer;
+        }
+
+        .btn-outline {
+            background: none;
+            border: 1px solid var(--border-light);
+            padding: 8px 16px;
+            border-radius: 40px;
+            margin-top: 8px;
         }
     </style>
 </head>
@@ -371,27 +404,27 @@
     <div class="card-inicio">
         <h1>DIANA PLATA</h1>
         <p>Studio · Elegancia en cada detalle</p>
-        <button class="btn-entrar" onclick="abrirApp()">✦ Ingresar ✦</button>
+        <button class="btn-entrar" id="btnAbrirApp">✦ Ingresar ✦</button>
     </div>
 </div>
 
 <div id="catalogo-overlay">
     <div class="header">
         <span id="logoAdmin">DIANA PLATA</span>
-        <button onclick="cerrarApp()" style="background:#EBEBEF; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
+        <button id="btnCerrarApp" style="background:#EBEBEF; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
     </div>
-    <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos..." oninput="renderCatalogo()">
+    <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos...">
 
     <div class="tabs">
-        <button class="tab" id="tabP" onclick="cambiarVista('prod')">Productos</button>
-        <button class="tab" id="tabS" onclick="cambiarVista('serv')">Servicios</button>
+        <button class="tab" id="tabP">Productos</button>
+        <button class="tab" id="tabS">Servicios</button>
     </div>
 
     <div class="content">
         <div id="prodView"><div id="catalogo-container"></div></div>
         <div id="servView" style="display:none;">
             <div class="card-prod" style="padding:24px; text-align:center;">
-                <h3 style="color:var(--gold-dark);">📅 Agenda tu cita</h3>
+                <h3 style="color:var(--gold-dark);">Agenda tu cita</h3>
                 <select id="citaTipo" style="margin:16px 0;">
                     <option>Facial Rejuvenecedor</option>
                     <option>Masaje Corporal Esencial</option>
@@ -399,13 +432,13 @@
                     <option>Tratamiento Gold & Silver</option>
                 </select>
                 <input type="date" id="citaFecha">
-                <button class="btn-ws" onclick="confirmarCita()">Confirmar vía WhatsApp</button>
+                <button class="btn-ws" id="btnConfirmarCita">Confirmar vía WhatsApp</button>
             </div>
         </div>
     </div>
 
-    <div class="cart-float" id="cartFloatBtn" onclick="abrirCarrito()">
-        🛒 <span class="cart-count" id="cartCount">0</span>
+    <div class="cart-float" id="cartFloatBtn">
+        <span>🛒</span> <span class="cart-count" id="cartCount">0</span>
     </div>
 </div>
 
@@ -416,21 +449,21 @@
         <div id="ticketArea" class="ticket"></div>
         <input type="text" id="custNombre" placeholder="Nombre completo">
         <input type="text" id="custDireccion" placeholder="Dirección (Celaya / zona)">
-        <button class="btn-ws" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
-        <button onclick="cerrarCarrito()" style="margin-top:12px; background:none; border:none; color:var(--text-secondary);">Seguir comprando</button>
+        <button class="btn-ws" id="btnEnviarPedido">Enviar pedido por WhatsApp</button>
+        <button id="btnCerrarCarrito" style="margin-top:12px; background:none; border:none; color:var(--text-secondary);">Seguir comprando</button>
     </div>
 </div>
 
-<!-- Panel Administrador (acceso por presión prolongada sobre logo) -->
+<!-- Panel Administrador -->
 <div id="adminPanel" class="modal">
     <div class="modal-content">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <h4 style="color:var(--gold-dark);">Panel de gestión</h4>
-            <button onclick="cerrarAdmin()" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
+            <button id="btnCerrarAdmin" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;">
-            <div class="stats-card"><span style="font-size:0.7rem;">📦 Stock total</span><br><b id="dashTotalStock" style="color:var(--gold);">0</b></div>
-            <div class="stats-card"><span style="font-size:0.7rem;">🏷️ Dto. promedio</span><br><b id="dashAvgDescuento" style="color:var(--silver-dark);">0%</b></div>
+            <div class="stats-card"><span style="font-size:0.7rem;">Stock total</span><br><b id="dashTotalStock" style="color:var(--gold);">0</b></div>
+            <div class="stats-card"><span style="font-size:0.7rem;">Dto. promedio</span><br><b id="dashAvgDescuento" style="color:var(--silver-dark);">0%</b></div>
         </div>
         <div id="formAdmin">
             <input type="hidden" id="editId">
@@ -444,8 +477,8 @@
                 <input type="number" id="admDescuento" placeholder="Descuento %" value="0" step="1">
             </div>
             <input type="file" id="admFile" accept="image/*">
-            <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">Guardar producto</button>
-            <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; margin-top:8px; background:#EBEBEF; border:none; border-radius:40px; padding:10px;">Cancelar edición</button>
+            <button class="btn-add" id="btnGuardarProducto">Guardar producto</button>
+            <button id="btnCancelarEdit" style="display:none; margin-top:8px; background:#EBEBEF; border:none; border-radius:40px; padding:10px;">Cancelar edición</button>
         </div>
         <div class="admin-scroll-area">
             <table>
@@ -458,210 +491,427 @@
 
 <div id="toast"></div>
 
+<script type="importmap">
+    {
+        "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+        }
+    }
+</script>
+
 <script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { 
-getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyCvrTlz7ewQlZBkTadgB9mxarMMJSvSp_A",
+        authDomain: "dianapg-99037.firebaseapp.com",
+        projectId: "dianapg-99037",
+        storageBucket: "dianapg-99037.firebasestorage.app",
+        messagingSenderId: "237058553544",
+        appId: "1:237058553544:web:62caa7960d879394da57fd"
+    };
 
-// 🔥 CONFIG REAL
-const firebaseConfig = { 
-  apiKey: "AIzaSyCvrTlz7ewQlZBkTadgB9mxarMMJSvSp_A",
-  authDomain: "dianapg-99037.firebaseapp.com",
-  projectId: "dianapg-99037",
-  storageBucket: "dianapg-99037.firebasestorage.app",
-  messagingSenderId: "237058553544",
-  appId: "1:237058553544:web:62caa7960d879394da57fd"
-};
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+    // ---------- ESTADO GLOBAL ----------
+    let productos = [];
+    let carrito = [];
+    let isAdmin = false;
+    let currentView = 'prod';
 
-// ================= ESTADO =================
-let productos = [];
-let carrito = [];
-let isAdmin = false;
-let currentView = 'prod';
+    // Elementos DOM
+    const catalogoContainer = document.getElementById("catalogo-container");
+    const searchInput = document.getElementById("searchInput");
+    const cartCountSpan = document.getElementById("cartCount");
+    const modalCarrito = document.getElementById("modalCarrito");
+    const ticketArea = document.getElementById("ticketArea");
+    const toastDiv = document.getElementById("toast");
 
-// ================= FIREBASE =================
-async function cargarProductos(){
-    const snap = await getDocs(collection(db,"productos"));
-    productos = [];
-    snap.forEach(d => productos.push({id:d.id, ...d.data()}));
-    renderCatalogo();
-    if(isAdmin) renderAdminTabla();
-}
-
-// ================= UTIL =================
-function calcularPrecioFinal(precio, desc){
-    return precio - (precio * (desc || 0) / 100);
-}
-
-// ================= RENDER =================
-window.renderCatalogo = function(){
-    const container = document.getElementById("catalogo-container");
-    let data = [...productos];
-
-    const q = document.getElementById("searchInput").value.toLowerCase();
-    if(q) data = data.filter(p => p.nombre.toLowerCase().includes(q));
-
-    const marcas = [...new Set(data.map(p=>p.marca))];
-    container.innerHTML="";
-
-    marcas.forEach(marca=>{
-        const items = data.filter(p=>p.marca===marca);
-
-        const section = document.createElement("div");
-        section.innerHTML = `
-        <div style="margin: 24px 0 12px 8px; font-weight:500; color:var(--gold-dark); border-left: 3px solid var(--silver); padding-left: 12px;">✦ ${marca} ✦</div>
-        <div class="grid"></div>`;
-
-        const grid = section.querySelector(".grid");
-
-        items.forEach(p=>{
-            const precioFinal = calcularPrecioFinal(p.precio, p.descuento);
-            const card = document.createElement("div");
-            card.className="card-prod";
-
-            card.innerHTML = `
-            <img src="${p.imagen || 'https://via.placeholder.com/120'}" class="img-prod">
-            <div style="display:flex; justify-content:space-between;">
-                <span class="badge-stock">📦 ${p.stock || 0}</span>
-            </div>
-            <p>${p.nombre}</p>
-            <div>
-                ${p.descuento>0?`<span class="precio-original">$${p.precio}</span>`:""}
-                <span class="precio-descuento">$${Math.round(precioFinal)}</span>
-            </div>`;
-
-            const btn = document.createElement("button");
-            btn.className="btn-add";
-            btn.innerText = "Agregar";
-            btn.onclick = ()=>agregarAlCarrito(p);
-
-            card.appendChild(btn);
-            grid.appendChild(card);
-        });
-
-        container.appendChild(section);
-    });
-}
-
-// ================= ADMIN =================
-window.renderAdminTabla = function(){
-    const tbody = document.getElementById("adminTableBody");
-    tbody.innerHTML="";
-
-    productos.forEach(p=>{
-        const row = tbody.insertRow();
-        row.insertCell(0).innerText = p.nombre;
-        row.insertCell(1).innerText = `$${p.precio}`;
-        row.insertCell(2).innerText = p.stock || 0;
-        row.insertCell(3).innerText = p.descuento || 0;
-
-        const acc = row.insertCell(4);
-
-        const edit = document.createElement("button");
-        edit.innerText="✏️";
-        edit.onclick=()=>editarProducto(p);
-
-        const del = document.createElement("button");
-        del.innerText="🗑️";
-        del.onclick=()=>eliminarProducto(p.id);
-
-        acc.appendChild(edit);
-        acc.appendChild(del);
-    });
-}
-
-window.guardarProducto = async function(){
-    const id = document.getElementById("editId").value;
-    const nombre = admNombre.value;
-    const precio = +admPrecio.value;
-    const marca = admMarca.value;
-    const stock = +admStock.value;
-    const descuento = +admDescuento.value;
-
-    if(!nombre || !precio) return alert("Datos inválidos");
-
-    if(id){
-        await updateDoc(doc(db,"productos",id),{
-            nombre,precio,marca,stock,descuento
-        });
-    }else{
-        await addDoc(collection(db,"productos"),{
-            nombre,precio,marca,stock,descuento,imagen:""
-        });
+    // Funciones auxiliares
+    function mostrarToast(mensaje, esError = false) {
+        toastDiv.textContent = mensaje;
+        toastDiv.style.opacity = "1";
+        toastDiv.style.background = esError ? "var(--danger)" : "#1C1C1E";
+        setTimeout(() => { toastDiv.style.opacity = "0"; }, 2500);
     }
 
-    limpiarForm();
+    function calcularPrecioFinal(precio, descuento) {
+        return precio - (precio * (descuento || 0) / 100);
+    }
+
+    function actualizarContadorCarrito() {
+        cartCountSpan.innerText = carrito.length;
+    }
+
+    // ---------- CARGAR PRODUCTOS DESDE FIRESTORE ----------
+    async function cargarProductos() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "productos"));
+            productos = [];
+            querySnapshot.forEach(docSnap => {
+                productos.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            if (productos.length === 0) {
+                // Datos demo iniciales
+                const demo = [
+                    { nombre: "Esencia Hidratante", precio: 450, marca: "TERRAMAR", stock: 12, descuento: 10, imagen: "" },
+                    { nombre: "Serum Lifting Oro", precio: 720, marca: "FARMASI", stock: 5, descuento: 15, imagen: "" },
+                    { nombre: "Exfoliante de Plata", precio: 390, marca: "YANBAL", stock: 8, descuento: 0, imagen: "" },
+                    { nombre: "Brillo Gloss", precio: 220, marca: "OTRO", stock: 3, descuento: 20, imagen: "" }
+                ];
+                for (const item of demo) {
+                    await addDoc(collection(db, "productos"), item);
+                }
+                await cargarProductos(); // recargar
+                return;
+            }
+            renderCatalogo();
+            if (isAdmin) renderAdminTabla();
+        } catch (error) {
+            console.error(error);
+            mostrarToast("Error al cargar productos", true);
+        }
+    }
+
+    // ---------- RENDER CATÁLOGO PÚBLICO ----------
+    function renderCatalogo() {
+        if (!catalogoContainer) return;
+        let filtrados = [...productos];
+        const query = searchInput.value.toLowerCase();
+        if (query) filtrados = filtrados.filter(p => p.nombre.toLowerCase().includes(query));
+
+        const marcasUnicas = [...new Set(filtrados.map(p => p.marca))];
+        catalogoContainer.innerHTML = "";
+
+        for (const marca of marcasUnicas) {
+            const itemsMarca = filtrados.filter(p => p.marca === marca);
+            if (itemsMarca.length === 0) continue;
+
+            const section = document.createElement("div");
+            section.innerHTML = `
+                <div style="margin: 24px 0 12px 8px; font-weight:500; color:var(--gold-dark); border-left: 3px solid var(--silver); padding-left: 12px;">✦ ${marca} ✦</div>
+                <div class="grid"></div>
+            `;
+            const grid = section.querySelector(".grid");
+
+            itemsMarca.forEach(prod => {
+                const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
+                const tieneStock = (prod.stock || 0) > 0;
+                const card = document.createElement("div");
+                card.className = "card-prod";
+                if (!tieneStock) card.style.opacity = "0.6";
+
+                card.innerHTML = `
+                    <img src="${prod.imagen || 'https://via.placeholder.com/120?text=✨'}" class="img-prod" onerror="this.src='https://via.placeholder.com/120?text=Studio'">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                        <span class="badge-stock">Stock: ${prod.stock ?? 0}</span>
+                        ${!tieneStock ? '<span style="color:var(--danger);">Agotado</span>' : ''}
+                    </div>
+                    <p style="font-weight:600; margin: 6px 0;">${prod.nombre}</p>
+                    <div>
+                        ${prod.descuento > 0 ? `<span class="precio-original">$${prod.precio}</span> ` : ''}
+                        <span class="precio-descuento">$${Math.round(precioFinal)}</span>
+                        ${prod.descuento > 0 ? `<span style="font-size:0.7rem;">-${prod.descuento}%</span>` : ''}
+                    </div>
+                `;
+                const btn = document.createElement("button");
+                btn.className = "btn-add";
+                btn.innerText = tieneStock ? "Agregar" : "Sin stock";
+                if (tieneStock) {
+                    btn.onclick = () => agregarAlCarrito(prod);
+                } else {
+                    btn.disabled = true;
+                }
+                card.appendChild(btn);
+                grid.appendChild(card);
+            });
+            catalogoContainer.appendChild(section);
+        }
+    }
+
+    // ---------- ADMIN: TABLA Y CRUD ----------
+    function renderAdminTabla() {
+        const tbody = document.getElementById("adminTableBody");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        let totalStock = 0;
+        let sumaDescuentos = 0;
+        let countDescuentos = 0;
+
+        productos.forEach(p => {
+            totalStock += (p.stock || 0);
+            if (p.descuento > 0) {
+                sumaDescuentos += p.descuento;
+                countDescuentos++;
+            }
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = p.nombre.length > 18 ? p.nombre.slice(0,15)+"…" : p.nombre;
+            row.insertCell(1).innerText = `$${p.precio}`;
+            row.insertCell(2).innerText = p.stock ?? 0;
+            row.insertCell(3).innerText = `${p.descuento || 0}%`;
+            const accCell = row.insertCell(4);
+            const btnEdit = document.createElement("button");
+            btnEdit.innerText = "✏️";
+            btnEdit.style.background = "none";
+            btnEdit.style.border = "none";
+            btnEdit.style.fontSize = "1rem";
+            btnEdit.style.cursor = "pointer";
+            btnEdit.onclick = () => editarProducto(p);
+            const btnDel = document.createElement("button");
+            btnDel.innerText = "🗑️";
+            btnDel.style.background = "none";
+            btnDel.style.border = "none";
+            btnDel.style.marginLeft = "8px";
+            btnDel.style.color = "var(--danger)";
+            btnDel.style.cursor = "pointer";
+            btnDel.onclick = () => eliminarProducto(p.id);
+            accCell.appendChild(btnEdit);
+            accCell.appendChild(btnDel);
+        });
+
+        document.getElementById("dashTotalStock").innerText = totalStock;
+        const promedioDto = countDescuentos ? Math.round(sumaDescuentos / countDescuentos) : 0;
+        document.getElementById("dashAvgDescuento").innerText = `${promedioDto}%`;
+    }
+
+    async function guardarProducto() {
+        const id = document.getElementById("editId").value;
+        const nombre = document.getElementById("admNombre").value.trim();
+        const precio = parseFloat(document.getElementById("admPrecio").value);
+        const marca = document.getElementById("admMarca").value;
+        const stock = parseInt(document.getElementById("admStock").value) || 0;
+        let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
+        if (descuento > 100) descuento = 100;
+        const file = document.getElementById("admFile").files[0];
+
+        if (!nombre || isNaN(precio)) {
+            mostrarToast("Complete nombre y precio", true);
+            return;
+        }
+
+        try {
+            if (id) {
+                await updateDoc(doc(db, "productos", id), { nombre, precio, marca, stock, descuento });
+                mostrarToast("Producto actualizado");
+            } else {
+                await addDoc(collection(db, "productos"), { nombre, precio, marca, stock, descuento, imagen: "" });
+                mostrarToast("Producto agregado");
+            }
+            limpiarFormularioAdmin();
+            await cargarProductos();
+        } catch (error) {
+            console.error(error);
+            mostrarToast("Error al guardar", true);
+        }
+    }
+
+    async function eliminarProducto(id) {
+        if (!confirm("¿Eliminar este producto permanentemente?")) return;
+        try {
+            await deleteDoc(doc(db, "productos", id));
+            mostrarToast("Producto eliminado");
+            await cargarProductos();
+        } catch (error) {
+            mostrarToast("Error al eliminar", true);
+        }
+    }
+
+    function editarProducto(prod) {
+        document.getElementById("editId").value = prod.id;
+        document.getElementById("admNombre").value = prod.nombre;
+        document.getElementById("admPrecio").value = prod.precio;
+        document.getElementById("admMarca").value = prod.marca;
+        document.getElementById("admStock").value = prod.stock ?? 0;
+        document.getElementById("admDescuento").value = prod.descuento ?? 0;
+        document.getElementById("btnGuardarProducto").innerText = "Actualizar producto";
+        document.getElementById("btnCancelarEdit").style.display = "block";
+        document.getElementById("formAdmin").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function limpiarFormularioAdmin() {
+        document.getElementById("editId").value = "";
+        document.getElementById("admNombre").value = "";
+        document.getElementById("admPrecio").value = "";
+        document.getElementById("admStock").value = "5";
+        document.getElementById("admDescuento").value = "0";
+        document.getElementById("admFile").value = "";
+        document.getElementById("btnGuardarProducto").innerText = "Guardar producto";
+        document.getElementById("btnCancelarEdit").style.display = "none";
+    }
+
+    // ---------- CARRITO ----------
+    function agregarAlCarrito(producto) {
+        const precioFinal = calcularPrecioFinal(producto.precio, producto.descuento);
+        const item = {
+            id: producto.id,
+            nombre: producto.nombre,
+            precioFinal: precioFinal,
+            precioOriginal: producto.precio,
+            descuento: producto.descuento || 0
+        };
+        carrito.push(item);
+        actualizarContadorCarrito();
+        mostrarToast(`${producto.nombre} agregado`);
+    }
+
+    function mostrarTicket() {
+        if (carrito.length === 0) {
+            ticketArea.innerHTML = "<p>Carrito vacío</p>";
+            return;
+        }
+        let total = 0;
+        let html = `<div style="font-family: monospace;">DIANA PLATA · Studio<br>━━━━━━━━━━━━━━<br>`;
+        carrito.forEach(item => {
+            html += `• ${item.nombre}   $${item.precioFinal.toLocaleString()}<br>`;
+            total += item.precioFinal;
+        });
+        html += `━━━━━━━━━━━━━━<br>Total: $${total.toLocaleString()}<br>✦ Gracias por tu compra</div>`;
+        ticketArea.innerHTML = html;
+    }
+
+    function abrirCarrito() {
+        if (carrito.length === 0) {
+            mostrarToast("El carrito está vacío", true);
+            return;
+        }
+        mostrarTicket();
+        modalCarrito.style.display = "flex";
+    }
+
+    function cerrarCarrito() {
+        modalCarrito.style.display = "none";
+    }
+
+    async function enviarPedido() {
+        const nombre = document.getElementById("custNombre").value.trim();
+        const direccion = document.getElementById("custDireccion").value.trim();
+        if (!nombre || !direccion) {
+            mostrarToast("Complete nombre y dirección", true);
+            return;
+        }
+        if (carrito.length === 0) {
+            mostrarToast("No hay productos", true);
+            return;
+        }
+
+        let total = 0;
+        let mensaje = `✨ DIANA PLATA · Studio ✨%0APedido para: ${nombre}%0ADirección: ${direccion}%0A━━━━━━━━━━━━%0A`;
+        carrito.forEach(p => {
+            mensaje += `• ${p.nombre} : $${p.precioFinal}%0A`;
+            total += p.precioFinal;
+        });
+        mensaje += `━━━━━━━━━━━━%0ATotal: $${total}%0A¡Gracias por su compra!`;
+
+        try {
+            // Guardar pedido en Firebase
+            await addDoc(collection(db, "pedidos"), {
+                nombre,
+                direccion,
+                items: carrito,
+                total,
+                fecha: new Date()
+            });
+            // Enviar WhatsApp
+            window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
+            carrito = [];
+            actualizarContadorCarrito();
+            cerrarCarrito();
+            mostrarToast("Pedido enviado y registrado");
+            document.getElementById("custNombre").value = "";
+            document.getElementById("custDireccion").value = "";
+        } catch (error) {
+            console.error(error);
+            mostrarToast("Error al guardar pedido", true);
+        }
+    }
+
+    // ---------- CITAS ----------
+    function confirmarCita() {
+        const fecha = document.getElementById("citaFecha").value;
+        if (!fecha) {
+            mostrarToast("Seleccione una fecha", true);
+            return;
+        }
+        const servicio = document.getElementById("citaTipo").value;
+        const mensaje = `Hola DIANA PLATA Studio, deseo agendar *${servicio}* para el día ${fecha}.`;
+        window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
+    }
+
+    // ---------- UI Y ADMIN (presión prolongada) ----------
+    let pressTimer = null;
+    const logo = document.getElementById("logoAdmin");
+    function startPress() {
+        pressTimer = setTimeout(() => {
+            const code = prompt("Clave de administración:");
+            if (code === "DAYANA123456") {
+                isAdmin = true;
+                renderAdminTabla();
+                document.getElementById("adminPanel").style.display = "flex";
+            } else if (code !== null) {
+                mostrarToast("Código incorrecto", true);
+            }
+            pressTimer = null;
+        }, 600);
+    }
+    function cancelPress() {
+        if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+    }
+    logo.addEventListener("mousedown", startPress);
+    logo.addEventListener("mouseup", cancelPress);
+    logo.addEventListener("mouseleave", cancelPress);
+    logo.addEventListener("touchstart", startPress);
+    logo.addEventListener("touchend", cancelPress);
+
+    function cerrarAdmin() {
+        isAdmin = false;
+        document.getElementById("adminPanel").style.display = "none";
+    }
+
+    function cambiarVista(vista) {
+        currentView = vista;
+        document.getElementById("prodView").style.display = vista === "prod" ? "block" : "none";
+        document.getElementById("servView").style.display = vista === "serv" ? "block" : "none";
+        const cartFloat = document.getElementById("cartFloatBtn");
+        if (cartFloat) cartFloat.style.display = vista === "prod" ? "flex" : "none";
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.getElementById(vista === "prod" ? "tabP" : "tabS").classList.add("active");
+        if (vista === "prod") renderCatalogo();
+    }
+
+    function abrirApp() {
+        document.getElementById("catalogo-overlay").classList.add("active");
+        cambiarVista('prod');
+    }
+    function cerrarApp() {
+        document.getElementById("catalogo-overlay").classList.remove("active");
+    }
+
+    // ---------- EVENTOS ----------
+    document.getElementById("btnAbrirApp").onclick = abrirApp;
+    document.getElementById("btnCerrarApp").onclick = cerrarApp;
+    document.getElementById("cartFloatBtn").onclick = abrirCarrito;
+    document.getElementById("btnCerrarCarrito").onclick = cerrarCarrito;
+    document.getElementById("btnEnviarPedido").onclick = enviarPedido;
+    document.getElementById("btnConfirmarCita").onclick = confirmarCita;
+    document.getElementById("btnGuardarProducto").onclick = guardarProducto;
+    document.getElementById("btnCancelarEdit").onclick = limpiarFormularioAdmin;
+    document.getElementById("btnCerrarAdmin").onclick = cerrarAdmin;
+    document.getElementById("tabP").onclick = () => cambiarVista('prod');
+    document.getElementById("tabS").onclick = () => cambiarVista('serv');
+    searchInput.oninput = () => renderCatalogo();
+
+    // Inicializar
     cargarProductos();
-}
+    actualizarContadorCarrito();
 
-window.eliminarProducto = async function(id){
-    await deleteDoc(doc(db,"productos",id));
-    cargarProductos();
-}
-
-window.editarProducto = function(p){
-    editId.value = p.id;
-    admNombre.value = p.nombre;
-    admPrecio.value = p.precio;
-    admMarca.value = p.marca;
-    admStock.value = p.stock;
-    admDescuento.value = p.descuento;
-}
-
-// ================= CARRITO =================
-window.agregarAlCarrito = function(p){
-    const precioFinal = calcularPrecioFinal(p.precio, p.descuento);
-    carrito.push({...p, precioFinal});
-    actualizarContador();
-}
-
-function actualizarContador(){
-    cartCount.innerText = carrito.length;
-}
-
-window.abrirCarrito = function(){
-    let total=0, html="";
-    carrito.forEach(p=>{
-        html+=`${p.nombre} $${p.precioFinal}<br>`;
-        total+=p.precioFinal;
-    });
-    html+=`<br>Total: $${total}`;
-    ticketArea.innerHTML=html;
-    modalCarrito.style.display="flex";
-}
-
-window.cerrarCarrito = ()=>modalCarrito.style.display="none";
-
-// ================= PEDIDOS =================
-window.enviarPedido = async function(){
-    const nombre = custNombre.value;
-    const direccion = custDireccion.value;
-
-    await addDoc(collection(db,"pedidos"),{
-        nombre,direccion,carrito,fecha:new Date()
-    });
-
-    alert("Pedido guardado");
-    carrito=[];
-    actualizarContador();
-    cerrarCarrito();
-}
-
-// ================= INIT =================
-window.onload = ()=>{
-    cargarProductos();
-}
-
-// ================= PWA =================
-if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("sw.js");
-}
-
+    // Service Worker para PWA (si existe)
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js").catch(e => console.log("SW no registrado"));
+    }
 </script>
 </body>
 </html>
