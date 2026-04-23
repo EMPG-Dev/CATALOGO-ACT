@@ -6,217 +6,342 @@
 <title>DIANA PLATA | Beauty Studio</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFFFFF">
 
 <style>
-:root{--bg:#F8F9FC;--gold:#C5A059;--dark:#1E1E2F;}
-body{margin:0;font-family:sans-serif;background:var(--bg);color:var(--dark);}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:9999;}
-.card{background:white;padding:12px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05);}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;}
-.btn{border:none;border-radius:30px;padding:10px;cursor:pointer;}
-.gold{background:var(--gold);color:white;}
-#catalogo-overlay{position:fixed;inset:0;background:white;transform:translateY(100%);transition:.3s;display:flex;flex-direction:column;}
-#catalogo-overlay.active{transform:translateY(0);}
-.cart-float{position:fixed;bottom:20px;right:20px;background:var(--gold);width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;cursor:pointer;}
-.cart-count{position:absolute;top:-5px;right:-5px;background:red;color:white;border-radius:50%;font-size:10px;padding:4px;}
+:root {
+--bg: #F8F9FC;
+--white: #FFFFFF;
+--dark: #1E1E2F;
+--gold: #C5A059;
+--gold-dark: #A07E3C;
+--gold-soft: #E9D6B0;
+--border: #EAECF0;
+}
+
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--dark);
+}
+
+/* ================= INICIO ================= */
+.main-screen{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(145deg,#fff,#f3f2f0);
+}
+
+.card-inicio{
+padding:50px;
+border-radius:40px;
+background:rgba(255,255,255,.95);
+box-shadow:0 20px 40px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.card-inicio h1{
+font-family:'Playfair Display',serif;
+color:var(--gold-dark);
+letter-spacing:1px;
+}
+
+.btn-main{
+margin-top:30px;
+background:var(--gold);
+border:none;
+padding:14px 30px;
+border-radius:50px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+/* ================= APP ================= */
+#catalogo-overlay{
+position:fixed;
+inset:0;
+background:var(--bg);
+transform:translateY(100%);
+transition:.4s cubic-bezier(.2,.9,.3,1.1);
+display:flex;
+flex-direction:column;
+}
+
+#catalogo-overlay.active{
+transform:translateY(0);
+}
+
+/* HEADER */
+.header{
+padding:16px 20px;
+background:var(--white);
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid var(--border);
+}
+
+#logoAdmin{
+font-family:'Playfair Display',serif;
+font-size:1.4rem;
+color:var(--gold-dark);
+cursor:pointer;
+}
+
+/* BUSCADOR */
+.search{
+margin:12px;
+padding:12px;
+border-radius:30px;
+border:1px solid var(--border);
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+padding:16px;
+}
+
+/* CARD PRODUCTO */
+.card-prod{
+background:var(--white);
+border-radius:24px;
+padding:14px;
+box-shadow:0 6px 18px rgba(0,0,0,.05);
+transition:.2s;
+}
+
+.card-prod:hover{
+transform:translateY(-3px);
+}
+
+.img-prod{
+width:100%;
+height:120px;
+border-radius:16px;
+background:#eee;
+margin-bottom:10px;
+}
+
+.precio{
+font-weight:700;
+color:var(--gold-dark);
+}
+
+.stock{
+font-size:.7rem;
+background:#eee;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.btn-add{
+margin-top:10px;
+background:var(--gold-soft);
+border:none;
+padding:8px;
+border-radius:30px;
+width:100%;
+cursor:pointer;
+}
+
+/* CARRITO */
+.cart-float{
+position:fixed;
+bottom:25px;
+right:20px;
+background:var(--gold);
+color:white;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.5rem;
+box-shadow:0 10px 20px rgba(0,0,0,.2);
+cursor:pointer;
+}
+
+.cart-count{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:.7rem;
+padding:4px 8px;
+border-radius:20px;
+}
+
+/* MODAL */
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.4);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.modal-content{
+background:white;
+padding:20px;
+border-radius:30px;
+width:90%;
+max-width:400px;
+}
+
+/* TICKET */
+.ticket{
+font-family:monospace;
+background:#FCFAF7;
+padding:10px;
+border-radius:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+.grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
 <body>
 
-<div style="height:100vh;display:flex;align-items:center;justify-content:center;">
-<button class="btn gold" onclick="abrirApp()">Entrar</button>
+<div class="main-screen">
+<div class="card-inicio">
+<h1>DIANA PLATA</h1>
+<p>Beauty Studio</p>
+<button class="btn-main" onclick="abrirApp()">Entrar</button>
+</div>
 </div>
 
 <div id="catalogo-overlay">
-<div style="display:flex;justify-content:space-between;padding:10px;">
-<b id="logoAdmin">DIANA PLATA</b>
+
+<div class="header">
+<span id="logoAdmin">DIANA PLATA</span>
 <button onclick="cerrarApp()">Cerrar</button>
 </div>
 
-<input id="searchInput" placeholder="Buscar..." oninput="renderCatalogo()">
+<input id="searchInput" class="search" placeholder="Buscar..." oninput="renderCatalogo()">
 
 <div id="catalogo-container" class="grid"></div>
 
 <div class="cart-float" onclick="abrirCarrito()">
 🛒 <span id="cartCount" class="cart-count">0</span>
 </div>
+
 </div>
 
-<!-- carrito -->
+<!-- MODAL -->
 <div id="modalCarrito" class="modal">
-<div class="card">
-<div id="ticket"></div>
+<div class="modal-content">
+<h3>Tu pedido</h3>
+<div id="ticket" class="ticket"></div>
+
 <input id="custNombre" placeholder="Nombre">
 <input id="custDireccion" placeholder="Dirección">
+
 <button onclick="enviarPedido()">Enviar pedido</button>
 <button onclick="cerrarCarrito()">Cerrar</button>
 </div>
 </div>
 
-<!-- admin -->
-<div id="adminPanel" class="modal">
-<div class="card">
-<h3>Panel Admin</h3>
-
-<input id="admNombre" placeholder="Nombre">
-<input id="admPrecio" type="number" placeholder="Precio">
-<input id="admStock" type="number" placeholder="Stock">
-<button onclick="guardarProducto()">Guardar</button>
-
-<table id="adminTable"></table>
-
-<button onclick="cerrarAdmin()">Cerrar</button>
-</div>
-</div>
-
 <script type="module">
 
-// 🔥 FIREBASE IMPORTS
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 🔥 TU CONFIG (YA INTEGRADA)
 const firebaseConfig = { 
   apiKey: "AIzaSyCvrTlz7ewQlZBkTadgB9mxarMMJSvSp_A",
   authDomain: "dianapg-99037.firebaseapp.com",
   projectId: "dianapg-99037",
   storageBucket: "dianapg-99037.firebasestorage.app",
   messagingSenderId: "237058553544",
-  appId: "1:237058553544:web:62caa7960d879394da57fd",
-  measurementId: "G-8535MPT6RV"
+  appId: "1:237058553544:web:62caa7960d879394da57fd"
 };
 
-// 🔥 INIT FIREBASE
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ================= ESTADO =================
-let carrito = [];
-let productos = [];
+let productos=[];
+let carrito=[];
 
-// ================= CARGAR PRODUCTOS =================
+/* CARGAR */
 async function cargarProductos(){
-  const querySnapshot = await getDocs(collection(db, "productos"));
-  productos = [];
-  querySnapshot.forEach(doc => {
-    productos.push({ id: doc.id, ...doc.data() });
-  });
-  renderCatalogo();
+const snap = await getDocs(collection(db,"productos"));
+productos=[];
+snap.forEach(d=>productos.push({id:d.id,...d.data()}));
+renderCatalogo();
 }
 
-// ================= RENDER =================
-function renderCatalogo(){
-  let q = document.getElementById("searchInput").value.toLowerCase();
-  let data = productos.filter(p => p.nombre.toLowerCase().includes(q));
-
-  let html="";
-  data.forEach(p=>{
-    html+=`
-    <div class="card">
-      <b>${p.nombre}</b><br>
-      $${p.precio}<br>
-      Stock:${p.stock}<br>
-      <button onclick="addToCart('${p.id}')">Agregar</button>
-    </div>`;
-  });
-  document.getElementById("catalogo-container").innerHTML=html;
+/* RENDER */
+window.renderCatalogo=function(){
+let html="";
+productos.forEach(p=>{
+html+=`
+<div class="card-prod">
+<div class="img-prod"></div>
+<div class="stock">Stock: ${p.stock}</div>
+<p>${p.nombre}</p>
+<div class="precio">$${p.precio}</div>
+<button class="btn-add" onclick="addToCart('${p.id}')">Agregar</button>
+</div>`;
+});
+catalogo-container.innerHTML=html;
 }
 
-// ================= CARRITO =================
-window.addToCart = function(id){
-  let p = productos.find(x=>x.id===id);
-  if(!p || p.stock<=0) return alert("Sin stock");
-
-  carrito.push(p);
-  localStorage.setItem("carrito",JSON.stringify(carrito));
-  actualizarContador();
+/* CARRITO */
+window.addToCart=function(id){
+let p=productos.find(x=>x.id===id);
+carrito.push(p);
+localStorage.setItem("carrito",JSON.stringify(carrito));
+cartCount.innerText=carrito.length;
 }
 
-function actualizarContador(){
-  document.getElementById("cartCount").innerText = carrito.length;
+window.abrirCarrito=function(){
+let html="";
+carrito.forEach(p=>html+=`${p.nombre} $${p.precio}<br>`);
+ticket.innerHTML=html;
+modalCarrito.style.display="flex";
 }
 
-function abrirCarrito(){
-  let html="";
-  carrito.forEach(p=>html+=`${p.nombre} $${p.precio}<br>`);
-  document.getElementById("ticket").innerHTML=html;
-  document.getElementById("modalCarrito").style.display="flex";
+window.cerrarCarrito=function(){
+modalCarrito.style.display="none";
 }
 
-function cerrarCarrito(){
-  document.getElementById("modalCarrito").style.display="none";
+/* PEDIDO */
+window.enviarPedido=async function(){
+await addDoc(collection(db,"pedidos"),{
+nombre:custNombre.value,
+direccion:custDireccion.value,
+carrito
+});
+alert("Pedido enviado");
 }
 
-// ================= PEDIDOS =================
-window.enviarPedido = async function(){
-  let nombre = document.getElementById("custNombre").value;
-  let dir = document.getElementById("custDireccion").value;
+/* UI */
+window.abrirApp=()=>catalogo-overlay.classList.add("active");
+window.cerrarApp=()=>catalogo-overlay.classList.remove("active");
 
-  if(!nombre || !dir) return alert("Completa datos");
-
-  let total = carrito.reduce((a,b)=>a+b.precio,0);
-
-  await addDoc(collection(db, "pedidos"), {
-    nombre,
-    direccion: dir,
-    carrito,
-    total,
-    fecha: new Date()
-  });
-
-  alert("Pedido guardado");
-
-  carrito=[];
-  localStorage.setItem("carrito","[]");
-  actualizarContador();
-  cerrarCarrito();
+/* INIT */
+window.onload=()=>{
+carrito=JSON.parse(localStorage.getItem("carrito")||"[]");
+cartCount.innerText=carrito.length;
+cargarProductos();
 }
 
-// ================= ADMIN =================
-document.getElementById("logoAdmin").ondblclick=()=>{
-  let code = prompt("Clave admin");
-  if(code==="1234"){
-    document.getElementById("adminPanel").style.display="flex";
-  }
-};
-
-window.guardarProducto = async function(){
-  let nombre = admNombre.value;
-  let precio = +admPrecio.value;
-  let stock = +admStock.value;
-
-  if(!nombre || !precio) return alert("Datos inválidos");
-
-  await addDoc(collection(db,"productos"),{
-    nombre,precio,stock
-  });
-
-  cargarProductos();
-}
-
-// ================= UI =================
-window.abrirApp = function(){
-  document.getElementById("catalogo-overlay").classList.add("active");
-}
-window.cerrarApp = function(){
-  document.getElementById("catalogo-overlay").classList.remove("active");
-}
-
-// ================= INIT =================
-window.onload = ()=>{
-  carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
-  actualizarContador();
-  cargarProductos();
-}
-
-// ================= PWA =================
+/* PWA */
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js");
+navigator.serviceWorker.register("sw.js");
 }
 
 </script>
-
 </body>
 </html>
