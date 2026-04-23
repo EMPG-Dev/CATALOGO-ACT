@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>DIANA PLATA | Beauty Studio</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#fdf2f8">
+    <meta name="theme-color" content="#FFFFFF">
     <style>
         * {
             margin: 0;
@@ -15,114 +15,103 @@
         }
 
         :root {
-            --rose-light: #fff5f8;
-            --rose-bg: #fdf2f8;
-            --rose-card: #ffffff;
-            --rose-primary: #f9a8d4;
-            --rose-deep: #f472b6;
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --gold-dark: #b8860b;
-            --text-dark: #2d2a2e;
-            --text-muted: #7e6b73;
-            --border-rose: #fce7f3;
-            --success: #2b7a4b;
-            --danger: #e11d48;
-            --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
-            --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
-            --shadow-gold: 0 4px 14px rgba(212, 175, 55, 0.2);
+            --bg-light: #F8F9FC;
+            --card-white: #FFFFFF;
+            --text-dark: #1E1E2F;
+            --text-muted: #5A5A70;
+            --gold: #C5A059;
+            --gold-dark: #A07E3C;
+            --gold-light: #E9D6B0;
+            --accent-soft: #EBE5D9;
+            --border-light: #EAECF0;
+            --danger: #C23B22;
+            --success: #2B6E4F;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
 
-        html, body {
+        body, html {
             height: 100%;
-            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
-            background: var(--rose-bg);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            background: var(--bg-light);
             color: var(--text-dark);
             overflow: hidden;
         }
 
-        /* GRADIENTE ELEGANTE PARA PANTALLA DE INICIO */
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* Pantalla de inicio elegante */
         .main-screen {
             height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
-            background: linear-gradient(135deg, #ffe6f0, #ffd9e8, #fbcfe8, #fdf2f8);
-            background-size: 300% 300%;
-            animation: shimmer 12s ease infinite;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F3F2F0 100%);
             position: relative;
         }
 
         .main-screen::before {
-            content: "✨";
+            content: "✦";
+            font-size: 180px;
+            color: var(--gold-light);
             position: absolute;
-            font-size: 120px;
-            opacity: 0.1;
             bottom: 20px;
             right: 20px;
+            opacity: 0.3;
             pointer-events: none;
         }
 
         .card-inicio {
-            background: rgba(255, 248, 251, 0.85);
-            backdrop-filter: blur(18px);
-            border-radius: 48px;
-            padding: 48px 28px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 36px;
+            padding: 48px 32px;
             text-align: center;
             width: 100%;
             max-width: 380px;
-            border: 1px solid rgba(255, 215, 200, 0.5);
+            border: 1px solid rgba(197, 160, 89, 0.3);
             box-shadow: var(--shadow-md);
         }
 
         .card-inicio h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #c084fc, #f472b6, #d4af37);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 2.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--gold-dark);
             margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
         }
 
         .card-inicio p {
-            color: #9d8189;
+            color: var(--text-muted);
             font-weight: 400;
+            font-size: 0.9rem;
         }
 
         .btn-entrar {
-            background: linear-gradient(90deg, #f9a8d4, #f472b6);
+            background: var(--gold);
             border: none;
             padding: 14px 28px;
-            border-radius: 60px;
+            border-radius: 50px;
             font-weight: 600;
             font-size: 1rem;
             color: white;
             width: 100%;
-            margin-top: 28px;
+            margin-top: 32px;
             cursor: pointer;
-            box-shadow: var(--shadow-gold);
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(197,160,89,0.3);
         }
 
-        .btn-entrar:active { transform: scale(0.97); }
+        .btn-entrar:active { transform: scale(0.97); background: var(--gold-dark); }
 
-        /* CATÁLOGO OVERLAY */
+        /* Overlay Catálogo */
         #catalogo-overlay {
             position: fixed;
             inset: 0;
-            background: var(--rose-bg);
+            background: var(--bg-light);
             z-index: 9999;
             transform: translateY(100%);
-            transition: 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
             display: flex;
             flex-direction: column;
         }
@@ -131,47 +120,42 @@
             transform: translateY(0);
         }
 
-        /* HEADER ROSA/DORADO */
+        /* Header profesional */
         .header {
-            padding: 18px 20px;
-            background: white;
-            border-bottom: 1px solid var(--border-rose);
+            padding: 16px 20px;
+            background: var(--card-white);
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         #logoAdmin {
-            font-weight: 700;
-            font-size: 1.4rem;
-            background: linear-gradient(135deg, #c084fc, #f472b6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold-dark);
+            letter-spacing: 0.5px;
             cursor: pointer;
         }
 
         .search-bar {
-            background: #ffffff;
-            border: 1px solid var(--border-rose);
-            border-radius: 40px;
+            background: var(--card-white);
+            border: 1px solid var(--border-light);
+            border-radius: 44px;
             padding: 12px 18px;
             margin: 12px 16px;
             font-size: 0.9rem;
             box-shadow: var(--shadow-sm);
         }
 
-        /* TABS */
+        /* Tabs minimalistas */
         .tabs {
             display: flex;
             gap: 12px;
             padding: 8px 16px;
-            background: white;
-            margin: 0 12px 12px 12px;
-            border-radius: 60px;
-            box-shadow: var(--shadow-sm);
+            background: transparent;
+            margin: 0 12px;
         }
 
         .tab {
@@ -180,25 +164,25 @@
             border: none;
             padding: 10px 0;
             border-radius: 40px;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-muted);
             transition: 0.2s;
             cursor: pointer;
+            font-size: 0.9rem;
         }
 
         .tab.active {
-            background: var(--rose-primary);
+            background: var(--gold);
             color: white;
-            box-shadow: 0 2px 8px rgba(249, 168, 212, 0.3);
         }
 
         .content {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 16px;
+            padding: 16px;
         }
 
-        /* TARJETAS PRODUCTOS */
+        /* Grid de productos */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -206,10 +190,10 @@
         }
 
         .card-prod {
-            background: var(--rose-card);
-            border-radius: 28px;
+            background: var(--card-white);
+            border-radius: 24px;
             padding: 14px;
-            border: 1px solid var(--border-rose);
+            border: 1px solid var(--border-light);
             transition: 0.2s;
             box-shadow: var(--shadow-sm);
         }
@@ -217,144 +201,155 @@
         .img-prod {
             width: 100%;
             height: 120px;
-            border-radius: 20px;
+            border-radius: 18px;
             object-fit: cover;
-            background: #fce7f3;
+            background: #F2EFEB;
             margin-bottom: 12px;
         }
 
         .precio-original {
             text-decoration: line-through;
             font-size: 0.7rem;
-            color: #a8768a;
+            color: var(--text-muted);
         }
 
         .precio-descuento {
-            font-weight: 800;
+            font-weight: 700;
             font-size: 1rem;
             color: var(--gold-dark);
         }
 
         .badge-stock {
-            background: #f3e8ff;
-            border-radius: 20px;
+            background: var(--accent-soft);
+            border-radius: 30px;
             padding: 3px 10px;
             font-size: 0.7rem;
             font-weight: 500;
-            color: #b4537a;
+            color: var(--text-dark);
         }
 
         .btn-add {
-            background: linear-gradient(95deg, #f9a8d4, #fbcfe8);
+            background: var(--gold-light);
             border: none;
-            border-radius: 50px;
+            border-radius: 40px;
             padding: 8px;
             width: 100%;
             font-weight: 600;
-            color: #4a2c38;
+            color: #3a2c1f;
             margin-top: 10px;
             transition: 0.2s;
             cursor: pointer;
         }
 
-        /* CARRITO FLOTANTE */
+        .btn-add:active { background: var(--gold); color: white; }
+
+        /* Carrito flotante dorado */
         .cart-float {
             position: fixed;
-            bottom: 25px;
+            bottom: 24px;
             right: 20px;
             background: var(--gold);
-            color: #2d2a2e;
-            width: 60px;
-            height: 60px;
+            color: white;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 6px 16px rgba(197,160,89,0.4);
             z-index: 10000;
             cursor: pointer;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         .cart-count {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -4px;
+            right: -4px;
             background: var(--danger);
             color: white;
             font-size: 0.7rem;
+            font-weight: bold;
             padding: 4px 8px;
             border-radius: 30px;
-            font-weight: bold;
         }
 
-        /* MODALES ESTILO BEAUTY */
+        /* Modales refinados */
         .modal-content {
             background: white;
-            border-radius: 40px;
-            padding: 28px;
-            border: 1px solid #fce7f3;
+            border-radius: 32px;
+            padding: 24px;
+            border: none;
             box-shadow: var(--shadow-md);
+            max-width: 500px;
         }
 
         .ticket {
-            background: #fffafc;
-            border-radius: 24px;
-            border-left: 4px solid var(--gold);
+            background: #FCFAF7;
+            border-radius: 20px;
+            padding: 16px;
+            border-left: 3px solid var(--gold);
+            font-family: monospace;
         }
 
         .btn-ws {
             background: #25D366;
-            border-radius: 40px;
+            border-radius: 44px;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        /* TABLA ADMIN SCROLL */
+        /* Admin panel con scroll */
         .admin-scroll-area {
             max-height: 260px;
             overflow-y: auto;
-            border-radius: 24px;
-            background: #fffafd;
+            margin-top: 16px;
+            border-radius: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.8rem;
         }
 
         th {
-            background: #fef2f6;
-            color: #b4537a;
+            text-align: left;
+            padding: 12px 8px;
+            background: #F8F7F4;
+            color: var(--gold-dark);
             font-weight: 600;
-            padding: 12px;
         }
 
         td {
             padding: 10px 8px;
-            border-bottom: 1px solid #fce7f3;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .stats-card {
-            background: linear-gradient(145deg, #fff5f8, #ffffff);
-            border-radius: 28px;
-            padding: 12px;
+            background: #FCFAF7;
+            border-radius: 24px;
+            padding: 14px;
             text-align: center;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
         }
 
         input, select {
-            border-radius: 60px;
-            border: 1px solid #fbcfe8;
+            border-radius: 44px;
+            border: 1px solid var(--border-light);
             padding: 12px 16px;
             background: white;
+            width: 100%;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
         }
 
         #toast {
-            background: #2d2a2e;
-            color: #fdf2f8;
+            background: #2C2A2E;
+            color: white;
             border-radius: 60px;
-            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -362,34 +357,34 @@
 
 <div class="main-screen">
     <div class="card-inicio">
-        <h1>🌸 DIANA PLATA</h1>
-        <p>Beauty Studio · Elegancia & Bienestar</p>
-        <button class="btn-entrar" onclick="abrirApp()">✦ Ver Colección ✦</button>
+        <h1>DIANA PLATA</h1>
+        <p>Beauty Studio · Elegancia atemporal</p>
+        <button class="btn-entrar" onclick="abrirApp()">✦ Ingresar ✦</button>
     </div>
 </div>
 
 <div id="catalogo-overlay">
     <div class="header">
-        <span id="logoAdmin">💖 DIANA PLATA</span>
-        <button onclick="cerrarApp()" style="background:#fce7f3; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
+        <span id="logoAdmin">DIANA PLATA</span>
+        <button onclick="cerrarApp()" style="background:#F0EDE8; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
     </div>
-    <input type="text" id="searchInput" class="search-bar" placeholder="🔍 Buscar tratamientos o productos..." oninput="renderCatalogo()">
+    <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos..." oninput="renderCatalogo()">
 
     <div class="tabs">
-        <button class="tab" id="tabP" onclick="cambiarVista('prod')">✨ Productos</button>
-        <button class="tab" id="tabS" onclick="cambiarVista('serv')">💆‍♀️ Servicios</button>
+        <button class="tab" id="tabP" onclick="cambiarVista('prod')">Productos</button>
+        <button class="tab" id="tabS" onclick="cambiarVista('serv')">Servicios</button>
     </div>
 
     <div class="content">
         <div id="prodView"><div id="catalogo-container"></div></div>
         <div id="servView" style="display:none;">
             <div class="card-prod" style="padding:24px; text-align:center;">
-                <h3 style="color:#b4537a;">📅 Reserva tu momento</h3>
-                <select id="citaTipo" style="margin:15px 0;">
-                    <option>Facial Glow Diamond</option>
-                    <option>Masaje Corporal con Aceites</option>
-                    <option>Diseño de Cejas & Lifting</option>
-                    <option>Tratamiento Gold Relax</option>
+                <h3 style="color:var(--gold-dark);">📅 Agenda tu cita</h3>
+                <select id="citaTipo" style="margin:16px 0;">
+                    <option>Facial Rejuvenecedor</option>
+                    <option>Masaje Corporal Esencial</option>
+                    <option>Lifting de Cejas</option>
+                    <option>Tratamiento Gold Plus</option>
                 </select>
                 <input type="date" id="citaFecha">
                 <button class="btn-ws" onclick="confirmarCita()">Confirmar vía WhatsApp</button>
@@ -398,37 +393,37 @@
     </div>
 
     <div class="cart-float" id="cartFloatBtn" onclick="abrirCarrito()">
-        🛍️ <span class="cart-count" id="cartCount">0</span>
+        🛒 <span class="cart-count" id="cartCount">0</span>
     </div>
 </div>
 
 <!-- Modal Carrito -->
 <div id="modalCarrito" class="modal">
     <div class="modal-content">
-        <h3 style="color:#d4af37;">🛒 Tu pedido especial</h3>
-        <div id="ticketArea" class="ticket" style="background:#fff9fb;"></div>
-        <input type="text" id="custNombre" placeholder="Tu nombre ✨">
+        <h3 style="color:var(--gold-dark);">Tu selección</h3>
+        <div id="ticketArea" class="ticket"></div>
+        <input type="text" id="custNombre" placeholder="Nombre completo">
         <input type="text" id="custDireccion" placeholder="Dirección (Celaya / zona)">
-        <button class="btn-ws" onclick="enviarPedido()">💎 Enviar pedido por WhatsApp</button>
-        <button onclick="cerrarCarrito()" style="margin-top:12px; background:none; border:none; color:#a8768a;">Seguir comprando</button>
+        <button class="btn-ws" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
+        <button onclick="cerrarCarrito()" style="margin-top:12px; background:none; border:none; color:var(--text-muted);">Seguir comprando</button>
     </div>
 </div>
 
-<!-- Panel Admin (Rosa/Dorado) -->
+<!-- Panel Administrador (acceso por presión prolongada sobre logo) -->
 <div id="adminPanel" class="modal">
     <div class="modal-content">
-        <div style="display:flex; justify-content:space-between;">
-            <h4 style="color:#b4537a;">👑 Administración Studio</h4>
-            <button onclick="cerrarAdmin()" style="background:none; border:none; font-size:1.8rem;">&times;</button>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h4 style="color:var(--gold-dark);">Panel de gestión</h4>
+            <button onclick="cerrarAdmin()" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0;">
-            <div class="stats-card"><p style="font-size:0.7rem;">📦 Stock Total</p><b id="dashTotalStock" style="color:#d4af37;">0</b></div>
-            <div class="stats-card"><p style="font-size:0.7rem;">🏷️ Descuento Promedio</p><b id="dashAvgDescuento" style="color:#f472b6;">0%</b></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;">
+            <div class="stats-card"><span style="font-size:0.7rem;">📦 Stock total</span><br><b id="dashTotalStock" style="color:var(--gold);">0</b></div>
+            <div class="stats-card"><span style="font-size:0.7rem;">🏷️ Dto. promedio</span><br><b id="dashAvgDescuento" style="color:var(--gold);">0%</b></div>
         </div>
         <div id="formAdmin">
             <input type="hidden" id="editId">
             <input type="text" id="admNombre" placeholder="Nombre del producto">
-            <input type="number" id="admPrecio" placeholder="Precio base ($)">
+            <input type="number" id="admPrecio" placeholder="Precio ($)">
             <select id="admMarca">
                 <option>TERRAMAR</option><option>FARMASI</option><option>YANBAL</option><option>OTRO</option>
             </select>
@@ -437,11 +432,14 @@
                 <input type="number" id="admDescuento" placeholder="Descuento %" value="0" step="1">
             </div>
             <input type="file" id="admFile" accept="image/*">
-            <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">✨ Guardar Producto</button>
-            <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; background:#fce7f3; border-radius:40px; padding:10px;">Cancelar edición</button>
+            <button class="btn-add" id="btnGuardar" onclick="guardarProducto()">Guardar producto</button>
+            <button id="btnCancelarEdit" onclick="limpiarForm()" style="display:none; margin-top:8px; background:#EDE8E2; border:none; border-radius:40px; padding:10px;">Cancelar edición</button>
         </div>
         <div class="admin-scroll-area">
-            <table><thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Dto%</th><th>Acciones</th></tr></thead><tbody id="adminTableBody"></tbody></table>
+            <table>
+                <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Dto%</th><th>Acciones</th></tr></thead>
+                <tbody id="adminTableBody"></tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -449,40 +447,42 @@
 <div id="toast"></div>
 
 <script>
+    // Configuración
     const CONFIG = {
         phone: "527121919227",
         secretCode: "DAYANA123456",
-        tienda: "DIANA PLATA ✨ Beauty Studio"
+        tienda: "DIANA PLATA · Studio"
     };
 
     let carrito = [];
     let isAdmin = false;
-    let vistaActual = 'prod';
+    let currentView = 'prod';
 
-    // ---- STORAGE ----
+    // --- Base de datos local ---
     function getProductos() {
-        const data = localStorage.getItem("diana_beauty_v4");
+        const data = localStorage.getItem("diana_pro_v5");
         if (!data) {
             const demo = [
-                { id: 201, nombre: "Rosa Hydra Cream", precio: 390, marca: "TERRAMAR", imagen: "", stock: 12, descuento: 10 },
-                { id: 202, nombre: "Gold Serum Lifting", precio: 580, marca: "FARMASI", imagen: "", stock: 5, descuento: 15 },
-                { id: 203, nombre: "Exfoliante de Diamante", precio: 340, marca: "YANBAL", imagen: "", stock: 8, descuento: 0 },
-                { id: 204, nombre: "Brillo Labial Perla", precio: 180, marca: "OTRO", imagen: "", stock: 3, descuento: 20 }
+                { id: 301, nombre: "Esencia Hidratante", precio: 450, marca: "TERRAMAR", imagen: "", stock: 12, descuento: 10 },
+                { id: 302, nombre: "Serum Lifting Oro", precio: 720, marca: "FARMASI", imagen: "", stock: 5, descuento: 15 },
+                { id: 303, nombre: "Exfoliante de Perlas", precio: 390, marca: "YANBAL", imagen: "", stock: 8, descuento: 0 },
+                { id: 304, nombre: "Brillo Gloss", precio: 220, marca: "OTRO", imagen: "", stock: 3, descuento: 20 }
             ];
-            localStorage.setItem("diana_beauty_v4", JSON.stringify(demo));
+            localStorage.setItem("diana_pro_v5", JSON.stringify(demo));
             return demo;
         }
         return JSON.parse(data);
     }
 
     function setProductos(arr) {
-        localStorage.setItem("diana_beauty_v4", JSON.stringify(arr));
+        localStorage.setItem("diana_pro_v5", JSON.stringify(arr));
     }
 
     function calcularPrecioFinal(precio, desc) {
         return precio - (precio * (desc || 0) / 100);
     }
 
+    // Render catálogo público
     function renderCatalogo() {
         const container = document.getElementById("catalogo-container");
         if (!container) return;
@@ -496,7 +496,7 @@
             const items = productos.filter(p => p.marca === marca);
             if (items.length === 0) continue;
             const section = document.createElement("div");
-            section.innerHTML = `<h5 style="margin:25px 0 12px 8px; color:#d4af37; font-weight:600; letter-spacing:1px;">✦ ${marca} ✦</h5><div class="grid"></div>`;
+            section.innerHTML = `<div style="margin: 24px 0 12px 8px; font-weight:500; color:var(--gold-dark); border-left: 3px solid var(--gold); padding-left: 12px;">✦ ${marca} ✦</div><div class="grid"></div>`;
             const grid = section.querySelector(".grid");
             items.forEach(prod => {
                 const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
@@ -505,13 +505,13 @@
                 card.className = "card-prod";
                 if (!tieneStock) card.style.opacity = "0.6";
                 card.innerHTML = `
-                    <img src="${prod.imagen || 'https://via.placeholder.com/120?text=✨'}" class="img-prod" onerror="this.src='https://via.placeholder.com/120?text=Beauty'">
-                    <div style="display:flex; justify-content:space-between;"><span class="badge-stock">📦 ${prod.stock ?? 0} uds</span>${!tieneStock ? '<span style="color:#e11d48;">Agotado</span>' : ''}</div>
-                    <p style="font-weight:600; margin:8px 0;">${prod.nombre}</p>
+                    <img src="${prod.imagen || 'https://via.placeholder.com/120?text=✨'}" class="img-prod" onerror="this.src='https://via.placeholder.com/120?text=Studio'">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span class="badge-stock">📦 ${prod.stock ?? 0} uds</span>${!tieneStock ? '<span style="color:#C23B22;">Agotado</span>' : ''}</div>
+                    <p style="font-weight:600; margin: 6px 0;">${prod.nombre}</p>
                     <div>${prod.descuento > 0 ? `<span class="precio-original">$${prod.precio}</span> ` : ''}<span class="precio-descuento">$${Math.round(precioFinal)}</span> ${prod.descuento > 0 ? `<span style="font-size:0.7rem;">-${prod.descuento}%</span>` : ''}</div>
                 `;
                 const btn = document.createElement("button");
-                btn.innerText = tieneStock ? "➕ Agregar al neceser" : "Sin stock";
+                btn.innerText = tieneStock ? "➕ Agregar" : "Sin stock";
                 btn.className = "btn-add";
                 if (tieneStock) btn.onclick = () => agregarAlCarrito(prod);
                 else btn.disabled = true;
@@ -522,6 +522,7 @@
         }
     }
 
+    // Render tabla admin
     function renderAdminTabla() {
         const tbody = document.getElementById("adminTableBody");
         if (!tbody) return;
@@ -532,13 +533,13 @@
             totalStock += (p.stock || 0);
             if (p.descuento > 0) { sumaDto += p.descuento; countDto++; }
             const row = tbody.insertRow();
-            row.insertCell(0).innerText = p.nombre.length > 15 ? p.nombre.slice(0,12)+".." : p.nombre;
+            row.insertCell(0).innerText = p.nombre.length > 14 ? p.nombre.slice(0,12)+"…" : p.nombre;
             row.insertCell(1).innerHTML = `$${p.precio}`;
-            row.insertCell(2).innerHTML = `<span style="background:#fce7f3; padding:2px 12px; border-radius:20px;">${p.stock ?? 0}</span>`;
+            row.insertCell(2).innerHTML = `<span style="background:#F0EDE8; padding:2px 12px; border-radius:30px;">${p.stock ?? 0}</span>`;
             row.insertCell(3).innerText = `${p.descuento || 0}%`;
             const acc = row.insertCell(4);
-            const editBtn = document.createElement("button"); editBtn.innerText = "✏️"; editBtn.className = "btn-icon"; editBtn.style.background="none"; editBtn.onclick = () => editarProducto(p.id);
-            const delBtn = document.createElement("button"); delBtn.innerText = "🗑️"; delBtn.className = "btn-icon"; delBtn.style.color="#e11d48"; delBtn.onclick = () => eliminarProducto(p.id);
+            const editBtn = document.createElement("button"); editBtn.innerText = "✏️"; editBtn.className = "btn-icon"; editBtn.style.background="none"; editBtn.style.border="none"; editBtn.style.fontSize="1rem"; editBtn.style.cursor="pointer"; editBtn.onclick = () => editarProducto(p.id);
+            const delBtn = document.createElement("button"); delBtn.innerText = "🗑️"; delBtn.className = "btn-icon"; delBtn.style.background="none"; delBtn.style.border="none"; delBtn.style.marginLeft="8px"; delBtn.style.color="var(--danger)"; delBtn.onclick = () => eliminarProducto(p.id);
             acc.appendChild(editBtn); acc.appendChild(delBtn);
         });
         document.getElementById("dashTotalStock").innerText = totalStock;
@@ -546,6 +547,7 @@
         document.getElementById("dashAvgDescuento").innerText = `${promedioDto}%`;
     }
 
+    // CRUD Admin
     function guardarProducto() {
         const id = document.getElementById("editId").value;
         const nombre = document.getElementById("admNombre").value.trim();
@@ -555,7 +557,7 @@
         let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
         if (descuento > 100) descuento = 100;
         const file = document.getElementById("admFile").files[0];
-        if (!nombre || isNaN(precio)) return toast("❌ Completa nombre y precio");
+        if (!nombre || isNaN(precio)) return toast("❌ Nombre y precio requeridos");
         
         const procesarImagen = (base64) => {
             let productos = getProductos();
@@ -571,7 +573,7 @@
             limpiarForm();
             renderCatalogo();
             if (isAdmin) renderAdminTabla();
-            toast(id ? "✅ Producto actualizado" : "✨ Nuevo producto agregado");
+            toast(id ? "✓ Producto actualizado" : "✓ Nuevo producto agregado");
         };
         if (file) {
             const reader = new FileReader();
@@ -589,7 +591,7 @@
         document.getElementById("admMarca").value = prod.marca;
         document.getElementById("admStock").value = prod.stock ?? 0;
         document.getElementById("admDescuento").value = prod.descuento ?? 0;
-        document.getElementById("btnGuardar").innerText = "💾 Actualizar Producto";
+        document.getElementById("btnGuardar").innerText = "💾 Actualizar producto";
         document.getElementById("btnCancelarEdit").style.display = "block";
         document.getElementById("formAdmin").scrollIntoView({ behavior: "smooth" });
     }
@@ -601,26 +603,26 @@
         document.getElementById("admStock").value = "5";
         document.getElementById("admDescuento").value = "0";
         document.getElementById("admFile").value = "";
-        document.getElementById("btnGuardar").innerText = "✨ Guardar Producto";
+        document.getElementById("btnGuardar").innerText = "Guardar producto";
         document.getElementById("btnCancelarEdit").style.display = "none";
     }
 
     function eliminarProducto(id) {
-        if (confirm("¿Eliminar este producto del catálogo?")) {
+        if (confirm("¿Eliminar este producto?")) {
             const nuevos = getProductos().filter(p => p.id != id);
             setProductos(nuevos);
             renderCatalogo();
             if (isAdmin) renderAdminTabla();
-            toast("🗑️ Eliminado");
+            toast("Producto eliminado");
         }
     }
 
-    // Carrito
+    // Carrito y pedidos
     function agregarAlCarrito(prod) {
         const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
         carrito.push({ id: prod.id, nombre: prod.nombre, precioFinal, descuento: prod.descuento });
         actualizarContador();
-        toast(`🌸 ${prod.nombre} añadido`);
+        toast(`✨ ${prod.nombre} añadido`);
     }
 
     function actualizarContador() {
@@ -629,17 +631,17 @@
 
     function dibujarTicket() {
         let total = 0;
-        let html = `<div style="font-family:monospace;">${CONFIG.tienda}<br>━━━━━━━━━━━━<br>`;
+        let html = `<div style="font-family: monospace;">${CONFIG.tienda}<br>━━━━━━━━━━━━━━<br>`;
         carrito.forEach(item => {
-            html += `• ${item.nombre}  $${item.precioFinal}<br>`;
+            html += `• ${item.nombre}   $${item.precioFinal}<br>`;
             total += item.precioFinal;
         });
-        html += `━━━━━━━━━━━━<br>💎 TOTAL: $${total}<br>✨ Gracias por tu confianza</div>`;
+        html += `━━━━━━━━━━━━━━<br>💰 TOTAL: $${total}<br>✨ Gracias por tu compra</div>`;
         document.getElementById("ticketArea").innerHTML = html;
     }
 
     function abrirCarrito() {
-        if (carrito.length === 0) return toast("🛍️ Tu neceser está vacío");
+        if (carrito.length === 0) return toast("Tu carrito está vacío");
         dibujarTicket();
         document.getElementById("modalCarrito").style.display = "flex";
     }
@@ -648,15 +650,15 @@
     function enviarPedido() {
         const nombre = document.getElementById("custNombre").value.trim();
         const direccion = document.getElementById("custDireccion").value.trim();
-        if (!nombre || !direccion) return toast("Por favor completa tus datos");
-        let total = 0, mensaje = `✨ *${CONFIG.tienda}* ✨%0A👑 Pedido para: ${nombre}%0A📍 ${direccion}%0A━━━━━━━━━━%0A`;
+        if (!nombre || !direccion) return toast("Completa tus datos de envío");
+        let total = 0, mensaje = `✨ *${CONFIG.tienda}* ✨%0A👤 Cliente: ${nombre}%0A📍 ${direccion}%0A━━━━━━━━━━━━%0A`;
         carrito.forEach(p => { mensaje += `🌸 ${p.nombre} : $${p.precioFinal}%0A`; total += p.precioFinal; });
-        mensaje += `━━━━━━━━━━%0A💎 *TOTAL: $${total}*%0A¡Gracias por elegir Diana Plata! 💖`;
+        mensaje += `━━━━━━━━━━━━%0A💎 *TOTAL: $${total}*%0A¡Esperamos verte pronto!`;
         window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(mensaje)}`);
         carrito = [];
         actualizarContador();
         cerrarCarrito();
-        toast("💕 Pedido enviado");
+        toast("Pedido enviado por WhatsApp");
     }
 
     function confirmarCita() {
@@ -667,12 +669,13 @@
         window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(msg)}`);
     }
 
-    // UI & Admin
+    // UI: cambio de vista
     function cambiarVista(vista) {
-        vistaActual = vista;
+        currentView = vista;
         document.getElementById("prodView").style.display = vista === "prod" ? "block" : "none";
         document.getElementById("servView").style.display = vista === "serv" ? "block" : "none";
-        document.getElementById("cartFloatBtn").style.display = vista === "prod" ? "flex" : "none";
+        const cartFloat = document.getElementById("cartFloatBtn");
+        if (cartFloat) cartFloat.style.display = vista === "prod" ? "flex" : "none";
         document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
         document.getElementById(vista === "prod" ? "tabP" : "tabS").classList.add("active");
         if (vista === "prod") renderCatalogo();
@@ -686,28 +689,58 @@
         document.getElementById("catalogo-overlay").classList.remove("active");
     }
 
-    let timer;
-    document.getElementById("logoAdmin").addEventListener("mousedown", () => {
-        timer = setTimeout(() => {
-            const code = prompt("🔑 Código de administradora:");
+    // --- ACCESO ADMINISTRADOR MEJORADO: presión prolongada / doble toque ---
+    let pressTimer = null;
+    const logo = document.getElementById("logoAdmin");
+    
+    function startPress() {
+        pressTimer = setTimeout(() => {
+            const code = prompt("🔐 Clave de administración:");
             if (code === CONFIG.secretCode) {
                 isAdmin = true;
                 renderAdminTabla();
                 document.getElementById("adminPanel").style.display = "flex";
                 limpiarForm();
-            } else if (code) toast("Código incorrecto");
-        }, 800);
-    });
-    document.getElementById("logoAdmin").addEventListener("mouseup", () => clearTimeout(timer));
-    document.getElementById("logoAdmin").addEventListener("touchend", () => clearTimeout(timer));
-
-    function cerrarAdmin() { isAdmin = false; document.getElementById("adminPanel").style.display = "none"; renderCatalogo(); }
-    function toast(msg) { const t = document.getElementById("toast"); t.innerText = msg; t.style.opacity = "1"; setTimeout(() => t.style.opacity = "0", 2200); }
-
+            } else if (code !== null) {
+                toast("Código incorrecto");
+            }
+            pressTimer = null;
+        }, 600);
+    }
+    
+    function cancelPress() {
+        if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+        }
+    }
+    
+    logo.addEventListener("mousedown", startPress);
+    logo.addEventListener("mouseup", cancelPress);
+    logo.addEventListener("mouseleave", cancelPress);
+    // Para móviles: touchstart + touchend
+    logo.addEventListener("touchstart", startPress);
+    logo.addEventListener("touchend", cancelPress);
+    logo.addEventListener("touchcancel", cancelPress);
+    
+    function cerrarAdmin() {
+        isAdmin = false;
+        document.getElementById("adminPanel").style.display = "none";
+        renderCatalogo();
+    }
+    
+    function toast(msg) {
+        const t = document.getElementById("toast");
+        t.innerText = msg;
+        t.style.opacity = "1";
+        setTimeout(() => t.style.opacity = "0", 2200);
+    }
+    
     window.onload = () => {
         renderCatalogo();
         actualizarContador();
-        document.getElementById("citaFecha").value = new Date().toISOString().slice(0,10);
+        const today = new Date().toISOString().slice(0,10);
+        if(document.getElementById("citaFecha")) document.getElementById("citaFecha").value = today;
     };
 </script>
 </body>
