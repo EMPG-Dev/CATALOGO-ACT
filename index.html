@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DIANA PLATA | Studio</title>
+    <title>STUDIO DIANA PLATA | BEAUTY & HAIR</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#F5F5F7">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -402,7 +402,7 @@
 
 <div class="main-screen">
     <div class="card-inicio">
-        <h1>DIANA PLATA</h1>
+        <h1>STUDIO DIANA PLATA | BEAUTY & HAIR</h1>
         <p>Studio · Elegancia en cada detalle</p>
         <button class="btn-entrar" id="btnAbrirApp">✦ Ingresar ✦</button>
     </div>
@@ -410,7 +410,7 @@
 
 <div id="catalogo-overlay">
     <div class="header">
-        <span id="logoAdmin">DIANA PLATA</span>
+        <span id="logoAdmin"> STUDIO DIANA PLATA | BEAUTY & HAIR</span>
         <button id="btnCerrarApp" style="background:#EBEBEF; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
     </div>
     <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos...">
@@ -789,25 +789,30 @@
     async function enviarPedido() {
         const nombre = document.getElementById("custNombre").value.trim();
         const direccion = document.getElementById("custDireccion").value.trim();
+        
         if (!nombre || !direccion) {
             mostrarToast("Complete nombre y dirección", true);
             return;
         }
-        if (carrito.length === 0) {
-            mostrarToast("No hay productos", true);
-            return;
-        }
 
         let total = 0;
-        let mensaje = `✨ DIANA PLATA · Studio ✨%0APedido para: ${nombre}%0ADirección: ${direccion}%0A━━━━━━━━━━━━%0A`;
+        // Construimos el mensaje con saltos de línea reales \n
+        let mensaje = `✨ *DIANA PLATA · Studio* ✨\n\n`;
+        mensaje += `📝 *Pedido para:* ${nombre.toUpperCase()}\n`;
+        mensaje += `📍 *Dirección:* ${direccion}\n`;
+        mensaje += `━━━━━━━━━━━━━━━━━━━━\n`;
+        
         carrito.forEach(p => {
-            mensaje += `• ${p.nombre} : $${p.precioFinal}%0A`;
+            mensaje += `• ${p.nombre} : $${p.precioFinal.toLocaleString()}\n`;
             total += p.precioFinal;
         });
-        mensaje += `━━━━━━━━━━━━%0ATotal: $${total}%0A¡Gracias por su compra!`;
+        
+        mensaje += `━━━━━━━━━━━━━━━━━━━━\n`;
+        mensaje += `💰 *Total: $${total.toLocaleString()}*\n\n`;
+        mensaje += `¡Gracias por su compra! 🙏✨`;
 
         try {
-            // Guardar pedido en Firebase
+            // Registro en Firebase
             await addDoc(collection(db, "pedidos"), {
                 nombre,
                 direccion,
@@ -815,8 +820,11 @@
                 total,
                 fecha: new Date()
             });
-            // Enviar WhatsApp
+
+            // Envío a WhatsApp con encodeURIComponent
             window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
+            
+            // Limpieza
             carrito = [];
             actualizarContadorCarrito();
             cerrarCarrito();
@@ -836,8 +844,19 @@
             mostrarToast("Seleccione una fecha", true);
             return;
         }
+        
         const servicio = document.getElementById("citaTipo").value;
-        const mensaje = `Hola DIANA PLATA Studio, deseo agendar *${servicio}* para el día ${fecha}.`;
+        
+        // Formato profesional con emojis y saltos de línea reales
+        let mensaje = `✨ *DIANA PLATA · Studio* ✨\n\n`;
+        mensaje += `📅 *SOLICITUD DE CITA*\n`;
+        mensaje += `------------------------------------------\n`;
+        mensaje += `💇‍♀️ *Servicio:* ${servicio}\n`;
+        mensaje += `🗓️ *Fecha:* ${fecha}\n`;
+        mensaje += `------------------------------------------\n`;
+        mensaje += `_Por favor, confirma disponibilidad para esta fecha._`;
+
+        // El uso de encodeURIComponent asegura que los saltos de línea se envíen bien
         window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
     }
 
