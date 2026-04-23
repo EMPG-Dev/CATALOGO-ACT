@@ -688,84 +688,68 @@
     }
 
     async function guardarProducto() {
-    const id = document.getElementById("editId").value;
-    const nombre = document.getElementById("admNombre").value.trim();
-    const precio = parseFloat(document.getElementById("admPrecio").value);
-    const stock = parseInt(document.getElementById("admStock").value) || 0;
-    const descuento = parseInt(document.getElementById("admDesc").value) || 0;
-    const marca = document.getElementById("admMarca").value;
-    const fileInput = document.getElementById("admFile");
+        const id = document.getElementById("editId").value;
+        const nombre = document.getElementById("admNombre").value.trim();
+        const precio = parseFloat(document.getElementById("admPrecio").value);
+        const marca = document.getElementById("admMarca").value;
+        const stock = parseInt(document.getElementById("admStock").value) || 0;
+        let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
+        if (descuento > 100) descuento = 100;
+        const file = document.getElementById("admFile").files[0];
 
-    if (!nombre || isNaN(precio)) {
-        mostrarToast("Nombre y precio son obligatorios", true);
-        return;
-    }
-
-    let imgFinal = "";
-
-    // FUNCIÓN PARA COMPRIMIR LA IMAGEN
-    const comprimirImagen = (archivo) => {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(archivo);
-            reader.onload = (event) => {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = () => {
-                    const canvas = document.createElement("canvas");
-                    const MAX_WIDTH = 400; // Reducimos el tamaño a 400px de ancho
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    // Convertimos a WebP o JPEG con calidad 0.6 (60%)
-                    resolve(canvas.toDataURL("image/jpeg", 0.6));
-                };
-            };
-        });
-    };
-
-    if (fileInput.files[0]) {
-        mostrarToast("Comprimiendo imagen...");
-        imgFinal = await comprimirImagen(fileInput.files[0]);
-    } else if (id) {
-        // Si estamos editando y no hay archivo nuevo, buscamos la imagen anterior
-        const prodExistente = productos.find(p => p.id == id);
-        imgFinal = prodExistente ? prodExistente.imagen : "";
-    }
-
-    const datos = {
-        nombre,
-        precio,
-        stock,
-        descuento,
-        marca,
-        imagen: imgFinal, // Ahora es una versión ligera
-        id: id ? parseInt(id) : Date.now()
-    };
-
-    try {
-        if (id) {
-            // Actualizar en Firebase
-            const q = query(collection(db, "productos"), where("id", "==", parseInt(id)));
-            const snap = await getDocs(q);
-            const docRef = doc(db, "productos", snap.docs[0].id);
-            await updateDoc(docRef, datos);
-            mostrarToast("Producto actualizado");
-        } else {
-            // Crear nuevo
-            await addDoc(collection(db, "productos"), datos);
-            mostrarToast("Producto guardado");
+        if (!nombre || isNaN(precio)) {
+            mostrarToast("Complete nombre y precio", true);
+            return;
         }
-        limpiarFormularioAdmin();
-        cerrarAdmin();
-    } catch (error) {
-        console.error(error);
-        mostrarToast("Error al guardar en la nube", true);
-    }
+
+        // --- BLOQUE DE COMPRESIÓN DE IMAGEN ---
+        let imgFinal = "";
+        const comprimirImagen = (archivo) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(archivo);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        const MAX_WIDTH = 400; // Ancho máximo profesional
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/jpeg", 0.6)); // Calidad 60%
+                    };
+                };
+            });
+        };
+
+        try {
+            if (file) {
+                mostrarToast("Comprimiendo imagen...");
+                imgFinal = await comprimirImagen(file);
+            } else if (id) {
+                // Si editamos y no hay archivo nuevo, mantenemos la anterior
+                const prodExistente = productos.find(p => p.id == id);
+                imgFinal = prodExistente ? prodExistente.imagen : "";
+            }
+
+            const datos = { nombre, precio, marca, stock, descuento, imagen: imgFinal };
+
+            if (id) {
+                await updateDoc(doc(db, "productos", id), datos);
+                mostrarToast("Producto actualizado");
+            } else {
+                await addDoc(collection(db, "productos"), datos);
+                mostrarToast("Producto agregado");
+            }
+            limpiarFormularioAdmin();
+            await cargarProductos();
+        } catch (error) {
+            console.error(error);
+            mostrarToast("Error al guardar: " + error.message, true);
+        }
     }
 
     async function eliminarProducto(id) {
