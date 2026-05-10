@@ -6,7 +6,7 @@
     <title>STUDIO DIANA PLATA | BEAUTY & HAIR</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#F5F5F7">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -28,20 +28,20 @@
             --border-light: #E9E9EF;
             --danger: #D9534F;
             --success: #2C6E4F;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.05);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
         }
 
         body, html {
             height: 100%;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'DM Sans', system-ui, sans-serif;
             background: var(--bg-neutral);
             color: var(--text-primary);
             overflow: hidden;
         }
 
-        /* Pantalla de inicio */
+        /* ── PANTALLA INICIO ── */
         .main-screen {
             height: 100dvh;
             display: flex;
@@ -51,7 +51,6 @@
             background: linear-gradient(125deg, #F9F9FB 0%, #EDEDF0 100%);
             position: relative;
         }
-
         .main-screen::before {
             content: "✦";
             font-size: 200px;
@@ -62,21 +61,19 @@
             opacity: 0.25;
             pointer-events: none;
         }
-
         .card-inicio {
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255,255,255,0.96);
             backdrop-filter: blur(2px);
             border-radius: 42px;
             padding: 48px 32px;
             text-align: center;
             width: 100%;
             max-width: 380px;
-            border: 1px solid rgba(197, 160, 89, 0.25);
+            border: 1px solid rgba(197,160,89,0.25);
             box-shadow: var(--shadow-md);
         }
-
         .card-inicio h1 {
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 500;
             letter-spacing: 1px;
             background: linear-gradient(135deg, var(--gold-dark), var(--silver-dark));
@@ -84,15 +81,14 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 8px;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
         }
-
         .card-inicio p {
             color: var(--text-secondary);
             font-weight: 400;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
         }
-
         .btn-entrar {
             background: linear-gradient(90deg, var(--gold), var(--silver));
             border: none;
@@ -107,24 +103,20 @@
             transition: all 0.2s ease;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-
         .btn-entrar:active { transform: scale(0.97); opacity: 0.9; }
 
-        /* Overlay Catálogo */
+        /* ── OVERLAY CATÁLOGO ── */
         #catalogo-overlay {
             position: fixed;
             inset: 0;
             background: var(--bg-neutral);
             z-index: 9999;
             transform: translateY(100%);
-            transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            transition: 0.35s cubic-bezier(0.2,0.9,0.3,1.1);
             display: flex;
             flex-direction: column;
         }
-
-        #catalogo-overlay.active {
-            transform: translateY(0);
-        }
+        #catalogo-overlay.active { transform: translateY(0); }
 
         .header {
             padding: 16px 20px;
@@ -133,11 +125,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
-
         #logoAdmin {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
             font-weight: 600;
             background: linear-gradient(135deg, var(--gold-dark), var(--silver-dark));
             -webkit-background-clip: text;
@@ -145,6 +137,7 @@
             color: transparent;
             letter-spacing: 0.5px;
             cursor: pointer;
+            user-select: none;
         }
 
         .search-bar {
@@ -152,19 +145,19 @@
             border: 1px solid var(--border-light);
             border-radius: 44px;
             padding: 12px 18px;
-            margin: 12px 16px;
+            margin: 12px 16px 0;
             font-size: 0.9rem;
             box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
         }
 
         .tabs {
             display: flex;
             gap: 12px;
-            padding: 8px 16px;
-            background: transparent;
+            padding: 10px 16px;
             margin: 0 12px;
+            flex-shrink: 0;
         }
-
         .tab {
             flex: 1;
             background: transparent;
@@ -176,8 +169,8 @@
             transition: 0.2s;
             cursor: pointer;
             font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
         }
-
         .tab.active {
             background: linear-gradient(95deg, var(--gold), var(--silver));
             color: white;
@@ -187,54 +180,150 @@
         .content {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px 16px 100px;
         }
 
+        /* ── GRID PRODUCTOS ── */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 14px;
         }
-
         .card-prod {
             background: var(--card-white);
-            border-radius: 24px;
-            padding: 14px;
+            border-radius: 22px;
+            padding: 12px;
             border: 1px solid var(--border-light);
             transition: 0.2s;
             box-shadow: var(--shadow-sm);
         }
 
-        .img-prod {
+        /* ── IMAGEN CON VISOR ── */
+        .img-prod-wrap {
+            position: relative;
             width: 100%;
             height: 120px;
-            border-radius: 18px;
-            object-fit: cover;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 10px;
             background: #F2F2F5;
-            margin-bottom: 12px;
+            cursor: zoom-in;
+        }
+        .img-prod {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        .img-prod-wrap:active .img-prod { transform: scale(0.97); }
+        .img-zoom-hint {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0,0,0,0.45);
+            color: white;
+            border-radius: 20px;
+            padding: 2px 7px;
+            font-size: 0.65rem;
+            pointer-events: none;
+            opacity: 0.85;
         }
 
-        .precio-original {
-            text-decoration: line-through;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
+        /* ── VISOR DE IMAGEN (LIGHTBOX) ── */
+        #imgViewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            backdrop-filter: blur(6px);
         }
-
-        .precio-descuento {
-            font-weight: 700;
+        #imgViewer.open { display: flex; }
+        #imgViewerImg {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 20px;
+            object-fit: contain;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        #imgViewerCaption {
+            color: white;
+            margin-top: 16px;
             font-size: 1rem;
-            color: var(--gold-dark);
+            font-weight: 500;
+            text-align: center;
+            opacity: 0.9;
+        }
+        #imgViewerClose {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
         }
 
+        /* ── BADGES Y PRECIOS ── */
+        .prod-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
         .badge-stock {
             background: var(--silver-light);
             border-radius: 30px;
-            padding: 3px 10px;
-            font-size: 0.7rem;
+            padding: 3px 9px;
+            font-size: 0.67rem;
             font-weight: 500;
             color: var(--text-primary);
         }
+        .badge-agotado {
+            color: var(--danger);
+            font-size: 0.67rem;
+            font-weight: 600;
+        }
+        /* Badge de variante/color */
+        .badge-variante {
+            background: linear-gradient(90deg, rgba(197,160,89,0.12), rgba(176,179,184,0.12));
+            border: 1px solid rgba(197,160,89,0.25);
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-size: 0.62rem;
+            font-weight: 500;
+            color: var(--gold-dark);
+        }
 
+        .prod-nombre {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin: 5px 0 4px;
+            line-height: 1.3;
+        }
+        .precio-original {
+            text-decoration: line-through;
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+        }
+        .precio-descuento {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gold-dark);
+        }
         .btn-add {
             background: linear-gradient(95deg, #F0F0F2, #E6E6EA);
             border: none;
@@ -242,14 +331,52 @@
             padding: 8px;
             width: 100%;
             font-weight: 600;
+            font-size: 0.8rem;
             color: #2C2C2E;
             margin-top: 10px;
             transition: 0.2s;
             cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
         }
-
         .btn-add:active { background: var(--silver); color: white; }
 
+        /* ── ENCABEZADO DE MARCA ── */
+        .marca-header {
+            margin: 22px 0 10px 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .marca-header::before {
+            content: '';
+            width: 3px;
+            height: 18px;
+            border-radius: 3px;
+            background: linear-gradient(var(--gold), var(--silver));
+            flex-shrink: 0;
+        }
+        .marca-label {
+            font-weight: 600;
+            color: var(--gold-dark);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* ── SUB-CATEGORÍA (variante) ── */
+        .sub-cat-header {
+            margin: 14px 0 8px 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+        }
+        .sub-cat-header::before { content: '└'; margin-right: 2px; opacity: 0.5; }
+
+        /* ── CARRITO ── */
         .cart-float {
             position: fixed;
             bottom: 24px;
@@ -266,9 +393,7 @@
             z-index: 10000;
             cursor: pointer;
             font-size: 1.4rem;
-            font-weight: 500;
         }
-
         .cart-count {
             position: absolute;
             top: -4px;
@@ -279,8 +404,11 @@
             font-weight: bold;
             padding: 4px 8px;
             border-radius: 30px;
+            min-width: 22px;
+            text-align: center;
         }
 
+        /* ── MODALES ── */
         .modal {
             position: fixed;
             inset: 0;
@@ -291,84 +419,134 @@
             justify-content: center;
             padding: 20px;
         }
-
         .modal-content {
             background: white;
             border-radius: 32px;
             padding: 24px;
-            border: none;
             box-shadow: var(--shadow-lg);
             max-width: 500px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
         }
-
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--gold-dark);
+            margin-bottom: 16px;
+        }
         .ticket {
             background: #F9F9FB;
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 16px;
             border-left: 3px solid var(--gold);
             font-family: 'Courier New', monospace;
-            margin: 16px 0;
+            font-size: 0.82rem;
+            margin: 14px 0;
+            line-height: 1.7;
         }
-
         .btn-ws {
             background: #25D366;
             border-radius: 44px;
             font-weight: 600;
             margin-top: 12px;
             border: none;
-            padding: 12px;
+            padding: 14px;
             width: 100%;
             color: white;
             cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
         }
+        .btn-ws:active { opacity: 0.85; }
 
+        /* ── ADMIN ── */
         .admin-scroll-area {
-            max-height: 260px;
+            max-height: 240px;
             overflow-y: auto;
             margin-top: 16px;
-            border-radius: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-
+        table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
         th {
             text-align: left;
-            padding: 12px 8px;
+            padding: 11px 8px;
             background: #F4F4F6;
             color: var(--gold-dark);
             font-weight: 600;
+            position: sticky;
+            top: 0;
         }
-
-        td {
-            padding: 10px 8px;
-            border-bottom: 1px solid var(--border-light);
-        }
+        td { padding: 9px 8px; border-bottom: 1px solid var(--border-light); }
 
         .stats-card {
             background: #FCFCFD;
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 14px;
             text-align: center;
             border: 1px solid var(--border-light);
         }
 
-        input, select {
+        /* ── FORM ADMIN MEJORADO ── */
+        .form-group { margin-bottom: 10px; }
+        .form-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            padding-left: 4px;
+        }
+        input[type=text], input[type=number], select {
             border-radius: 44px;
             border: 1px solid var(--border-light);
             padding: 12px 16px;
             background: white;
             width: 100%;
+            font-size: 0.88rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type=text]:focus, input[type=number]:focus, select:focus {
+            border-color: var(--gold);
+        }
+        input[type=date] {
+            border-radius: 44px;
+            border: 1px solid var(--border-light);
+            padding: 12px 16px;
+            background: white;
+            width: 100%;
+            font-size: 0.88rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+            outline: none;
             margin-bottom: 12px;
-            font-size: 0.9rem;
+        }
+        input[type=file] {
+            border-radius: 14px;
+            border: 1px dashed var(--border-light);
+            padding: 10px 14px;
+            background: #FAFAFA;
+            width: 100%;
+            font-size: 0.82rem;
+            margin-bottom: 12px;
+        }
+        .form-row { display: flex; gap: 8px; }
+        .form-row > .form-group { flex: 1; }
+
+        /* Variante tag input */
+        .tag-nota {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            padding: 0 0 4px 4px;
         }
 
+        /* ── TOAST ── */
         #toast {
             position: fixed;
             bottom: 100px;
@@ -377,121 +555,209 @@
             background: #1C1C1E;
             color: white;
             border-radius: 60px;
-            padding: 10px 20px;
-            font-size: 0.85rem;
+            padding: 10px 22px;
+            font-size: 0.83rem;
             opacity: 0;
-            transition: 0.2s;
-            z-index: 30000;
+            transition: opacity 0.2s;
+            z-index: 99998;
             pointer-events: none;
+            white-space: nowrap;
         }
 
-        button {
-            cursor: pointer;
-        }
-
-        .btn-outline {
-            background: none;
+        /* ── SERVICIOS ── */
+        .servicio-card {
+            background: var(--card-white);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
             border: 1px solid var(--border-light);
-            padding: 8px 16px;
-            border-radius: 40px;
-            margin-top: 8px;
+            box-shadow: var(--shadow-sm);
         }
+        .servicio-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--gold-dark);
+            margin-bottom: 16px;
+        }
+
+        button { cursor: pointer; }
     </style>
 </head>
 <body>
 
+<!-- PANTALLA INICIO -->
 <div class="main-screen">
     <div class="card-inicio">
         <h1>STUDIO DIANA PLATA | BEAUTY & HAIR</h1>
-        <p>CALIDAD | ELEGANCIA | BELLEZA</p>
+        <p>CALIDAD · ELEGANCIA · BELLEZA</p>
         <button class="btn-entrar" id="btnAbrirApp">✦ Ingresar ✦</button>
     </div>
 </div>
 
+<!-- OVERLAY CATÁLOGO -->
 <div id="catalogo-overlay">
     <div class="header">
-        <span id="logoAdmin"> STUDIO DIANA PLATA | BEAUTY & HAIR</span>
-        <button id="btnCerrarApp" style="background:#EBEBEF; border:none; padding:6px 16px; border-radius:40px; font-weight:500;">Cerrar</button>
+        <span id="logoAdmin">STUDIO DIANA PLATA</span>
+        <button id="btnCerrarApp" style="background:#EBEBEF; border:none; padding:7px 18px; border-radius:40px; font-weight:500; font-family:'DM Sans',sans-serif;">Cerrar</button>
     </div>
-    <input type="text" id="searchInput" class="search-bar" placeholder="Buscar productos...">
+
+    <input type="text" id="searchInput" class="search-bar" placeholder="🔍  Buscar productos...">
 
     <div class="tabs">
-        <button class="tab" id="tabP">Shop</button>
-        <button class="tab" id="tabS">Servicios</button>
+        <button class="tab" id="tabP">🛍️ Shop</button>
+        <button class="tab" id="tabS">✨ Servicios</button>
     </div>
 
     <div class="content">
-        <div id="prodView"><div id="catalogo-container"></div></div>
+        <!-- VISTA PRODUCTOS -->
+        <div id="prodView">
+            <div id="catalogo-container"></div>
+        </div>
+
+        <!-- VISTA SERVICIOS -->
         <div id="servView" style="display:none;">
-            <div class="card-prod" style="padding:24px; text-align:center;">
-                <h3 style="color:var(--gold-dark);">Agenda tu cita</h3>
-                <select id="citaTipo" style="margin:16px 0;">
-                    <option>Facial</option>
-                    <option>Depilación</option>
-                    <option>Lifting de Cejas</option>
-                    <option>Planchado/Laminado de Cejas</option>
-                    <option>Corte de Cabello (Unisex)</option>
-                    <option>Barberia (Arreglo de barba, mascarilla, etc.)</option>
-                    <option>Maquillaje (Fiesta, Social, Novia, XV años, etc.)</option>
-                    <option>Peinado Social</option>
-                    <option>Nails</option>
-                    <option>Blonding Services</option>
-                    <option>Corrección de Color (Unisex)</option>
-                    <option>Tratamiento Capilar</option>
-                    <option>Asesorias en Diseño de Imagen</option>
-                </select>
-                <input type="date" id="citaFecha">
-                <button class="btn-ws" id="btnConfirmarCita">Confirmar vía WhatsApp</button>
+            <div class="servicio-card">
+                <h3>Agenda tu cita</h3>
+                <div class="form-group">
+                    <label class="form-label">Tipo de servicio</label>
+                    <select id="citaTipo">
+                        <option>Facial</option>
+                        <option>Depilación</option>
+                        <option>Lifting de Cejas</option>
+                        <option>Planchado / Laminado de Cejas</option>
+                        <option>Corte de Cabello (Unisex)</option>
+                        <option>Barbería — Arreglo de barba, mascarilla, etc.</option>
+                        <option>Maquillaje — Fiesta, Social, Novia, XV años…</option>
+                        <option>Peinado Social</option>
+                        <option>Nails</option>
+                        <option>Blonding Services</option>
+                        <option>Corrección de Color (Unisex)</option>
+                        <option>Tratamiento Capilar</option>
+                        <option>Asesoría en Diseño de Imagen</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Fecha preferida</label>
+                    <input type="date" id="citaFecha">
+                </div>
+                <button class="btn-ws" id="btnConfirmarCita">📲 Confirmar vía WhatsApp</button>
             </div>
         </div>
     </div>
 
     <div class="cart-float" id="cartFloatBtn">
-        <span>🛒</span> <span class="cart-count" id="cartCount">0</span>
+        <span>🛒</span>
+        <span class="cart-count" id="cartCount">0</span>
     </div>
 </div>
 
-<!-- Modal Carrito -->
+<!-- LIGHTBOX IMAGEN -->
+<div id="imgViewer">
+    <button id="imgViewerClose">✕</button>
+    <img id="imgViewerImg" src="" alt="">
+    <div id="imgViewerCaption"></div>
+</div>
+
+<!-- MODAL CARRITO -->
 <div id="modalCarrito" class="modal">
     <div class="modal-content">
-        <h3 style="color:var(--gold-dark);">Tu selección</h3>
+        <p class="modal-title">Tu selección ✦</p>
         <div id="ticketArea" class="ticket"></div>
-        <input type="text" id="custNombre" placeholder="Nombre completo">
-        <input type="text" id="custDireccion" placeholder="Dirección (Celaya / zona)">
-        <button class="btn-ws" id="btnEnviarPedido">Enviar pedido por WhatsApp</button>
-        <button id="btnCerrarCarrito" style="margin-top:12px; background:none; border:none; color:var(--text-secondary);">Seguir comprando</button>
+        <div class="form-group">
+            <label class="form-label">Nombre completo</label>
+            <input type="text" id="custNombre" placeholder="Tu nombre…">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Dirección / Zona</label>
+            <input type="text" id="custDireccion" placeholder="Celaya, Apaseo, Juventino…">
+        </div>
+        <button class="btn-ws" id="btnEnviarPedido">📲 Enviar pedido por WhatsApp</button>
+        <button id="btnCerrarCarrito" style="display:block; margin-top:10px; background:none; border:none; color:var(--text-secondary); width:100%; padding:8px; font-family:'DM Sans',sans-serif;">Seguir comprando</button>
     </div>
 </div>
 
-<!-- Panel Administrador -->
+<!-- PANEL ADMINISTRADOR -->
 <div id="adminPanel" class="modal">
     <div class="modal-content">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h4 style="color:var(--gold-dark);">Panel de gestión</h4>
-            <button id="btnCerrarAdmin" style="background:none; border:none; font-size:1.6rem; cursor:pointer;">&times;</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--gold-dark); font-weight:600;">Panel de Gestión</span>
+            <button id="btnCerrarAdmin" style="background:none; border:none; font-size:1.6rem; color:var(--text-secondary);">✕</button>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;">
-            <div class="stats-card"><span style="font-size:0.7rem;">Stock total</span><br><b id="dashTotalStock" style="color:var(--gold);">0</b></div>
-            <div class="stats-card"><span style="font-size:0.7rem;">Dto. promedio</span><br><b id="dashAvgDescuento" style="color:var(--silver-dark);">0%</b></div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+            <div class="stats-card">
+                <span style="font-size:0.7rem; color:var(--text-secondary); display:block; margin-bottom:4px;">Stock total</span>
+                <b id="dashTotalStock" style="color:var(--gold); font-size:1.3rem;">0</b>
+            </div>
+            <div class="stats-card">
+                <span style="font-size:0.7rem; color:var(--text-secondary); display:block; margin-bottom:4px;">Dto. promedio</span>
+                <b id="dashAvgDescuento" style="color:var(--silver-dark); font-size:1.3rem;">0%</b>
+            </div>
         </div>
+
         <div id="formAdmin">
             <input type="hidden" id="editId">
-            <input type="text" id="admNombre" placeholder="Nombre del producto">
-            <input type="number" id="admPrecio" placeholder="Precio ($)">
-            <select id="admMarca">
-                <option>TERRAMAR</option><option>FARMASI</option><option>YANBAL</option><option>OTRO</option>
-            </select>
-            <div style="display:flex; gap:8px;">
-                <input type="number" id="admStock" placeholder="Stock" value="5">
-                <input type="number" id="admDescuento" placeholder="Descuento %" value="0" step="1">
+
+            <div class="form-group">
+                <label class="form-label">Nombre del producto</label>
+                <input type="text" id="admNombre" placeholder="Ej: Serum Lifting Oro">
             </div>
-            <input type="file" id="admFile" accept="image/*">
-            <button class="btn-add" id="btnGuardarProducto">Guardar producto</button>
-            <button id="btnCancelarEdit" style="display:none; margin-top:8px; background:#EBEBEF; border:none; border-radius:40px; padding:10px;">Cancelar edición</button>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Precio ($)</label>
+                    <input type="number" id="admPrecio" placeholder="450">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descuento %</label>
+                    <input type="number" id="admDescuento" placeholder="0" value="0" step="1" min="0" max="100">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Marca</label>
+                    <select id="admMarca">
+                        <option>TERRAMAR</option>
+                        <option>FARMASI</option>
+                        <option>YANBAL</option>
+                        <option>OTRO</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stock</label>
+                    <input type="number" id="admStock" placeholder="5" value="5" min="0">
+                </div>
+            </div>
+
+            <!-- CAMPO VARIANTE (nuevo) -->
+            <div class="form-group">
+                <label class="form-label">Variante / Color / Terminación <span style="font-weight:400; text-transform:none;">(opcional)</span></label>
+                <input type="text" id="admVariante" placeholder="Ej: Tono Nude, Color Marrón, Talla L…">
+                <p class="tag-nota">Si hay varios productos con el mismo nombre pero distinto tono o presentación, llena este campo para agruparlos.</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Imagen del producto</label>
+                <input type="file" id="admFile" accept="image/*">
+            </div>
+
+            <button class="btn-add" id="btnGuardarProducto" style="margin-top:4px; padding:12px; font-size:0.9rem;">💾 Guardar producto</button>
+            <button id="btnCancelarEdit" style="display:none; margin-top:8px; background:#EBEBEF; border:none; border-radius:40px; padding:11px; width:100%; font-family:'DM Sans',sans-serif;">Cancelar edición</button>
         </div>
+
         <div class="admin-scroll-area">
             <table>
-                <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Dto%</th><th>Acciones</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Variante</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Dto%</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
                 <tbody id="adminTableBody"></tbody>
             </table>
         </div>
@@ -501,479 +767,597 @@
 <div id="toast"></div>
 
 <script type="importmap">
-    {
-        "imports": {
-            "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
-            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
-        }
+{
+    "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
     }
+}
 </script>
 
 <script type="module">
-    import { initializeApp } from "firebase/app";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-    // Firebase Config
-    const firebaseConfig = {
-        apiKey: "AIzaSyCvrTlz7ewQlZBkTadgB9mxarMMJSvSp_A",
-        authDomain: "dianapg-99037.firebaseapp.com",
-        projectId: "dianapg-99037",
-        storageBucket: "dianapg-99037.firebasestorage.app",
-        messagingSenderId: "237058553544",
-        appId: "1:237058553544:web:62caa7960d879394da57fd"
-    };
+const firebaseConfig = {
+    apiKey: "AIzaSyCvrTlz7ewQlZBkTadgB9mxarMMJSvSp_A",
+    authDomain: "dianapg-99037.firebaseapp.com",
+    projectId: "dianapg-99037",
+    storageBucket: "dianapg-99037.firebasestorage.app",
+    messagingSenderId: "237058553544",
+    appId: "1:237058553544:web:62caa7960d879394da57fd"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    // ---------- ESTADO GLOBAL ----------
-    let productos = [];
-    let carrito = [];
-    let isAdmin = false;
-    let currentView = 'prod';
+// ── ESTADO ──
+let productos = [];
+let carrito = [];
+let isAdmin = false;
+let currentView = 'prod';
 
-    // Elementos DOM
-    const catalogoContainer = document.getElementById("catalogo-container");
-    const searchInput = document.getElementById("searchInput");
-    const cartCountSpan = document.getElementById("cartCount");
-    const modalCarrito = document.getElementById("modalCarrito");
-    const ticketArea = document.getElementById("ticketArea");
-    const toastDiv = document.getElementById("toast");
+// ── DOM ──
+const catalogoContainer = document.getElementById("catalogo-container");
+const searchInput = document.getElementById("searchInput");
+const cartCountSpan = document.getElementById("cartCount");
+const modalCarrito = document.getElementById("modalCarrito");
+const ticketArea = document.getElementById("ticketArea");
+const toastDiv = document.getElementById("toast");
 
-    // Funciones auxiliares
-    function mostrarToast(mensaje, esError = false) {
-        toastDiv.textContent = mensaje;
-        toastDiv.style.opacity = "1";
-        toastDiv.style.background = esError ? "var(--danger)" : "#1C1C1E";
-        setTimeout(() => { toastDiv.style.opacity = "0"; }, 2500);
-    }
+// ── TOAST ──
+function mostrarToast(mensaje, esError = false) {
+    toastDiv.textContent = mensaje;
+    toastDiv.style.opacity = "1";
+    toastDiv.style.background = esError ? "var(--danger)" : "#1C1C1E";
+    setTimeout(() => { toastDiv.style.opacity = "0"; }, 2800);
+}
 
-    function calcularPrecioFinal(precio, descuento) {
-        return precio - (precio * (descuento || 0) / 100);
-    }
+function calcularPrecioFinal(precio, descuento) {
+    return precio - (precio * (descuento || 0) / 100);
+}
 
-    function actualizarContadorCarrito() {
-        cartCountSpan.innerText = carrito.length;
-    }
+function actualizarContadorCarrito() {
+    cartCountSpan.innerText = carrito.length;
+}
 
-    // ---------- CARGAR PRODUCTOS DESDE FIRESTORE ----------
-    async function cargarProductos() {
-        try {
-            const querySnapshot = await getDocs(collection(db, "productos"));
-            productos = [];
-            querySnapshot.forEach(docSnap => {
-                productos.push({ id: docSnap.id, ...docSnap.data() });
-            });
-            if (productos.length === 0) {
-                // Datos demo iniciales
-                const demo = [
-                    { nombre: "Esencia Hidratante", precio: 450, marca: "TERRAMAR", stock: 12, descuento: 10, imagen: "" },
-                    { nombre: "Serum Lifting Oro", precio: 720, marca: "FARMASI", stock: 5, descuento: 15, imagen: "" },
-                    { nombre: "Exfoliante de Plata", precio: 390, marca: "YANBAL", stock: 8, descuento: 0, imagen: "" },
-                    { nombre: "Brillo Gloss", precio: 220, marca: "OTRO", stock: 3, descuento: 20, imagen: "" }
-                ];
-                for (const item of demo) {
-                    await addDoc(collection(db, "productos"), item);
-                }
-                await cargarProductos(); // recargar
-                return;
-            }
-            renderCatalogo();
-            if (isAdmin) renderAdminTabla();
-        } catch (error) {
-            console.error(error);
-            mostrarToast("Error al cargar productos", true);
-        }
-    }
+// ── LIGHTBOX ──
+function abrirVisor(src, nombre) {
+    const viewer = document.getElementById("imgViewer");
+    document.getElementById("imgViewerImg").src = src;
+    document.getElementById("imgViewerCaption").textContent = nombre;
+    viewer.classList.add("open");
+}
+function cerrarVisor() {
+    document.getElementById("imgViewer").classList.remove("open");
+}
+document.getElementById("imgViewerClose").onclick = cerrarVisor;
+document.getElementById("imgViewer").addEventListener("click", function(e) {
+    if (e.target === this) cerrarVisor();
+});
 
-    // ---------- RENDER CATÁLOGO PÚBLICO ----------
-    function renderCatalogo() {
-        if (!catalogoContainer) return;
-        let filtrados = [...productos];
-        const query = searchInput.value.toLowerCase();
-        if (query) filtrados = filtrados.filter(p => p.nombre.toLowerCase().includes(query));
-
-        const marcasUnicas = [...new Set(filtrados.map(p => p.marca))];
-        catalogoContainer.innerHTML = "";
-
-        for (const marca of marcasUnicas) {
-            const itemsMarca = filtrados.filter(p => p.marca === marca);
-            if (itemsMarca.length === 0) continue;
-
-            const section = document.createElement("div");
-            section.innerHTML = `
-                <div style="margin: 24px 0 12px 8px; font-weight:500; color:var(--gold-dark); border-left: 3px solid var(--silver); padding-left: 12px;">✦ ${marca} ✦</div>
-                <div class="grid"></div>
-            `;
-            const grid = section.querySelector(".grid");
-
-            itemsMarca.forEach(prod => {
-                const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
-                const tieneStock = (prod.stock || 0) > 0;
-                const card = document.createElement("div");
-                card.className = "card-prod";
-                if (!tieneStock) card.style.opacity = "0.6";
-
-                card.innerHTML = `
-                    <img src="${prod.imagen || 'https://via.placeholder.com/120?text=✨'}" class="img-prod" onerror="this.src='https://via.placeholder.com/120?text=Studio'">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span class="badge-stock">Stock: ${prod.stock ?? 0}</span>
-                        ${!tieneStock ? '<span style="color:var(--danger);">Agotado</span>' : ''}
-                    </div>
-                    <p style="font-weight:600; margin: 6px 0;">${prod.nombre}</p>
-                    <div>
-                        ${prod.descuento > 0 ? `<span class="precio-original">$${prod.precio}</span> ` : ''}
-                        <span class="precio-descuento">$${Math.round(precioFinal)}</span>
-                        ${prod.descuento > 0 ? `<span style="font-size:0.7rem;">-${prod.descuento}%</span>` : ''}
-                    </div>
-                `;
-                const btn = document.createElement("button");
-                btn.className = "btn-add";
-                btn.innerText = tieneStock ? "Agregar" : "Sin stock";
-                if (tieneStock) {
-                    btn.onclick = () => agregarAlCarrito(prod);
-                } else {
-                    btn.disabled = true;
-                }
-                card.appendChild(btn);
-                grid.appendChild(card);
-            });
-            catalogoContainer.appendChild(section);
-        }
-    }
-
-    // ---------- ADMIN: TABLA Y CRUD ----------
-    function renderAdminTabla() {
-        const tbody = document.getElementById("adminTableBody");
-        if (!tbody) return;
-        tbody.innerHTML = "";
-        let totalStock = 0;
-        let sumaDescuentos = 0;
-        let countDescuentos = 0;
-
-        productos.forEach(p => {
-            totalStock += (p.stock || 0);
-            if (p.descuento > 0) {
-                sumaDescuentos += p.descuento;
-                countDescuentos++;
-            }
-            const row = tbody.insertRow();
-            row.insertCell(0).innerText = p.nombre.length > 18 ? p.nombre.slice(0,15)+"…" : p.nombre;
-            row.insertCell(1).innerText = `$${p.precio}`;
-            row.insertCell(2).innerText = p.stock ?? 0;
-            row.insertCell(3).innerText = `${p.descuento || 0}%`;
-            const accCell = row.insertCell(4);
-            const btnEdit = document.createElement("button");
-            btnEdit.innerText = "✏️";
-            btnEdit.style.background = "none";
-            btnEdit.style.border = "none";
-            btnEdit.style.fontSize = "1rem";
-            btnEdit.style.cursor = "pointer";
-            btnEdit.onclick = () => editarProducto(p);
-            const btnDel = document.createElement("button");
-            btnDel.innerText = "🗑️";
-            btnDel.style.background = "none";
-            btnDel.style.border = "none";
-            btnDel.style.marginLeft = "8px";
-            btnDel.style.color = "var(--danger)";
-            btnDel.style.cursor = "pointer";
-            btnDel.onclick = () => eliminarProducto(p.id);
-            accCell.appendChild(btnEdit);
-            accCell.appendChild(btnDel);
+// ── CARGAR PRODUCTOS ──
+async function cargarProductos() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "productos"));
+        productos = [];
+        querySnapshot.forEach(docSnap => {
+            productos.push({ id: docSnap.id, ...docSnap.data() });
         });
 
-        document.getElementById("dashTotalStock").innerText = totalStock;
-        const promedioDto = countDescuentos ? Math.round(sumaDescuentos / countDescuentos) : 0;
-        document.getElementById("dashAvgDescuento").innerText = `${promedioDto}%`;
-    }
-
-    async function guardarProducto() {
-        const id = document.getElementById("editId").value;
-        const nombre = document.getElementById("admNombre").value.trim();
-        const precio = parseFloat(document.getElementById("admPrecio").value);
-        const marca = document.getElementById("admMarca").value;
-        const stock = parseInt(document.getElementById("admStock").value) || 0;
-        let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
-        if (descuento > 100) descuento = 100;
-        const file = document.getElementById("admFile").files[0];
-
-        if (!nombre || isNaN(precio)) {
-            mostrarToast("Complete nombre y precio", true);
+        if (productos.length === 0) {
+            const demo = [
+                { nombre: "Esencia Hidratante", precio: 450, marca: "TERRAMAR", stock: 12, descuento: 10, imagen: "", variante: "" },
+                { nombre: "Esencia Hidratante", precio: 450, marca: "TERRAMAR", stock: 7, descuento: 10, imagen: "", variante: "Aroma Lavanda" },
+                { nombre: "Serum Lifting Oro", precio: 720, marca: "FARMASI", stock: 5, descuento: 15, imagen: "", variante: "" },
+                { nombre: "Exfoliante de Plata", precio: 390, marca: "YANBAL", stock: 8, descuento: 0, imagen: "", variante: "" },
+                { nombre: "Brillo Gloss", precio: 220, marca: "OTRO", stock: 3, descuento: 20, imagen: "", variante: "Tono Rosa" },
+                { nombre: "Brillo Gloss", precio: 220, marca: "OTRO", stock: 5, descuento: 20, imagen: "", variante: "Tono Coral" },
+            ];
+            for (const item of demo) {
+                await addDoc(collection(db, "productos"), item);
+            }
+            await cargarProductos();
             return;
         }
 
-        // --- BLOQUE DE COMPRESIÓN DE IMAGEN ---
-        let imgFinal = "";
-        const comprimirImagen = (archivo) => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(archivo);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement("canvas");
-                        const MAX_WIDTH = 400; // Ancho máximo profesional
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height * scaleSize;
-                        const ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL("image/jpeg", 0.6)); // Calidad 60%
-                    };
-                };
-            });
-        };
+        renderCatalogo();
+        if (isAdmin) renderAdminTabla();
+    } catch (error) {
+        console.error(error);
+        mostrarToast("Error al cargar productos", true);
+    }
+}
 
-        try {
-            if (file) {
-                mostrarToast("Comprimiendo imagen...");
-                imgFinal = await comprimirImagen(file);
-            } else if (id) {
-                // Si editamos y no hay archivo nuevo, mantenemos la anterior
-                const prodExistente = productos.find(p => p.id == id);
-                imgFinal = prodExistente ? prodExistente.imagen : "";
-            }
+// ── RENDER CATÁLOGO ──
+// Agrupa: Marca → Nombre base → Variantes
+function renderCatalogo() {
+    if (!catalogoContainer) return;
 
-            const datos = { nombre, precio, marca, stock, descuento, imagen: imgFinal };
+    let filtrados = [...productos];
+    const query = searchInput.value.toLowerCase().trim();
+    if (query) filtrados = filtrados.filter(p =>
+        p.nombre.toLowerCase().includes(query) ||
+        (p.variante || "").toLowerCase().includes(query) ||
+        p.marca.toLowerCase().includes(query)
+    );
 
-            if (id) {
-                await updateDoc(doc(db, "productos", id), datos);
-                mostrarToast("Producto actualizado");
+    catalogoContainer.innerHTML = "";
+
+    // Agrupar por marca
+    const marcasUnicas = [...new Set(filtrados.map(p => p.marca))];
+
+    for (const marca of marcasUnicas) {
+        const itemsMarca = filtrados.filter(p => p.marca === marca);
+        if (itemsMarca.length === 0) continue;
+
+        const seccionMarca = document.createElement("div");
+        const marcaHeader = document.createElement("div");
+        marcaHeader.className = "marca-header";
+        marcaHeader.innerHTML = `<span class="marca-label">✦ ${marca} ✦</span>`;
+        seccionMarca.appendChild(marcaHeader);
+
+        // Agrupar por nombre base dentro de cada marca
+        const nombresUnicos = [...new Set(itemsMarca.map(p => p.nombre))];
+
+        for (const nombreBase of nombresUnicos) {
+            const variantes = itemsMarca.filter(p => p.nombre === nombreBase);
+
+            // Si solo hay un producto con ese nombre (sin variante registrada), mostrar directo
+            const tieneVariantes = variantes.length > 1 || (variantes.length === 1 && variantes[0].variante);
+
+            if (tieneVariantes && variantes.length > 1) {
+                // Sub-encabezado de nombre base
+                const subHeader = document.createElement("div");
+                subHeader.className = "sub-cat-header";
+                subHeader.textContent = nombreBase;
+                seccionMarca.appendChild(subHeader);
+
+                const grid = document.createElement("div");
+                grid.className = "grid";
+                variantes.forEach(prod => grid.appendChild(crearCardProducto(prod, true)));
+                seccionMarca.appendChild(grid);
             } else {
-                await addDoc(collection(db, "productos"), datos);
-                mostrarToast("Producto agregado");
+                // Producto único: renderizar en la cuadrícula general de la marca
+                const grid = seccionMarca.querySelector(".grid-marca") || (() => {
+                    const g = document.createElement("div");
+                    g.className = "grid grid-marca";
+                    seccionMarca.appendChild(g);
+                    return g;
+                })();
+                variantes.forEach(prod => grid.appendChild(crearCardProducto(prod, false)));
             }
-            limpiarFormularioAdmin();
-            await cargarProductos();
-        } catch (error) {
-            console.error(error);
-            mostrarToast("Error al guardar: " + error.message, true);
         }
+
+        catalogoContainer.appendChild(seccionMarca);
+    }
+}
+
+function crearCardProducto(prod, mostrarVariante) {
+    const precioFinal = calcularPrecioFinal(prod.precio, prod.descuento);
+    const tieneStock = (prod.stock || 0) > 0;
+    const imgSrc = prod.imagen || "https://via.placeholder.com/240x180?text=✨";
+
+    const card = document.createElement("div");
+    card.className = "card-prod";
+    if (!tieneStock) card.style.opacity = "0.55";
+
+    // Imagen con visor
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "img-prod-wrap";
+    imgWrap.title = "Toca para ampliar";
+
+    const img = document.createElement("img");
+    img.className = "img-prod";
+    img.src = imgSrc;
+    img.alt = prod.nombre;
+    img.onerror = function() { this.src = "https://via.placeholder.com/240x180?text=Studio"; };
+
+    const zoomHint = document.createElement("span");
+    zoomHint.className = "img-zoom-hint";
+    zoomHint.textContent = "🔍";
+
+    imgWrap.appendChild(img);
+    imgWrap.appendChild(zoomHint);
+    imgWrap.onclick = () => abrirVisor(img.src, prod.nombre + (prod.variante ? ` — ${prod.variante}` : ""));
+    card.appendChild(imgWrap);
+
+    // Fila superior: stock y agotado
+    const topRow = document.createElement("div");
+    topRow.className = "prod-top-row";
+    const badgeStock = document.createElement("span");
+    badgeStock.className = "badge-stock";
+    badgeStock.textContent = `Stock: ${prod.stock ?? 0}`;
+    topRow.appendChild(badgeStock);
+
+    if (!tieneStock) {
+        const agotado = document.createElement("span");
+        agotado.className = "badge-agotado";
+        agotado.textContent = "Agotado";
+        topRow.appendChild(agotado);
+    }
+    card.appendChild(topRow);
+
+    // Badge variante
+    if (mostrarVariante && prod.variante) {
+        const bv = document.createElement("span");
+        bv.className = "badge-variante";
+        bv.textContent = prod.variante;
+        bv.style.display = "inline-block";
+        bv.style.marginTop = "5px";
+        card.appendChild(bv);
     }
 
-    async function eliminarProducto(id) {
-        if (!confirm("¿Eliminar este producto permanentemente?")) return;
-        try {
-            await deleteDoc(doc(db, "productos", id));
-            mostrarToast("Producto eliminado");
-            await cargarProductos();
-        } catch (error) {
-            mostrarToast("Error al eliminar", true);
-        }
+    // Nombre
+    const nombre = document.createElement("p");
+    nombre.className = "prod-nombre";
+    nombre.textContent = prod.nombre;
+    card.appendChild(nombre);
+
+    // Precios
+    const preciosDiv = document.createElement("div");
+    if (prod.descuento > 0) {
+        preciosDiv.innerHTML = `<span class="precio-original">$${prod.precio}</span> <span class="precio-descuento">$${Math.round(precioFinal)}</span> <span style="font-size:0.65rem; color:var(--gold);">-${prod.descuento}%</span>`;
+    } else {
+        preciosDiv.innerHTML = `<span class="precio-descuento">$${Math.round(precioFinal)}</span>`;
+    }
+    card.appendChild(preciosDiv);
+
+    // Botón agregar
+    const btn = document.createElement("button");
+    btn.className = "btn-add";
+    if (tieneStock) {
+        btn.textContent = "+ Agregar";
+        btn.onclick = () => agregarAlCarrito(prod);
+    } else {
+        btn.textContent = "Sin stock";
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+    }
+    card.appendChild(btn);
+
+    return card;
+}
+
+// ── ADMIN: TABLA ──
+function renderAdminTabla() {
+    const tbody = document.getElementById("adminTableBody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    let totalStock = 0, sumaDesc = 0, countDesc = 0;
+
+    productos.forEach(p => {
+        totalStock += (p.stock || 0);
+        if (p.descuento > 0) { sumaDesc += p.descuento; countDesc++; }
+
+        const row = tbody.insertRow();
+        row.insertCell(0).textContent = p.nombre.length > 16 ? p.nombre.slice(0,14)+"…" : p.nombre;
+        row.insertCell(1).textContent = p.variante || "—";
+        row.insertCell(2).textContent = `$${p.precio}`;
+        row.insertCell(3).textContent = p.stock ?? 0;
+        row.insertCell(4).textContent = `${p.descuento || 0}%`;
+
+        const accCell = row.insertCell(5);
+        const btnEdit = document.createElement("button");
+        btnEdit.textContent = "✏️";
+        Object.assign(btnEdit.style, { background:"none", border:"none", fontSize:"1rem", cursor:"pointer" });
+        btnEdit.onclick = () => editarProducto(p);
+
+        const btnDel = document.createElement("button");
+        btnDel.textContent = "🗑️";
+        Object.assign(btnDel.style, { background:"none", border:"none", marginLeft:"6px", cursor:"pointer" });
+        btnDel.onclick = () => eliminarProducto(p.id);
+
+        accCell.appendChild(btnEdit);
+        accCell.appendChild(btnDel);
+    });
+
+    document.getElementById("dashTotalStock").textContent = totalStock;
+    document.getElementById("dashAvgDescuento").textContent = countDesc ? `${Math.round(sumaDesc/countDesc)}%` : "0%";
+}
+
+// ── GUARDAR PRODUCTO ──
+async function guardarProducto() {
+    const id = document.getElementById("editId").value;
+    const nombre = document.getElementById("admNombre").value.trim();
+    const precio = parseFloat(document.getElementById("admPrecio").value);
+    const marca = document.getElementById("admMarca").value;
+    const stock = parseInt(document.getElementById("admStock").value) || 0;
+    let descuento = parseInt(document.getElementById("admDescuento").value) || 0;
+    if (descuento > 100) descuento = 100;
+    const variante = document.getElementById("admVariante").value.trim();
+    const file = document.getElementById("admFile").files[0];
+
+    if (!nombre || isNaN(precio) || precio <= 0) {
+        mostrarToast("Completa nombre y precio válido", true);
+        return;
     }
 
-    function editarProducto(prod) {
-        document.getElementById("editId").value = prod.id;
-        document.getElementById("admNombre").value = prod.nombre;
-        document.getElementById("admPrecio").value = prod.precio;
-        document.getElementById("admMarca").value = prod.marca;
-        document.getElementById("admStock").value = prod.stock ?? 0;
-        document.getElementById("admDescuento").value = prod.descuento ?? 0;
-        document.getElementById("btnGuardarProducto").innerText = "Actualizar producto";
-        document.getElementById("btnCancelarEdit").style.display = "block";
-        document.getElementById("formAdmin").scrollIntoView({ behavior: "smooth" });
-    }
-
-    function limpiarFormularioAdmin() {
-        document.getElementById("editId").value = "";
-        document.getElementById("admNombre").value = "";
-        document.getElementById("admPrecio").value = "";
-        document.getElementById("admStock").value = "5";
-        document.getElementById("admDescuento").value = "0";
-        document.getElementById("admFile").value = "";
-        document.getElementById("btnGuardarProducto").innerText = "Guardar producto";
-        document.getElementById("btnCancelarEdit").style.display = "none";
-    }
-
-    // ---------- CARRITO ----------
-    function agregarAlCarrito(producto) {
-        const precioFinal = calcularPrecioFinal(producto.precio, producto.descuento);
-        const item = {
-            id: producto.id,
-            nombre: producto.nombre,
-            precioFinal: precioFinal,
-            precioOriginal: producto.precio,
-            descuento: producto.descuento || 0
+    const comprimirImagen = (archivo) => new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(archivo);
+        reader.onload = (e) => {
+            const imgEl = new Image();
+            imgEl.src = e.target.result;
+            imgEl.onload = () => {
+                const canvas = document.createElement("canvas");
+                const MAX_W = 480;
+                const scale = MAX_W / imgEl.width;
+                canvas.width = MAX_W;
+                canvas.height = imgEl.height * scale;
+                canvas.getContext("2d").drawImage(imgEl, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL("image/jpeg", 0.65));
+            };
         };
-        carrito.push(item);
-        actualizarContadorCarrito();
-        mostrarToast(`${producto.nombre} agregado`);
-    }
+    });
 
-    function mostrarTicket() {
-        if (carrito.length === 0) {
-            ticketArea.innerHTML = "<p>Carrito vacío</p>";
-            return;
-        }
-        let total = 0;
-        let html = `<div style="font-family: monospace;">DIANA PLATA · Studio<br>━━━━━━━━━━━━━━<br>`;
-        carrito.forEach(item => {
-            html += `• ${item.nombre}   $${item.precioFinal.toLocaleString()}<br>`;
-            total += item.precioFinal;
-        });
-        html += `━━━━━━━━━━━━━━<br>Total: $${total.toLocaleString()}<br>✦ Gracias por tu compra</div>`;
-        ticketArea.innerHTML = html;
-    }
-
-    function abrirCarrito() {
-        if (carrito.length === 0) {
-            mostrarToast("El carrito está vacío", true);
-            return;
-        }
-        mostrarTicket();
-        modalCarrito.style.display = "flex";
-    }
-
-    function cerrarCarrito() {
-        modalCarrito.style.display = "none";
-    }
-
-    async function enviarPedido() {
-        const nombre = document.getElementById("custNombre").value.trim();
-        const direccion = document.getElementById("custDireccion").value.trim();
-        
-        if (!nombre || !direccion) {
-            mostrarToast("Complete nombre y dirección", true);
-            return;
+    try {
+        let imgFinal = "";
+        if (file) {
+            mostrarToast("⏳ Procesando imagen…");
+            imgFinal = await comprimirImagen(file);
+        } else if (id) {
+            const prodExistente = productos.find(p => p.id === id);
+            imgFinal = prodExistente ? (prodExistente.imagen || "") : "";
         }
 
-        let total = 0;
-        // Construimos el mensaje con saltos de línea reales \n
-        let mensaje = `✨ *DIANA PLATA · Studio* ✨\n\n`;
-        mensaje += `📝 *Pedido para:* ${nombre.toUpperCase()}\n`;
-        mensaje += `📍 *Dirección:* ${direccion}\n`;
-        mensaje += `━━━━━━━━━━━━━━━━━━━━\n`;
-        
-        carrito.forEach(p => {
-            mensaje += `• ${p.nombre} : $${p.precioFinal.toLocaleString()}\n`;
-            total += p.precioFinal;
-        });
-        
-        mensaje += `━━━━━━━━━━━━━━━━━━━━\n`;
-        mensaje += `💰 *Total: $${total.toLocaleString()}*\n\n`;
-        mensaje += `¡Gracias por su compra! 🙏✨`;
+        const datos = { nombre, precio, marca, stock, descuento, variante, imagen: imgFinal };
 
-        try {
-            // Registro en Firebase
-            await addDoc(collection(db, "pedidos"), {
-                nombre,
-                direccion,
-                items: carrito,
-                total,
-                fecha: new Date()
-            });
-
-            // Envío a WhatsApp con encodeURIComponent
-            window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
-            
-            // Limpieza
-            carrito = [];
-            actualizarContadorCarrito();
-            cerrarCarrito();
-            mostrarToast("Pedido enviado y registrado");
-            document.getElementById("custNombre").value = "";
-            document.getElementById("custDireccion").value = "";
-        } catch (error) {
-            console.error(error);
-            mostrarToast("Error al guardar pedido", true);
+        if (id) {
+            await updateDoc(doc(db, "productos", id), datos);
+            mostrarToast("✅ Producto actualizado");
+        } else {
+            await addDoc(collection(db, "productos"), datos);
+            mostrarToast("✅ Producto agregado");
         }
+        limpiarFormularioAdmin();
+        await cargarProductos();
+    } catch (error) {
+        console.error(error);
+        mostrarToast("Error: " + error.message, true);
     }
+}
 
-    // ---------- CITAS ----------
-    function confirmarCita() {
-        const fecha = document.getElementById("citaFecha").value;
-        if (!fecha) {
-            mostrarToast("Seleccione una fecha", true);
-            return;
-        }
-        
-        const servicio = document.getElementById("citaTipo").value;
-        
-        // Formato profesional con emojis y saltos de línea reales
-        let mensaje = `✨ *DIANA PLATA · Studio* ✨\n\n`;
-        mensaje += `📅 *SOLICITUD DE CITA*\n`;
-        mensaje += `------------------------------------------\n`;
-        mensaje += `💇‍♀️ *Servicio:* ${servicio}\n`;
-        mensaje += `🗓️ *Fecha:* ${fecha}\n`;
-        mensaje += `------------------------------------------\n`;
-        mensaje += `_Por favor, confirma disponibilidad para esta fecha._`;
-
-        // El uso de encodeURIComponent asegura que los saltos de línea se envíen bien
-        window.open(`https://wa.me/527121919227?text=${encodeURIComponent(mensaje)}`);
+async function eliminarProducto(id) {
+    if (!confirm("¿Eliminar este producto permanentemente?")) return;
+    try {
+        await deleteDoc(doc(db, "productos", id));
+        mostrarToast("🗑️ Producto eliminado");
+        await cargarProductos();
+    } catch {
+        mostrarToast("Error al eliminar", true);
     }
+}
 
-    // ---------- UI Y ADMIN (presión prolongada) ----------
-    let pressTimer = null;
-    const logo = document.getElementById("logoAdmin");
-    function startPress() {
-        pressTimer = setTimeout(() => {
-            const code = prompt("Clave de administración:");
-            if (code === "DAYANA123456") {
-                isAdmin = true;
-                renderAdminTabla();
-                document.getElementById("adminPanel").style.display = "flex";
-            } else if (code !== null) {
-                mostrarToast("Código incorrecto", true);
-            }
-            pressTimer = null;
-        }, 600);
-    }
-    function cancelPress() {
-        if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
-    }
-    logo.addEventListener("mousedown", startPress);
-    logo.addEventListener("mouseup", cancelPress);
-    logo.addEventListener("mouseleave", cancelPress);
-    logo.addEventListener("touchstart", startPress);
-    logo.addEventListener("touchend", cancelPress);
+function editarProducto(prod) {
+    document.getElementById("editId").value = prod.id;
+    document.getElementById("admNombre").value = prod.nombre;
+    document.getElementById("admPrecio").value = prod.precio;
+    document.getElementById("admMarca").value = prod.marca;
+    document.getElementById("admStock").value = prod.stock ?? 0;
+    document.getElementById("admDescuento").value = prod.descuento ?? 0;
+    document.getElementById("admVariante").value = prod.variante || "";
+    document.getElementById("btnGuardarProducto").textContent = "💾 Actualizar producto";
+    document.getElementById("btnCancelarEdit").style.display = "block";
+    document.getElementById("formAdmin").scrollIntoView({ behavior: "smooth" });
+}
 
-    function cerrarAdmin() {
-        isAdmin = false;
-        document.getElementById("adminPanel").style.display = "none";
-    }
+function limpiarFormularioAdmin() {
+    ["editId","admNombre","admPrecio","admVariante"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("admStock").value = "5";
+    document.getElementById("admDescuento").value = "0";
+    document.getElementById("admFile").value = "";
+    document.getElementById("btnGuardarProducto").textContent = "💾 Guardar producto";
+    document.getElementById("btnCancelarEdit").style.display = "none";
+}
 
-    function cambiarVista(vista) {
-        currentView = vista;
-        document.getElementById("prodView").style.display = vista === "prod" ? "block" : "none";
-        document.getElementById("servView").style.display = vista === "serv" ? "block" : "none";
-        const cartFloat = document.getElementById("cartFloatBtn");
-        if (cartFloat) cartFloat.style.display = vista === "prod" ? "flex" : "none";
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        document.getElementById(vista === "prod" ? "tabP" : "tabS").classList.add("active");
-        if (vista === "prod") renderCatalogo();
-    }
-
-    function abrirApp() {
-        document.getElementById("catalogo-overlay").classList.add("active");
-        cambiarVista('prod');
-    }
-    function cerrarApp() {
-        document.getElementById("catalogo-overlay").classList.remove("active");
-    }
-
-    // ---------- EVENTOS ----------
-    document.getElementById("btnAbrirApp").onclick = abrirApp;
-    document.getElementById("btnCerrarApp").onclick = cerrarApp;
-    document.getElementById("cartFloatBtn").onclick = abrirCarrito;
-    document.getElementById("btnCerrarCarrito").onclick = cerrarCarrito;
-    document.getElementById("btnEnviarPedido").onclick = enviarPedido;
-    document.getElementById("btnConfirmarCita").onclick = confirmarCita;
-    document.getElementById("btnGuardarProducto").onclick = guardarProducto;
-    document.getElementById("btnCancelarEdit").onclick = limpiarFormularioAdmin;
-    document.getElementById("btnCerrarAdmin").onclick = cerrarAdmin;
-    document.getElementById("tabP").onclick = () => cambiarVista('prod');
-    document.getElementById("tabS").onclick = () => cambiarVista('serv');
-    searchInput.oninput = () => renderCatalogo();
-
-    // Inicializar
-    cargarProductos();
+// ── CARRITO ──
+function agregarAlCarrito(producto) {
+    const precioFinal = calcularPrecioFinal(producto.precio, producto.descuento);
+    carrito.push({
+        id: producto.id,
+        nombre: producto.nombre,
+        variante: producto.variante || "",
+        precioFinal,
+        precioOriginal: producto.precio,
+        descuento: producto.descuento || 0
+    });
     actualizarContadorCarrito();
+    const label = producto.variante ? `${producto.nombre} (${producto.variante})` : producto.nombre;
+    mostrarToast(`🛒 ${label} agregado`);
+}
 
-    // Service Worker para PWA (si existe)
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js").catch(e => console.log("SW no registrado"));
+function mostrarTicket() {
+    if (carrito.length === 0) {
+        ticketArea.innerHTML = "<p style='color:var(--text-secondary); text-align:center;'>Carrito vacío</p>";
+        return;
     }
+    let total = 0;
+    let html = `DIANA PLATA · Studio\n━━━━━━━━━━━━━━━━━━\n`;
+    carrito.forEach(item => {
+        const etiqueta = item.variante ? `${item.nombre} (${item.variante})` : item.nombre;
+        html += `• ${etiqueta}  $${Math.round(item.precioFinal).toLocaleString()}\n`;
+        total += item.precioFinal;
+    });
+    html += `━━━━━━━━━━━━━━━━━━\nTotal: $${Math.round(total).toLocaleString()}\n✦ Gracias por tu compra`;
+    ticketArea.innerText = html;
+}
+
+function abrirCarrito() {
+    if (carrito.length === 0) {
+        mostrarToast("El carrito está vacío 🛒", true);
+        return;
+    }
+    mostrarTicket();
+    modalCarrito.style.display = "flex";
+}
+
+function cerrarCarrito() {
+    modalCarrito.style.display = "none";
+}
+
+// ── ENVIAR PEDIDO (WhatsApp mejorado) ──
+async function enviarPedido() {
+    const nombre = document.getElementById("custNombre").value.trim();
+    const direccion = document.getElementById("custDireccion").value.trim();
+
+    if (!nombre || !direccion) {
+        mostrarToast("Por favor completa nombre y dirección", true);
+        return;
+    }
+
+    let total = 0;
+    const fecha = new Date().toLocaleDateString("es-MX", { day:"2-digit", month:"long", year:"numeric" });
+
+    let msg = `╔══════════════════════╗\n`;
+    msg += `  ✨ STUDIO DIANA PLATA\n`;
+    msg += `╚══════════════════════╝\n\n`;
+    msg += `📋 *NUEVO PEDIDO*\n`;
+    msg += `📅 ${fecha}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `👤 *Cliente:* ${nombre}\n`;
+    msg += `📍 *Entrega en:* ${direccion}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `🛍️ *Productos seleccionados:*\n`;
+
+    carrito.forEach((p, i) => {
+        const etiqueta = p.variante ? `${p.nombre} (${p.variante})` : p.nombre;
+        const precioRedondeado = Math.round(p.precioFinal);
+        msg += `  ${i+1}. ${etiqueta}\n`;
+        if (p.descuento > 0) {
+            msg += `     Antes: $${p.precioOriginal} → *Ahora: $${precioRedondeado}* (-${p.descuento}%)\n`;
+        } else {
+            msg += `     Precio: *$${precioRedondeado}*\n`;
+        }
+        total += p.precioFinal;
+    });
+
+    msg += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `💰 *TOTAL: $${Math.round(total).toLocaleString()} MXN*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `_Por favor confirma disponibilidad y método de pago. ¡Gracias! 🙏_`;
+
+    try {
+        await addDoc(collection(db, "pedidos"), {
+            nombre, direccion,
+            items: carrito,
+            total: Math.round(total),
+            fecha: new Date()
+        });
+
+        window.open(`https://wa.me/527121919227?text=${encodeURIComponent(msg)}`);
+        carrito = [];
+        actualizarContadorCarrito();
+        cerrarCarrito();
+        mostrarToast("✅ Pedido enviado con éxito");
+        document.getElementById("custNombre").value = "";
+        document.getElementById("custDireccion").value = "";
+    } catch (error) {
+        console.error(error);
+        mostrarToast("Error al guardar pedido", true);
+    }
+}
+
+// ── CITAS (WhatsApp mejorado) ──
+function confirmarCita() {
+    const fecha = document.getElementById("citaFecha").value;
+    if (!fecha) {
+        mostrarToast("Selecciona una fecha para tu cita", true);
+        return;
+    }
+
+    const servicio = document.getElementById("citaTipo").value;
+    const fechaFormato = new Date(fecha + "T12:00:00").toLocaleDateString("es-MX", {
+        weekday:"long", day:"numeric", month:"long", year:"numeric"
+    });
+    // Capitaliza
+    const fechaLinda = fechaFormato.charAt(0).toUpperCase() + fechaFormato.slice(1);
+
+    let msg = `╔══════════════════════╗\n`;
+    msg += `  ✨ STUDIO DIANA PLATA\n`;
+    msg += `╚══════════════════════╝\n\n`;
+    msg += `📅 *SOLICITUD DE CITA*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `💇‍♀️ *Servicio:* ${servicio}\n`;
+    msg += `🗓️ *Fecha deseada:* ${fechaLinda}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `_Por favor, ¿me confirmas si hay disponibilidad para esa fecha? ¡Gracias! 😊_`;
+
+    window.open(`https://wa.me/527121919227?text=${encodeURIComponent(msg)}`);
+}
+
+// ── ADMIN: ACCESO POR PRESIÓN LARGA ──
+let pressTimer = null;
+const logo = document.getElementById("logoAdmin");
+
+function startPress() {
+    pressTimer = setTimeout(() => {
+        const code = prompt("🔑 Clave de administración:");
+        if (code === "DAYANA123456") {
+            isAdmin = true;
+            renderAdminTabla();
+            document.getElementById("adminPanel").style.display = "flex";
+        } else if (code !== null) {
+            mostrarToast("Código incorrecto ❌", true);
+        }
+        pressTimer = null;
+    }, 700);
+}
+function cancelPress() {
+    if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+}
+
+logo.addEventListener("mousedown", startPress);
+logo.addEventListener("mouseup", cancelPress);
+logo.addEventListener("mouseleave", cancelPress);
+logo.addEventListener("touchstart", startPress, { passive: true });
+logo.addEventListener("touchend", cancelPress);
+
+function cerrarAdmin() {
+    isAdmin = false;
+    document.getElementById("adminPanel").style.display = "none";
+}
+
+// ── VISTAS ──
+function cambiarVista(vista) {
+    currentView = vista;
+    document.getElementById("prodView").style.display = vista === "prod" ? "block" : "none";
+    document.getElementById("servView").style.display = vista === "serv" ? "block" : "none";
+    document.getElementById("cartFloatBtn").style.display = vista === "prod" ? "flex" : "none";
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.getElementById(vista === "prod" ? "tabP" : "tabS").classList.add("active");
+    if (vista === "prod") renderCatalogo();
+}
+
+function abrirApp() {
+    document.getElementById("catalogo-overlay").classList.add("active");
+    cambiarVista("prod");
+}
+function cerrarApp() {
+    document.getElementById("catalogo-overlay").classList.remove("active");
+}
+
+// ── EVENTOS ──
+document.getElementById("btnAbrirApp").onclick = abrirApp;
+document.getElementById("btnCerrarApp").onclick = cerrarApp;
+document.getElementById("cartFloatBtn").onclick = abrirCarrito;
+document.getElementById("btnCerrarCarrito").onclick = cerrarCarrito;
+document.getElementById("btnEnviarPedido").onclick = enviarPedido;
+document.getElementById("btnConfirmarCita").onclick = confirmarCita;
+document.getElementById("btnGuardarProducto").onclick = guardarProducto;
+document.getElementById("btnCancelarEdit").onclick = limpiarFormularioAdmin;
+document.getElementById("btnCerrarAdmin").onclick = cerrarAdmin;
+document.getElementById("tabP").onclick = () => cambiarVista("prod");
+document.getElementById("tabS").onclick = () => cambiarVista("serv");
+searchInput.oninput = renderCatalogo;
+
+// ── INIT ──
+cargarProductos();
+actualizarContadorCarrito();
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+}
 </script>
 </body>
 </html>
